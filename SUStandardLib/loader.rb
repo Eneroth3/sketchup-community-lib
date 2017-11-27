@@ -6,12 +6,12 @@
 #
 #-------------------------------------------------------------------------------
 module ExampleExtensionModule
-  module SUStandardLib
+module SUStandardLib
 
-    Dir.glob(File.join(File.dirname(__FILE__), "*.rb")).each do |path|
-      next if path == __FILE__
-      require path
-    end
-
+  Dir.glob(File.join(File.dirname(__FILE__), "*.rb")).each do |path|
+    next if path == __FILE__
+    require path
   end
+
+end
 end
