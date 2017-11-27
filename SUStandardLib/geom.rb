@@ -2,24 +2,6 @@ module ExampleExtensionModule
 module SUStandardLib
 module Geom
 
-  # TODO: Move arbitrary_non_parallel_vector and arbitrary_perpendicular_vector to Vector3d module.
-
-  # Find an arbitrary unit vector that is not parallel to given vector.
-  #
-  # @param [Geom::Vector3d]
-  # @return [Geom::Vector3d]
-  def self.arbitrary_non_parallel_vector(vector)
-    vector.parallel?(Z_AXIS) ? X_AXIS : Z_AXIS
-  end
-
-  # Find an arbitrary unit vector that is perpendicular to given vector.
-  #
-  # @param [Geom::Vector3d]
-  # @return [Geom::Vector3d]
-  def self.arbitrary_perpendicular_vector(vector)
-    (vector * arbitrary_non_parallel_vector(vector)).normalize
-  end
-
   # Determine the unit normal vector for a plane.
   #
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]

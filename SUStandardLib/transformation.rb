@@ -9,7 +9,7 @@ module Transformation
   # @return [Float]
   def self.scale_factor_in_plane(transformation, plane)
     normal = Geom.plane_normal(plane)
-    tangent = Geom.arbitrary_perpendicular_vector(normal)
+    tangent = Vector.arbitrary_perpendicular_vector(normal)
     bi_tangent = tangent * normal
 
     tangent.transform!(transformation)
