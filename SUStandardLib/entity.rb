@@ -1,4 +1,6 @@
-module ExampleExtensionModule::SUStandardLib::Entity
+module ExampleExtensionModule
+module SUStandardLib
+module Entity
 
   # List all InstancePaths pointing towards this Entity throughout the model.
   #
@@ -33,4 +35,6 @@ module ExampleExtensionModule::SUStandardLib::Entity
     end
   end
 
+end
+end
 end
