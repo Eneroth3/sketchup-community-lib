@@ -31,8 +31,12 @@ module Vector3d
 
     tangent.transform!(transformation)
     bi_tangent.transform!(transformation)
+    normal = (tangent * bi_tangent).normalize
 
-    (tangent * bi_tangent).normalize# TODO: Reverse vector if Transformation is flipped.
+    # Mathematically, mirroring an object should flip its faces inside out
+    # (winding order of vertices, cross product of tangents and cotangents).
+    # However SketchUp compensates for this. So does this library.
+    Transformation.flipped?(transformation) ? normal.reverse : normal
   end
 
 end
