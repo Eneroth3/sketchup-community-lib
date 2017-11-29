@@ -2,13 +2,13 @@ module ExampleExtensionModule
 module SUStandardLib
 module Transformation
 
-  # Compare if two transformations are the same using SketchUp's internal
+  # Check whether two transformations are the same using SketchUp's internal
   # precision for Point3d and Vector3d comparison.
   #
   # @param [Geom::Transformation]
   # @param [Geom::Transformation]
   # @return [Boolean]
-  def self.compare(transformation_a, transformation_b)
+  def self.same(transformation_a, transformation_b)
     xaxis(transformation_a) == xaxis(transformation_b) &&
     yaxis(transformation_a) == yaxis(transformation_b) &&
     zaxis(transformation_a) == zaxis(transformation_b) &&

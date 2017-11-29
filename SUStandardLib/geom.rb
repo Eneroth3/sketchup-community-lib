@@ -2,6 +2,17 @@ module ExampleExtensionModule
 module SUStandardLib
 module Geom
 
+  # Check whether two planes are the same.
+  #
+  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @returns [Boolean]
+  def self.same_plane?(plane_a, plane_b)
+    # REVIEW: Should true be returned for planes with opposite orientation?
+    plane_point(plane_a).on_plane?(plane_b) &&
+    plane_parallel?(plane_a, plane_b)
+  end
+
   # Determine the unit normal vector for a plane.
   #
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
@@ -11,6 +22,15 @@ module Geom
     a, b, c, _ = plane
 
     ::Geom::Vector3d.new(a, b, c).normalize
+  end
+
+  # Check whether two planes are plane parallel.
+  #
+  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @returns [Boolean]
+  def self.plane_parallel?(plane_a, plane_b)
+    plane_normal(plane_a).parallel?(plane_normal(plane_b))
   end
 
   # Find arbitrary point on plane.
