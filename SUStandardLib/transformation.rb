@@ -1,4 +1,3 @@
-module ExampleExtensionModule
 module SUStandardLib
 module Transformation
 
@@ -93,6 +92,5 @@ module Transformation
     ::Geom::Vector3d.new(transformation.to_a.values_at(8..10))
   end
 
-end
 end
 end

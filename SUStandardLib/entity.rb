@@ -1,4 +1,3 @@
-module ExampleExtensionModule
 module SUStandardLib
 module Entity
 
@@ -35,6 +34,5 @@ module Entity
     end
   end
 
-end
 end
 end

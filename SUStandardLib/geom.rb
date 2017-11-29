@@ -1,4 +1,3 @@
-module ExampleExtensionModule
 module SUStandardLib
 module Geom
 
@@ -57,6 +56,5 @@ module Geom
     ]
   end
 
-end
 end
 end

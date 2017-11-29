@@ -1,4 +1,3 @@
-module ExampleExtensionModule
 module SUStandardLib
 module Vector3d
 
@@ -20,7 +19,8 @@ module Vector3d
 
   # Transform vector as a normal, i.e. transform the plane vector is
   # perpendicular to and return the new normal of that plane. For non-uniform
-  # Transformations this result differs from directly transforming the vector.
+  # Transformations this result typically differs from directly transforming the
+  # vector.
   #
   # @param [Geom::Vector3d)]
   # @param [Geom::Transformation]
@@ -39,6 +39,5 @@ module Vector3d
     Transformation.flipped?(transformation) ? normal.reverse : normal
   end
 
-end
 end
 end

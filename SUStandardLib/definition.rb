@@ -1,4 +1,3 @@
-module ExampleExtensionModule
 module SUStandardLib
 module ComponentDefinition
 
@@ -50,6 +49,5 @@ module ComponentDefinition
     nil
   end
 
-end
 end
 end

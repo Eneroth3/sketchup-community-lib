@@ -5,7 +5,6 @@
 #   License: MIT
 #
 #-------------------------------------------------------------------------------
-module ExampleExtensionModule
 module SUStandardLib
 
   Dir.glob(File.join(File.dirname(__FILE__), "*.rb")).each do |path|
@@ -13,5 +12,4 @@ module SUStandardLib
     require path
   end
 
-end
 end
