@@ -1,26 +1,51 @@
-# SketchUp Standard Library
+# SketchUp Standard Library (Beta)
 
 ## WIP
 
-This project is at a very early stage and not even the project outlines have been fully defined yet. Read at your own risk :P ! Beware of internet jokes and smileys :O !
+This project is at a very early stage and not these project outlines should be seen as a draft.
 
 ## Intent/Scope
 
-The purpose of this library is to fill in gaps of missing features in the SketchUp Ruby API. This was intended as a running text, not a list, but since I'm not sure myself yet of the purpose of this projects here's a lits for ya:
+The purpose of this library is to:
 
-- Not having each developer re-inventing the wheel.
-- Long term (no new fancy front end frameworks that are obsolete next Tuesday).
-- Generic utility stuff/Not too specific. If you code solid operators or mimic SketchUp's own face shading, please publish that as a separate library instead.
+* prevent developers from reinventing the wheel,
+* being long-lived (no fancy front-end web frameworks that are obsolete next Tuesday, please) and
+* encourage community members to share knowledge and have fun together!
+
+This should be achieved by:
+* simplicity,
+* generality and
+* consistency.
+
+This library should be easy to grasp and use for new developers, while still being useful for advanced developers.
+
+If you have found a way to mimic SketchUp's native [face shading](https://github.com/Eneroth3/FaceShader), created [your own solid operations](https://github.com/Eneroth3/Eneroth-Solid-Tools) or creates some other rather specific functionality that is probably better suited as a separate library, but could be dependent on this one.
+
+### Supported SU versions
+
+This is not yet decided. However ancient versions should NOT be supported at the cost of code readability. For instance the &:-idiom must be supported (SU 2014+).
 
 ## Installation
 
-1. Copy the library (SUStandardLib/) into your extension's directory, e.g. to "my_extension/lib/SUStandardLib".
-2. Wrap in your extension's namespace by replacing "ExampleExtensionModule", e.g. with "MyExtension".
-3. Load the library's loader file from your own extension, e.g. by adding `require(File.join(File.dirname(__FILE__)), "lib", "SUStandardLib", "loader.rb")` inside your main extension file (a file inside "my_extension/").
+The library is designed to be placed in the directory of each extension using it. For simplicity's sake it is not intended to be a standalone extension or in other ways shared between extensions.
+
+For now installation is manual (but could be scripted).
+
+1. Copy the library directory (SUStandardLib/) into your extension's directory (e.g. to "my_extension/lib/SUStandardLib/).
+2. Wrap the content of each file with the namespace of your extension.
+3. Load the library's loader file from your plugin, e.g. by adding `require(File.join(File.dirname(__FILE__)), "lib", "SUStandardLib", "loader.rb")` inside your main extension file (a file inside "my_extension/").
 
 ## Contribute
 
 1. Read and understand Intent/Scope.
-2. Do stuff
+2. Maybe fork, edit and make a Pull Request, I dunno how this typically work.
 3. ????
 4. Profit!
+
+Guidelines:
+* ~~Follow~~ *Obey(!)* the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide).
+* If a method could have been a class instance method its first argument must be the object that would have been self. For instance `Point.between?(point, boundary_a, boundary_b)` should have the point being checked first, not between the other arguments. Code consistency is more important than non-general logic reasoning.
+* KISS (keep it simple, stupid).
+* Comments should tell why the code does what it does, never what it does. That should be obvious from the code itself.
+* Document with YARD.
+* Consistency! Consistency! Consistency!

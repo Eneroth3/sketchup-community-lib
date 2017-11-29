@@ -12,6 +12,8 @@ module Entity
       raise TypeError, "wrong argument type. Expected Sketchup::Drawingelement. #{entity.class} was supplied."
     end
 
+    # This code throws syntax error in SU 6 on Win. That is however not a
+    # supported version.
     recursive = lambda do |entity, current_path = [], all_paths = []|
       current_path.unshift(entity)
       if entity.parent.is_a?(Sketchup::Model)
