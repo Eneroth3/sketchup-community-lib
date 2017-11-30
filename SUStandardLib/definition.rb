@@ -2,7 +2,7 @@ module SUStandardLib
 module ComponentDefinition
 
   # Get definition used by given instance.
-  # For Versions before SU 2015 there was no Group#definition method.
+  #   For Versions before SU 2015 there was no Group#definition method.
   #
   # @param [Sketchup::ComponentInstance, Sketchup::Group, Sketchup::Image]
   # @returns [Sketchup::ComponentDefinition]

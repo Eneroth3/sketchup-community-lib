@@ -18,9 +18,9 @@ module Vector3d
   end
 
   # Transform vector as a normal, i.e. transform the plane vector is
-  # perpendicular to and return the new normal of that plane. For non-uniform
-  # Transformations this result typically differs from directly transforming the
-  # vector.
+  #   perpendicular to and return the new normal of that plane. For non-uniform
+  #   Transformations this result typically differs from directly transforming
+  #   the vector.
   #
   # @param [Geom::Vector3d)]
   # @param [Geom::Transformation]
