@@ -1,7 +1,62 @@
+# Loosely based on the following rubocop configurations:
+# https://gist.github.com/jhass/a5ae80d87f18e53e7b56
+# https://gist.github.com/thomthom/5a08b248ef786cf60ee9e6c3398e21f1
+
 require: rubocop-sketchup
 
 AllCops:
-  DisabledByDefault: true
+  DisplayCopNames: true
+
+# This cop catches methods that assigns many variables, even if the complexity
+# is low and readability is high.
+Metrics/AbcSize:
+  Enabled: false
+
+# Short lines are in general good for readability but splitting up one
+# expression into multiple lines can be less readable. Aim for 80 chars but
+# allow 120.
+Metrics/LineLength:
+  Max: 120
+
+# Aim for 10 lines and less in each methods but accept slightly longer ones.
+Metrics/MethodLength:
+  Max: 20
+
+Layout/IndentArray:
+  EnforcedStyle: consistent
+
+# The modules containing methods should have wrapping empty lines to increase
+# readability. The first method has the same relation to the module as all
+# following methods and should therefore have the same outer wrapping empty
+# lines.
+#
+# However the modules that only wrap one single module should not have empty
+# wrapping lines. Writing  "module ParentModule::ChildModule" wouldn't work
+# as methods in one module needs to be able to access the other modules and
+# their methods.
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+# A module that merely wraps another module doesn't have to be indented.
+Layout/IndentationWidth:
+  IgnoredPatterns:
+    - '^\s*module'
+
+# Single quotes being faster is hardly measurable and only affects parse time.
+# Enforcing double quotes reduces the times where you need to change them
+# when introducing an interpolation. Use single quotes only if their semantics
+# are needed.
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# No need for a doc-block for each class/module.
+Style/Documentation:
+  Enabled: false
+
+# Conflict too often with Metric/LineLength.
+# https://github.com/bbatsov/rubocop/issues/1332#issuecomment-277503854
+Style/GuardClause:
+  Enabled: false
 
 SketchupDeprecations:
   Enabled: true

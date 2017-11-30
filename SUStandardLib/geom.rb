@@ -41,7 +41,7 @@ module Geom
   def self.same_plane?(plane_a, plane_b)
     # REVIEW: Should true be returned for planes with opposite orientation?
     plane_point(plane_a).on_plane?(plane_b) &&
-    plane_parallel?(plane_a, plane_b)
+      plane_parallel?(plane_a, plane_b)
   end
 
   # Transform plane.

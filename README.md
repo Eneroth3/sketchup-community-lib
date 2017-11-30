@@ -45,8 +45,8 @@ For now installation is manual (but could be scripted).
 4. Profit!
 
 Guidelines:
-* ~~Follow~~ *Obey(!)* the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide).
-* If a method could have been a class instance method its first argument must be the object that would have been self. For instance `Point.between?(point, boundary_a, boundary_b)` should have the point being checked first, not between the other arguments. Code consistency is more important than non-general logic reasoning.
+* Follow the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide), with the modifications defined by .rubocop.yml.
+* If a method could have been a class instance method its first argument must be the object that would have been self. For instance `Point.between?(point, boundary_a, boundary_b)` should have the point being checked first, not between the other arguments. Code consistency is more important than non-generalizable reasoning.
 * KISS (keep it simple, stupid).
 * Comments should tell why the code does what it does, never what it does. That should be obvious from the code itself.
 * Document with YARD.

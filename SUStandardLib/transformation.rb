@@ -14,7 +14,12 @@ module Transformation
   # @example Create scaled and skewed transformation and apply to selected instance
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUStandardLib::Transformation.create_from_axes(ORIGIN, Geom::Vector3d.new(2, 0.3, 0.3), Geom::Vector3d.new(0.3, 2, 0.3), Geom::Vector3d.new(0.3, 0.3, 2))
+  #   e.transformation = SUStandardLib::Transformation.create_from_axes(
+  #     ORIGIN,
+  #     Geom::Vector3d.new(2, 0.3, 0.3),
+  #     Geom::Vector3d.new(0.3, 2, 0.3),
+  #     Geom::Vector3d.new(0.3, 0.3, 2)
+  #   )
   #
   # @raise [ArgumentError] if any of the provided axes are parallel.
   #
@@ -63,7 +68,9 @@ module Transformation
   # @example Mimic Context Menu > Reset Scale
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUStandardLib::Transformation.reset_scale(SUStandardLib::Transformation.reset_skew(e.transformation, false))
+  #   e.transformation = SUStandardLib::Transformation.reset_scale(
+  #     SUStandardLib::Transformation.reset_skew(e.transformation, false)
+  #   )
   #   # Note that native Reset Scale also resets skew, not just scale.
   #
   # @return [Geom::transformation]
@@ -126,9 +133,9 @@ module Transformation
   # @return [Boolean]
   def self.same?(transformation_a, transformation_b)
     xaxis(transformation_a) == xaxis(transformation_b) &&
-    yaxis(transformation_a) == yaxis(transformation_b) &&
-    zaxis(transformation_a) == zaxis(transformation_b) &&
-    transformation_a.origin == transformation_b.origin
+      yaxis(transformation_a) == yaxis(transformation_b) &&
+      zaxis(transformation_a) == zaxis(transformation_b) &&
+      transformation_a.origin == transformation_b.origin
   end
 
   # Compute the area scale factor of transformation at specific plane.
