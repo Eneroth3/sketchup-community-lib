@@ -1,0 +1,20 @@
+require: rubocop-sketchup
+
+AllCops:
+  DisabledByDefault: true
+
+SketchupDeprecations:
+  Enabled: true
+
+SketchupPerformance:
+  Enabled: true
+
+SketchupRequirements:
+  Enabled: true
+
+SketchupSuggestions:
+  Enabled: true
+
+# FileStructure checks don't apply as this isn't an Extension but a library.
+SketchupRequirements/FileStructure:
+  Enabled: false

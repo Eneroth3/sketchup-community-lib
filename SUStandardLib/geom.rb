@@ -7,7 +7,7 @@ module Geom
   # @return [Geom::Vector3d]
   def self.plane_normal(plane)
     return plane[1].normalize if plane.size == 2
-    a, b, c, _ = plane
+    a, b, c = plane
 
     ::Geom::Vector3d.new(a, b, c).normalize
   end

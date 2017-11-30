@@ -14,12 +14,12 @@ module Entity
 
     # This code throws syntax error in SU 6 on Win. That is however not a
     # supported version.
-    recursive = lambda do |entity, current_path = [], all_paths = []|
-      current_path.unshift(entity)
-      if entity.parent.is_a?(Sketchup::Model)
+    recursive = lambda do |e, current_path = [], all_paths = []|
+      current_path.unshift(e)
+      if e.parent.is_a?(Sketchup::Model)
         all_paths << current_path
       else
-        entity.parent.instances.each do |instance|
+        e.parent.instances.each do |instance|
           recursive.call(instance, current_path.dup, all_paths)
         end
       end

@@ -7,8 +7,12 @@
 #-------------------------------------------------------------------------------
 module SUStandardLib
 
-  Dir.glob(File.join(File.dirname(__FILE__), "*.rb")).each do |path|
-    next if path == __FILE__
+  current_path = __FILE__.dup
+  if current_path.respond_to?(:force_encoding)
+    current_path.force_encoding("UTF-8")
+  end
+  Dir.glob(File.join(File.dirname(current_path), "*.rb")).each do |path|
+    next if path == current_path
     require path
   end
 
