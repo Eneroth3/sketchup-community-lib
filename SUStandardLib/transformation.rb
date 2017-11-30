@@ -1,6 +1,37 @@
 module SUStandardLib
 module Transformation
 
+  # Create transformation from origin point and axes vectors.
+  #   Unlike native +Geom::Transformation.axes+ this method does not make axes
+  #   orthogonal or normalize their length but uses them as they are, allowing
+  #   for scaled and skewed transformations.
+  #
+  # @param [Geom::Point3d]
+  # @param [Geom::Vector3d]
+  # @param [Geom::Vector3d]
+  # @param [Geom::Vector3d]
+  #
+  # @example Create scaled and skewed transformation and apply to selected instance
+  #   # Select a group or component and run:
+  #   e = Sketchup.active_model.selection.first
+  #   e.transformation = SUStandardLib::Transformation.create_from_axes(ORIGIN, Geom::Vector3d.new(2, 0.3, 0.3), Geom::Vector3d.new(0.3, 2, 0.3), Geom::Vector3d.new(0.3, 0.3, 2))
+  #
+  # @raise [ArgumentError] if any of the provided axes are parallel.
+  #
+  # @return [Geom::Transformation]
+  def self.create_from_axes(origin, xaxis, yaxis, zaxis)
+    if xaxis.parallel?(yaxis) || yaxis.parallel?(zaxis) || zaxis.parallel?(xaxis)
+      raise ArgumentError, "Axes must not be parallel."
+    end
+
+    ::Geom::Transformation.new([
+      xaxis.x,  xaxis.y,  xaxis.z,  0,
+      yaxis.x,  yaxis.y,  yaxis.z,  0,
+      zaxis.x,  zaxis.y,  zaxis.z,  0,
+      origin.x, origin.y, origin.z, 1
+    ])
+  end
+
   # Calculate determinant of 3X3 matrix.
   #
   # @param [Geom::Transformation]
@@ -23,6 +54,68 @@ module Transformation
   # @return [Boolean]
   def self.identity?(transformation)
     compare(transformation, IDENTITY)
+  end
+
+  # Create non-scaling transformation based on a transformation.
+  #
+  # @param [Geom::Transformation]
+  #
+  # @example Mimic Context Menu > Reset Scale
+  #   # Select a skewed group or component and run:
+  #   e = Sketchup.active_model.selection.first
+  #   e.transformation = SUStandardLib::Transformation.reset_scale(SUStandardLib::Transformation.reset_skew(e.transformation, false))
+  #   # Note that native Reset Scale also resets skew, not just scale.
+  #
+  # @return [Geom::transformation]
+  def self.reset_scale(transformation)
+    # FIXME: Native reset scale behaves differently when Transformation is flipped.
+    create_from_axes(
+      transformation.origin,
+      xaxis(transformation).normalize,
+      yaxis(transformation).normalize,
+      zaxis(transformation).normalize
+    )
+  end
+
+  # Create a orthogonal transformation based on a transformation.
+  #
+  # @param [Geom::Transformation]
+  # @param [Boolean] preserve_determinant_value
+  #   If true the determinant value of the transformation, and thus the volume
+  #   of an object transformed with it, is preserved. If false lengths along
+  #   axes are preserved (the behavior of SketchUp's native Context Menu >
+  #   Reset Skew).
+  #
+  # @example Mimic Context Menu > Reset Skew
+  #   # Select a skewed group or component and run:
+  #   e = Sketchup.active_model.selection.first
+  #   e.transformation = SUStandardLib::Transformation.reset_skew(e.transformation, false)
+  #
+  # @example Reset skewing while retaining volume
+  #   # Select a skewed group or component and run:
+  #   e = Sketchup.active_model.selection.first
+  #   e.transformation = SUStandardLib::Transformation.reset_skew(e.transformation, true)
+  #
+  # @return [Geom::Transformation]
+  def self.reset_skew(transformation, preserve_determinant_value = false)
+    xaxis = xaxis(transformation)
+    yaxis = yaxis(transformation)
+    zaxis = zaxis(transformation)
+
+    new_yaxis = xaxis.normalize * yaxis * xaxis.normalize
+    new_zaxis = new_yaxis.normalize * (xaxis.normalize * zaxis * xaxis.normalize) * new_yaxis.normalize
+
+    unless preserve_determinant_value
+      new_yaxis.length = yaxis.length
+      new_zaxis.length = zaxis.length
+    end
+
+    create_from_axes(
+      transformation.origin,
+      xaxis,
+      new_yaxis,
+      new_zaxis
+    )
   end
 
   # Check whether two transformations are the same using SketchUp's internal
