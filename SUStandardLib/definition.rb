@@ -5,7 +5,7 @@ module ComponentDefinition
   #   For Versions before SU 2015 there was no Group#definition method.
   #
   # @param [Sketchup::ComponentInstance, Sketchup::Group, Sketchup::Image]
-  # @returns [Sketchup::ComponentDefinition]
+  # @return [Sketchup::ComponentDefinition]
   def self.from_instance(instance)
     if instance.is_a?(Sketchup::ComponentInstance)
       instance.definition

@@ -16,7 +16,7 @@ module Geom
   #
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @returns [Boolean]
+  # @return [Boolean]
   def self.plane_parallel?(plane_a, plane_b)
     plane_normal(plane_a).parallel?(plane_normal(plane_b))
   end
@@ -37,7 +37,7 @@ module Geom
   #
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @returns [Boolean]
+  # @return [Boolean]
   def self.same_plane?(plane_a, plane_b)
     # REVIEW: Should true be returned for planes with opposite orientation?
     plane_point(plane_a).on_plane?(plane_b) &&

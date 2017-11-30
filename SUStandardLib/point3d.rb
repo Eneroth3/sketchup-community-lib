@@ -12,7 +12,7 @@ module Point3d
   #   SUStandardLib::Point3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
   #   # => true
   #
-  # @returns [Boolean]
+  # @return [Boolean]
   def self.between?(point, boundary_a, boundary_b, include_boundaries = true)
     return false unless point.on_line?([boundary_a, boundary_b])
     vector_a = point - boundary_a
@@ -26,7 +26,7 @@ module Point3d
   #
   # @param [Geom::point3d]
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @returns [Boolean]
+  # @return [Boolean]
   def self.front_of_plane?(point, plane)
     (point - point.project_to_plane(plane)) % Geom::plane_normal(plane) > 0
   end
