@@ -1,17 +1,6 @@
 module SUStandardLib
 module Geom
 
-  # Check whether two planes are the same.
-  #
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @returns [Boolean]
-  def self.same_plane?(plane_a, plane_b)
-    # REVIEW: Should true be returned for planes with opposite orientation?
-    plane_point(plane_a).on_plane?(plane_b) &&
-    plane_parallel?(plane_a, plane_b)
-  end
-
   # Determine the unit normal vector for a plane.
   #
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
@@ -42,6 +31,17 @@ module Geom
     v = ::Geom::Vector3d.new(a, b, c)
 
     ORIGIN.offset(v, -d)
+  end
+
+  # Check whether two planes are the same.
+  #
+  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @returns [Boolean]
+  def self.same_plane?(plane_a, plane_b)
+    # REVIEW: Should true be returned for planes with opposite orientation?
+    plane_point(plane_a).on_plane?(plane_b) &&
+    plane_parallel?(plane_a, plane_b)
   end
 
   # Transform plane.

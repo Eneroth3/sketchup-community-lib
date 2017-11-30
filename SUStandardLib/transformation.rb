@@ -1,19 +1,6 @@
 module SUStandardLib
 module Transformation
 
-  # Check whether two transformations are the same using SketchUp's internal
-  #   precision for Point3d and Vector3d comparison.
-  #
-  # @param [Geom::Transformation]
-  # @param [Geom::Transformation]
-  # @return [Boolean]
-  def self.same(transformation_a, transformation_b)
-    xaxis(transformation_a) == xaxis(transformation_b) &&
-    yaxis(transformation_a) == yaxis(transformation_b) &&
-    zaxis(transformation_a) == zaxis(transformation_b) &&
-    transformation_a.origin == transformation_b.origin
-  end
-
   # Calculate determinant of 3X3 matrix.
   #
   # @param [Geom::Transformation]
@@ -36,6 +23,19 @@ module Transformation
   # @return [Boolean]
   def self.identity?(transformation)
     compare(transformation, IDENTITY)
+  end
+
+  # Check whether two transformations are the same using SketchUp's internal
+  #   precision for Point3d and Vector3d comparison.
+  #
+  # @param [Geom::Transformation]
+  # @param [Geom::Transformation]
+  # @return [Boolean]
+  def self.same?(transformation_a, transformation_b)
+    xaxis(transformation_a) == xaxis(transformation_b) &&
+    yaxis(transformation_a) == yaxis(transformation_b) &&
+    zaxis(transformation_a) == zaxis(transformation_b) &&
+    transformation_a.origin == transformation_b.origin
   end
 
   # Compute the area scale factor of transformation at specific plane.
