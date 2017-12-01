@@ -1,4 +1,6 @@
 module SUStandardLib
+
+# Namespace for methods related to SketchUp's native Geom::Point3d class.
 module Point3d
 
   # Check whether point lies between two other points.

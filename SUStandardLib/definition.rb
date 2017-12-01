@@ -1,4 +1,6 @@
 module SUStandardLib
+
+# Namespace for methods related to SketchUp's native ComponentDefinition class.
 module ComponentDefinition
 
   # Get definition used by given instance.

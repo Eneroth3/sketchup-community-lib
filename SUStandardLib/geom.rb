@@ -1,4 +1,6 @@
 module SUStandardLib
+
+# Namespace for methods related to SketchUp's native Geom module.
 module Geom
 
   # Determine the unit normal vector for a plane.

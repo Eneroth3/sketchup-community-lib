@@ -1,4 +1,6 @@
 module SUStandardLib
+
+# Namespace for methods related to SketchUp's native Geom::Transformation class.
 module Transformation
 
   # Create transformation from origin point and axes vectors.

@@ -1,4 +1,6 @@
 module SUStandardLib
+
+# Namespace for methods related to SketchUp's native Entity classes.
 module Entity
 
   # List all InstancePaths pointing towards this Entity throughout the model.

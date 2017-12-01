@@ -1,4 +1,6 @@
 module SUStandardLib
+
+# Namespace for methods related to SketchUp's native Geom::Vector3d class.
 module Vector3d
 
   # Find an arbitrary unit vector that is not parallel to given vector.
