@@ -31,7 +31,7 @@ module Point3d
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   # @return [Boolean]
   def self.front_of_plane?(point, plane)
-    (point - point.project_to_plane(plane)) % Geom.plane_normal(plane) > 0
+    (point - point.project_to_plane(plane)) % Plane.normal(plane) > 0
   end
 
 end

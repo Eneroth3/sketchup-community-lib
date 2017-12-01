@@ -147,7 +147,7 @@ module Transformation
   # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   # @return [Float]
   def self.scale_factor_in_plane(transformation, plane)
-    normal = Geom.plane_normal(plane)
+    normal = Plane.normal(plane)
     tangent = Vector.arbitrary_perpendicular_vector(normal)
     bi_tangent = tangent * normal
 
