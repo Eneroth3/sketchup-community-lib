@@ -1,4 +1,5 @@
 module SUStandardLib
+module Geom
 
 # Namespace for methods related to SketchUp's native Geom::Vector3d class.
 module Vector3d
@@ -41,5 +42,6 @@ module Vector3d
     Transformation.flipped?(transformation) ? normal.reverse : normal
   end
 
+end
 end
 end

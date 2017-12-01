@@ -1,4 +1,5 @@
 module SUStandardLib
+module Geom
 
 # Namespace for methods related to SketchUp's native Geom::Point3d class.
 module Point3d
@@ -11,7 +12,7 @@ module Point3d
   # @param [Boolean] include_boundaries
   #
   # @example
-  #   SUStandardLib::Point3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
+  #   SUStandardLib::Geom::Point3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
   #   # => true
   #
   # @return [Boolean]
@@ -33,5 +34,6 @@ module Point3d
     (point - point.project_to_plane(plane)) % Geom.plane_normal(plane) > 0
   end
 
+end
 end
 end
