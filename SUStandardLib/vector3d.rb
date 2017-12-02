@@ -20,12 +20,12 @@ module Vector3d
     (vector * arbitrary_non_parallel_vector(vector)).normalize
   end
 
-  # Transform vector as a normal, i.e. transform the plane vector is
-  #   perpendicular to and return the new normal of that plane. For non-uniform
-  #   Transformations this result typically differs from directly transforming
-  #   the vector.
+  # Transform vector as a normal, i.e. transform the plane the vector is
+  # perpendicular to and return the new normal of that plane. For non-uniform
+  # Transformations this result typically differs from directly transforming
+  # the vector.
   #
-  # @param [Geom::Vector3d)]
+  # @param [Geom::Vector3d]
   # @param [Geom::Transformation]
   # @return [Geom::Vector3d]
   def self.transform_as_normal(normal, transformation)

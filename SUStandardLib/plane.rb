@@ -3,8 +3,8 @@ module Geom
 
 # Namespace for methods related to planes.
 #
-#   A plane can either be defined as an Array of a point and vector or as an
-#   Array of 4 Floats defining the coefficients of the plane equation.
+# A plane can either be defined as an Array of a point and vector or as an
+# Array of 4 Floats defining the coefficients of the plane equation.
 module Plane
 
   # Determine the unit normal vector for a plane.

@@ -5,9 +5,9 @@ module Geom
 module Transformation
 
   # Create transformation from origin point and axes vectors.
-  #   Unlike native +Geom::Transformation.axes+ this method does not make axes
-  #   orthogonal or normalize their length but uses them as they are, allowing
-  #   for scaled and skewed transformations.
+  # Unlike native +Geom::Transformation.axes+ this method does not make the axes
+  # orthogonal or normalize them but uses them as they are, allowing for scaled
+  # and skewed transformations.
   #
   # @param [Geom::Point3d]
   # @param [Geom::Vector3d]
@@ -129,7 +129,7 @@ module Transformation
   end
 
   # Check whether two transformations are the same using SketchUp's internal
-  #   precision for Point3d and Vector3d comparison.
+  # precision for Point3d and Vector3d comparison.
   #
   # @param [Geom::Transformation]
   # @param [Geom::Transformation]
@@ -166,8 +166,8 @@ module Transformation
   end
 
   # Get the X axis vector of a transformation. Unlike native
-  #   Transformation#xaxis this method returns a vector which length resembles
-  #   scaling instead of a unit vector.
+  # Transformation#xaxis this method returns a vector which length resembles
+  # scaling instead of a unit vector.
   #
   # @param [Geom::Transformation]
   # @return [Geom::Vector3d]
@@ -176,8 +176,8 @@ module Transformation
   end
 
   # Get the Y axis vector of a transformation. Unlike native
-  #   Transformation#yaxis this method returns a vector which length resembles
-  #   scaling instead of a unit vector.
+  # Transformation#yaxis this method returns a vector which length resembles
+  # scaling instead of a unit vector.
   #
   # @param [Geom::Transformation]
   # @return [Geom::Vector3d]
@@ -186,8 +186,8 @@ module Transformation
   end
 
   # Get the Z axis vector of a transformation. Unlike native
-  #   Transformation#zaxis this method returns a vector which length resembles
-  #   scaling instead of a unit vector.
+  # Transformation#zaxis this method returns a vector which length resembles
+  # scaling instead of a unit vector.
   #
   # @param [Geom::Transformation]
   # @return [Geom::Vector3d]
