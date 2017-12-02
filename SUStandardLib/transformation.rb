@@ -27,9 +27,13 @@ module Transformation
   #   )
   #
   # @raise [ArgumentError] if any of the provided axes are parallel.
+  # @raise [ArgumentError] if any of the vectors are zero length.
   #
   # @return [::Geom::Transformation]
   def self.create_from_axes(origin, xaxis, yaxis, zaxis)
+    unless [xaxis, yaxis, zaxis].all?(&:valid?)
+      raise ArgumentError, "Axes must not be zero length."
+    end
     if xaxis.parallel?(yaxis) || yaxis.parallel?(zaxis) || zaxis.parallel?(xaxis)
       raise ArgumentError, "Axes must not be parallel."
     end
