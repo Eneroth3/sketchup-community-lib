@@ -5,7 +5,8 @@ module Entity
 
   # List all InstancePaths pointing towards this Entity throughout the model.
   #
-  # @param [Sketchup::Drawingelement]
+  # @param entity [Sketchup::Drawingelement]
+  #
   # @return [Array<Array>, Array<Sketchup::InstancePath>]
   #   In SketchUp 2017+ InstancePath objects are returned. In earlier versions
   #   the corresponding Arrays are returned.

@@ -1,10 +1,7 @@
-#-------------------------------------------------------------------------------
+# Library containing methods commonly used along with the SketchUp Ruby API.
 #
-#    Author: Julia Christina Eneroth (eneroth3@gmail.com)
-# Copyright: Copyright (c) 2017
-#   License: MIT
-#
-#-------------------------------------------------------------------------------
+# For simplicity's sake the library doesn't refine the API's existing modules
+# and classes but defines its own corresponding modules.
 module SUStandardLib
 
   current_path = __FILE__.dup

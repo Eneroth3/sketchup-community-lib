@@ -49,10 +49,6 @@ Layout/IndentationWidth:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-# No need for a doc-block for each class/module.
-Style/Documentation:
-  Enabled: false
-
 # Conflict too often with Metric/LineLength.
 # https://github.com/bbatsov/rubocop/issues/1332#issuecomment-277503854
 Style/GuardClause:

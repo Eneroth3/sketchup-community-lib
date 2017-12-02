@@ -9,8 +9,9 @@ module Plane
 
   # Determine the unit normal vector for a plane.
   #
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @return [Geom::Vector3d]
+  # @param plane [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  #
+  # @return [::Geom::Vector3d]
   def self.normal(plane)
     return plane[1].normalize if plane.size == 2
     a, b, c = plane
@@ -20,8 +21,9 @@ module Plane
 
   # Check whether two planes are plane parallel.
   #
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane_a [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane_b [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  #
   # @return [Boolean]
   def self.parallel?(plane_a, plane_b)
     normal(plane_a).parallel?(normal(plane_b))
@@ -29,8 +31,9 @@ module Plane
 
   # Find arbitrary point on plane.
   #
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @return [Geom::Point3d]
+  # @param plane [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  #
+  # @return [::Geom::Point3d]
   def self.point(plane)
     return plane[0].normalize if plane.size == 2
     a, b, c, d = plane
@@ -41,8 +44,9 @@ module Plane
 
   # Check whether two planes are the same.
   #
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane_a [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane_b [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  #
   # @return [Boolean]
   def self.same?(plane_a, plane_b)
     # REVIEW: Should true be returned for planes with opposite orientation?
@@ -52,8 +56,9 @@ module Plane
 
   # Transform plane.
   #
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @param [Geom::Transformation]
+  # @param plane [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param transformation [::Geom::Transformation]
+  #
   # @return [Array(Geom::Point3d, Geom::Vector3d)]
   def self.transform_plane(plane, transformation)
     [

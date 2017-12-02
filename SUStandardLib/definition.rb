@@ -6,7 +6,8 @@ module ComponentDefinition
   # Get definition used by given instance.
   # For Versions before SU 2015 there was no Group#definition method.
   #
-  # @param [Sketchup::ComponentInstance, Sketchup::Group, Sketchup::Image]
+  # @param instance [Sketchup::ComponentInstance, Sketchup::Group, Sketchup::Image]
+  #
   # @return [Sketchup::ComponentDefinition]
   def self.from_instance(instance)
     if instance.is_a?(Sketchup::ComponentInstance)
@@ -18,11 +19,11 @@ module ComponentDefinition
 
   # Define new axes placement for component.
   #
-  # @param [Sketchup::ComponentDefiniton]
-  # @param [Geom::Transformation] axes
+  # @param definition [Sketchup::ComponentDefiniton]
+  # @param new_axes [::Geom::Transformation]
   #   A Transformation object defining the new axes placement relative to old
   #   axes.
-  # @param [Boolean] adjust_instances
+  # @param adjust_instances [Boolean]
   #   Whether all instances should have their transformations updated to
   #   compensate for the change in component axes. If +true+ the geometry will
   #   stay in the same place (in model space), if +false+ the instances' axes

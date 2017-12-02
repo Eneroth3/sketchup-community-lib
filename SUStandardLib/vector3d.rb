@@ -6,16 +6,18 @@ module Vector3d
 
   # Find an arbitrary unit vector that is not parallel to given vector.
   #
-  # @param [Geom::Vector3d]
-  # @return [Geom::Vector3d]
+  # @param vector [::Geom::Vector3d]
+  #
+  # @return [::Geom::Vector3d]
   def self.arbitrary_non_parallel_vector(vector)
     vector.parallel?(Z_AXIS) ? X_AXIS : Z_AXIS
   end
 
   # Find an arbitrary unit vector that is perpendicular to given vector.
   #
-  # @param [Geom::Vector3d]
-  # @return [Geom::Vector3d]
+  # @param vector [::Geom::Vector3d]
+  #
+  # @return [::Geom::Vector3d]
   def self.arbitrary_perpendicular_vector(vector)
     (vector * arbitrary_non_parallel_vector(vector)).normalize
   end
@@ -25,9 +27,21 @@ module Vector3d
   # Transformations this result typically differs from directly transforming
   # the vector.
   #
-  # @param [Geom::Vector3d]
-  # @param [Geom::Transformation]
-  # @return [Geom::Vector3d]
+  # @param normal [::Geom::Vector3d]
+  # @param transformation [::Geom::Transformation]
+  #
+  # @example
+  #   skewed_tr = SUStandardLib::Geom::Transformation.create_from_axes(
+  #     ORIGIN,
+  #     Geom::Vector3d.new(1, 0.3, 0),
+  #     Geom::Vector3d.new(0, 1, 0),
+  #     Geom::Vector3d.new(0, 0, 1)
+  #   )
+  #   normal = Y_AXIS
+  #   puts "Transformed as vector: #{normal.transform(skewed_tr)}"
+  #   puts "Transformed as normal: #{SUStandardLib::Geom::Vector3d.transform_as_normal(normal, skewed_tr)}"
+  #
+  # @return [::Geom::Vector3d]
   def self.transform_as_normal(normal, transformation)
     tangent = arbitrary_perpendicular_vector(normal)
     bi_tangent = normal * tangent

@@ -5,7 +5,8 @@ module Geom
 
   # Compute area of an array of points representing a polygon.
   #
-  # @param [Array<Geom::Point3d>]
+  # @param points [Array<::Geom::Point3d>]
+  #
   # @return [Float]
   def self.polygon_area(points)
     origin = points.first
@@ -27,7 +28,7 @@ module Geom
 
   # Find normal vector from an array of points representing a polygon.
   #
-  # @param [Array<Geom::Point3d>]
+  # @param points [Array<::Geom::Point3d>]
   #
   # @example Find normal of a face
   #   # Select a face and run:
@@ -35,7 +36,7 @@ module Geom
   #   points = face.vertices.map(&:position)
   #   normal = SUStandardLib::Geom.polygon_normal(points)
   #
-  # @return [Geom::Vector3d]
+  # @return [::Geom::Vector3d]
   def self.polygon_normal(points)
     normal = ::Geom::Vector3d.new
     points.each_with_index do |pt0, i|

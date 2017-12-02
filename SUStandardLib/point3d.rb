@@ -6,10 +6,10 @@ module Point3d
 
   # Check whether point lies between two other points.
   #
-  # @param [Geom::point3d] point
-  # @param [Geom::point3d] boundary_a
-  # @param [Geom::point3d] boundary_b
-  # @param [Boolean] include_boundaries
+  # @param point [::Geom::Point3d]
+  # @param boundary_a [::Geom::Point3d]
+  # @param boundary_b [::Geom::Point3d]
+  # @param include_boundaries [Boolean]
   #
   # @example
   #   SUStandardLib::Geom::Point3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
@@ -25,11 +25,13 @@ module Point3d
     !vector_a.samedirection?(vector_b)
   end
 
-  # Check whether point is in front of a plane.
+  # Check whether point is in front of or behind a plane.
   #
-  # @param [Geom::point3d]
-  # @param [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param point [::Geom::Point3d]
+  # @param plane [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  #
   # @return [Boolean]
+  #   +true+ when in front, +false+ when behind or on plane.
   def self.front_of_plane?(point, plane)
     (point - point.project_to_plane(plane)) % Plane.normal(plane) > 0
   end
