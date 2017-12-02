@@ -32,8 +32,10 @@ module ComponentDefinition
   # @example Move component's axes to its its bottom front left corner
   #   # Select a component in the model and run:
   #   definition = Sketchup.active_model.selection.first.definition
-  #   bottom_front_left_pt = definition.bounds.min
-  #   new_axes = Geom::Transformation.new(bottom_front_left_pt)
+  #   bottom_front_left = definition.bounds.corner(0)
+  #   bottom_back_right = definition.bounds.corner(3)
+  #   bottom_center = Geom.linear_combination(0.5, bottom_front_left, 0.5, bottom_back_right)
+  #   new_axes = Geom::Transformation.new(bottom_center)
   #   SUStandardLib::ComponentDefinition.place_axes(definition, new_axes)
   #
   # @return [Void]
