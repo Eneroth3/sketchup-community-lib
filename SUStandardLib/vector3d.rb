@@ -31,6 +31,7 @@ module Vector3d
   # @param transformation [::Geom::Transformation]
   #
   # @example
+  #   # transform_as_normal vs native #transform
   #   skewed_tr = SUStandardLib::Geom::Transformation.create_from_axes(
   #     ORIGIN,
   #     Geom::Vector3d.new(1, 0.3, 0),

@@ -15,7 +15,8 @@ module Transformation
   # @param yaxis [::Geom::Vector3d]
   # @param zaxis [::Geom::Vector3d]
   #
-  # @example Skew selected group/component
+  # @example
+  #   # Skew selected group/component
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
   #   e.transformation = SUStandardLib::Geom::Transformation.create_from_axes(
@@ -72,7 +73,8 @@ module Transformation
   #
   # @param transformation [::Geom::Transformation]
   #
-  # @example Mimic Context Menu > Reset Scale
+  # @example
+  #   # Mimic Context Menu > Reset Scale
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
   #   e.transformation = SUStandardLib::Geom::Transformation.reset_scale(
@@ -100,12 +102,13 @@ module Transformation
   #   axes are preserved (the behavior of SketchUp's native Context Menu >
   #   Reset Skew).
   #
-  # @example Mimic Context Menu > Reset Skew
+  # @example
+  #   # Mimic Context Menu > Reset Skew
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
   #   e.transformation = SUStandardLib::Geom::Transformation.reset_skew(e.transformation, false)
   #
-  # @example Reset skewing while retaining volume
+  #   # Reset Skewing While Retaining Volume
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
   #   e.transformation = SUStandardLib::Geom::Transformation.reset_skew(e.transformation, true)

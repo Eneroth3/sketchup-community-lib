@@ -30,7 +30,8 @@ module Geom
   #
   # @param points [Array<::Geom::Point3d>]
   #
-  # @example Find normal of a face
+  # @example
+  #   # Find Normal of a Face
   #   # Select a face and run:
   #   face = Sketchup.active_model.selection.first
   #   points = face.vertices.map(&:position)

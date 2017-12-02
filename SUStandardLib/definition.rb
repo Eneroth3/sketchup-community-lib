@@ -29,7 +29,8 @@ module ComponentDefinition
   #   stay in the same place (in model space), if +false+ the instances' axes
   #   will stay in the same place.
   #
-  # @example Move component's axes to its its bottom front left corner
+  # @example
+  #   # Move Axes to BoundongBox Bottom Center
   #   # Select a component in the model and run:
   #   definition = Sketchup.active_model.selection.first.definition
   #   bottom_front_left = definition.bounds.corner(0)
