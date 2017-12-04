@@ -88,10 +88,11 @@ module Transformation
   #
   # @return [::Geom::Transformation]
   def self.reset_scale(transformation)
-    # FIXME: Native reset scale behaves differently when Transformation is flipped.
+    x_axis = xaxis(transformation).normalize
+    x_axis.reverse! if flipped?(transformation)
     create_from_axes(
       transformation.origin,
-      xaxis(transformation).normalize,
+      x_axis,
       yaxis(transformation).normalize,
       zaxis(transformation).normalize
     )
