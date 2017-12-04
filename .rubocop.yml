@@ -69,3 +69,6 @@ SketchupSuggestions:
 # FileStructure checks don't apply as this isn't an Extension but a library.
 SketchupRequirements/FileStructure:
   Enabled: false
+# Not an Extension.
+SketchupRequirements/SketchupExtension:
+  Enabled: false
