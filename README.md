@@ -26,7 +26,7 @@ If you have found a way to mimic SketchUp's native [face shading](https://github
 
 ### Supported SU versions
 
-This is not yet decided. However ancient versions should NOT be supported at the cost of code readability. For instance the &:-idiom must be supported (Ruby 1.8.7+ / SU 2014+).
+This is not yet decided. However ancient versions should NOT be supported at the cost of code readability. For instance the &:-idiom must be supported (SU 2014+, Ruby 2.0.0+).
 
 ## Installation
 

@@ -180,6 +180,17 @@ module Transformation
     !xaxis(transformation).parallel?(yaxis(transformation) * zaxis(transformation))
   end
 
+  # Get the X axis vector of a transformation. Unlike native
+  # Transformation#xaxis this method returns a vector which length resembles
+  # scaling instead of a unit vector.
+  #
+  # @param transformation [::Geom::Transformation]
+  #
+  # @return [::Geom::Vector3d]
+  def self.xaxis(transformation)
+    ::Geom::Vector3d.new(transformation.to_a.values_at(0..2))
+  end
+
   # Get X scale factor for transformation.
   #
   # @param transformation [::Geom::Transformation]
@@ -194,15 +205,15 @@ module Transformation
     xaxis(transformation).length * transformation.to_a[15]
   end
 
-  # Get the X axis vector of a transformation. Unlike native
-  # Transformation#xaxis this method returns a vector which length resembles
+  # Get the Y axis vector of a transformation. Unlike native
+  # Transformation#yaxis this method returns a vector which length resembles
   # scaling instead of a unit vector.
   #
   # @param transformation [::Geom::Transformation]
   #
   # @return [::Geom::Vector3d]
-  def self.xaxis(transformation)
-    ::Geom::Vector3d.new(transformation.to_a.values_at(0..2))
+  def self.yaxis(transformation)
+    ::Geom::Vector3d.new(transformation.to_a.values_at(4..6))
   end
 
   # Get Y scale factor for transformation.
@@ -219,15 +230,15 @@ module Transformation
     yaxis(transformation).length * transformation.to_a[15]
   end
 
-  # Get the Y axis vector of a transformation. Unlike native
-  # Transformation#yaxis this method returns a vector which length resembles
+  # Get the Z axis vector of a transformation. Unlike native
+  # Transformation#zaxis this method returns a vector which length resembles
   # scaling instead of a unit vector.
   #
   # @param transformation [::Geom::Transformation]
   #
   # @return [::Geom::Vector3d]
-  def self.yaxis(transformation)
-    ::Geom::Vector3d.new(transformation.to_a.values_at(4..6))
+  def self.zaxis(transformation)
+    ::Geom::Vector3d.new(transformation.to_a.values_at(8..10))
   end
 
   # Get Z scale factor for transformation.
@@ -242,17 +253,6 @@ module Transformation
   # @return [Float]
   def self.zscale(transformation)
     zaxis(transformation).length * transformation.to_a[15]
-  end
-
-  # Get the Z axis vector of a transformation. Unlike native
-  # Transformation#zaxis this method returns a vector which length resembles
-  # scaling instead of a unit vector.
-  #
-  # @param transformation [::Geom::Transformation]
-  #
-  # @return [::Geom::Vector3d]
-  def self.zaxis(transformation)
-    ::Geom::Vector3d.new(transformation.to_a.values_at(8..10))
   end
 
 end
