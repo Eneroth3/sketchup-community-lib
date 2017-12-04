@@ -179,6 +179,20 @@ module Transformation
     !xaxis(transformation).parallel?(yaxis(transformation) * zaxis(transformation))
   end
 
+  # Get X scale factor for transformation.
+  #
+  # @param transformation [::Geom::Transformation]
+  #
+  # @example
+  #   # Select a group or component and run:
+  #   e = Sketchup.active_model.selection.first
+  #   SUCommunityLib::Geom::Transformation.xscale(e.transformation)
+  #
+  # @return [Float]
+  def self.xscale(transformation)
+    xaxis(transformation).length * transformation.to_a[15]
+  end
+
   # Get the X axis vector of a transformation. Unlike native
   # Transformation#xaxis this method returns a vector which length resembles
   # scaling instead of a unit vector.
@@ -190,6 +204,20 @@ module Transformation
     ::Geom::Vector3d.new(transformation.to_a.values_at(0..2))
   end
 
+  # Get Y scale factor for transformation.
+  #
+  # @param transformation [::Geom::Transformation]
+  #
+  # @example
+  #   # Select a group or component and run:
+  #   e = Sketchup.active_model.selection.first
+  #   SUCommunityLib::Geom::Transformation.yscale(e.transformation)
+  #
+  # @return [Float]
+  def self.yscale(transformation)
+    yaxis(transformation).length * transformation.to_a[15]
+  end
+
   # Get the Y axis vector of a transformation. Unlike native
   # Transformation#yaxis this method returns a vector which length resembles
   # scaling instead of a unit vector.
@@ -199,6 +227,20 @@ module Transformation
   # @return [::Geom::Vector3d]
   def self.yaxis(transformation)
     ::Geom::Vector3d.new(transformation.to_a.values_at(4..6))
+  end
+
+  # Get Z scale factor for transformation.
+  #
+  # @param transformation [::Geom::Transformation]
+  #
+  # @example
+  #   # Select a group or component and run:
+  #   e = Sketchup.active_model.selection.first
+  #   SUCommunityLib::Geom::Transformation.zscale(e.transformation)
+  #
+  # @return [Float]
+  def self.zscale(transformation)
+    zaxis(transformation).length * transformation.to_a[15]
   end
 
   # Get the Z axis vector of a transformation. Unlike native
