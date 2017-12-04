@@ -1,4 +1,4 @@
-module SUStandardLib
+module SUCommunityLib
 module Geom
 
 # Namespace for methods related to SketchUp's native Geom::Point3d class.
@@ -12,7 +12,7 @@ module Point3d
   # @param include_boundaries [Boolean]
   #
   # @example
-  #   SUStandardLib::Geom::Point3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
+  #   SUCommunityLib::Geom::Point3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
   #   # => true
   #
   # @return [Boolean]

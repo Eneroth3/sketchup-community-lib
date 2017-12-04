@@ -1,4 +1,4 @@
-module SUStandardLib
+module SUCommunityLib
 module Geom
 
 # Namespace for methods related to planes.

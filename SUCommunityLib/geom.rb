@@ -1,4 +1,4 @@
-module SUStandardLib
+module SUCommunityLib
 
 # Namespace for methods related to SketchUp's native Geom module.
 module Geom
@@ -35,7 +35,7 @@ module Geom
   #   # Select a face and run:
   #   face = Sketchup.active_model.selection.first
   #   points = face.vertices.map(&:position)
-  #   normal = SUStandardLib::Geom.polygon_normal(points)
+  #   normal = SUCommunityLib::Geom.polygon_normal(points)
   #
   # @return [::Geom::Vector3d]
   def self.polygon_normal(points)

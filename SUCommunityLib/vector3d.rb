@@ -1,4 +1,4 @@
-module SUStandardLib
+module SUCommunityLib
 module Geom
 
 # Namespace for methods related to SketchUp's native Geom::Vector3d class.
@@ -32,7 +32,7 @@ module Vector3d
   #
   # @example
   #   # transform_as_normal vs native #transform
-  #   skewed_tr = SUStandardLib::Geom::Transformation.create_from_axes(
+  #   skewed_tr = SUCommunityLib::Geom::Transformation.create_from_axes(
   #     ORIGIN,
   #     Geom::Vector3d.new(1, 0.3, 0),
   #     Geom::Vector3d.new(0, 1, 0),
@@ -40,7 +40,7 @@ module Vector3d
   #   )
   #   normal = Y_AXIS
   #   puts "Transformed as vector: #{normal.transform(skewed_tr)}"
-  #   puts "Transformed as normal: #{SUStandardLib::Geom::Vector3d.transform_as_normal(normal, skewed_tr)}"
+  #   puts "Transformed as normal: #{SUCommunityLib::Geom::Vector3d.transform_as_normal(normal, skewed_tr)}"
   #
   # @return [::Geom::Vector3d]
   def self.transform_as_normal(normal, transformation)

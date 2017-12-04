@@ -1,4 +1,4 @@
-module SUStandardLib
+module SUCommunityLib
 
 # Namespace for methods related to SketchUp's native UI module.
 module UI
@@ -12,14 +12,14 @@ module UI
   #
   # @example
   #   # Reveal file containing source code for this method.
-  #   path = SUStandardLib::UI.method(:reveal).source_location.first
-  #   SUStandardLib::UI.reveal(path)
+  #   path = SUCommunityLib::UI.method(:reveal).source_location.first
+  #   SUCommunityLib::UI.reveal(path)
   #
   #   # Open directory containing source code for this method (without selecting
   #   # the file).
-  #   path = SUStandardLib::UI.method(:reveal).source_location.first
+  #   path = SUCommunityLib::UI.method(:reveal).source_location.first
   #   dir_path = File.dirname(path)
-  #   SUStandardLib::UI.reveal(dir_path)
+  #   SUCommunityLib::UI.reveal(dir_path)
   #
   #
   # @return [Void]

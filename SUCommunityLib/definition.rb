@@ -1,4 +1,4 @@
-module SUStandardLib
+module SUCommunityLib
 
 # Namespace for methods related to SketchUp's native ComponentDefinition class.
 module ComponentDefinition
@@ -37,7 +37,7 @@ module ComponentDefinition
   #   bottom_back_right = definition.bounds.corner(3)
   #   bottom_center = Geom.linear_combination(0.5, bottom_front_left, 0.5, bottom_back_right)
   #   new_axes = Geom::Transformation.new(bottom_center)
-  #   SUStandardLib::ComponentDefinition.place_axes(definition, new_axes)
+  #   SUCommunityLib::ComponentDefinition.place_axes(definition, new_axes)
   #
   # @return [Void]
   def self.place_axes(definition, new_axes, adjust_instances = true)

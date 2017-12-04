@@ -1,4 +1,4 @@
-module SUStandardLib
+module SUCommunityLib
 
 # Namespace for methods related to SketchUp's native Entity classes.
 module Entity

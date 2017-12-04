@@ -1,4 +1,4 @@
-# SketchUp Standard Library (Beta)
+# SketchUp Community Library (Beta)
 
 ## WIP
 
@@ -34,7 +34,7 @@ The library is designed to be placed in the directory of each extension using it
 
 For now installation is manual (but could be scripted).
 
-1. Copy the library directory (SUStandardLib/) into your extension's directory (e.g. to "my_extension/lib/SUStandardLib/).
+1. Copy the library directory (SUCommunityLib/) into your extension's directory (e.g. to "my_extension/lib/SUCommunityLib/).
 2. Wrap the content of each file with the namespace of your extension.
 3. Load the library's loader file from your plugin.
 
@@ -42,7 +42,7 @@ Example of loading script inside an extension's directory:
 
     dir_path = __dir__
     dir_path.force_encoding("UTF-8") if dir_path.respond_to?(:force_encoding)
-    require(File.join(dir_path, "lib", "SUStandardLib", "loader.rb"))
+    require(File.join(dir_path, "lib", "SUCommunityLib", "loader.rb"))
 
 ## Contribute
 

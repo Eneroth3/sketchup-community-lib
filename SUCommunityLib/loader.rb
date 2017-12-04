@@ -2,7 +2,7 @@
 #
 # For simplicity's sake the library doesn't refine the API's existing modules
 # and classes but defines its own corresponding modules.
-module SUStandardLib
+module SUCommunityLib
 
   current_path = __FILE__.dup
   if current_path.respond_to?(:force_encoding)

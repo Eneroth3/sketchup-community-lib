@@ -1,4 +1,4 @@
-module SUStandardLib
+module SUCommunityLib
 module Geom
 
 # Namespace for methods related to SketchUp's native Geom::Transformation class.
@@ -19,7 +19,7 @@ module Transformation
   #   # Skew selected group/component
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUStandardLib::Geom::Transformation.create_from_axes(
+  #   e.transformation = SUCommunityLib::Geom::Transformation.create_from_axes(
   #     ORIGIN,
   #     Geom::Vector3d.new(2, 0.3, 0.3),
   #     Geom::Vector3d.new(0.3, 2, 0.3),
@@ -81,8 +81,8 @@ module Transformation
   #   # Mimic Context Menu > Reset Scale
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUStandardLib::Geom::Transformation.reset_scale(
-  #     SUStandardLib::Geom::Transformation.reset_skew(e.transformation, false)
+  #   e.transformation = SUCommunityLib::Geom::Transformation.reset_scale(
+  #     SUCommunityLib::Geom::Transformation.reset_skew(e.transformation, false)
   #   )
   #   # Note that native Reset Scale also resets skew, not just scale.
   #
@@ -110,12 +110,12 @@ module Transformation
   #   # Mimic Context Menu > Reset Skew
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUStandardLib::Geom::Transformation.reset_skew(e.transformation, false)
+  #   e.transformation = SUCommunityLib::Geom::Transformation.reset_skew(e.transformation, false)
   #
   #   # Reset Skewing While Retaining Volume
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUStandardLib::Geom::Transformation.reset_skew(e.transformation, true)
+  #   e.transformation = SUCommunityLib::Geom::Transformation.reset_skew(e.transformation, true)
   #
   # @return [::Geom::Transformation]
   def self.reset_skew(transformation, preserve_determinant_value = false)
