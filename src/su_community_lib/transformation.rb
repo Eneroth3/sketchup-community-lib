@@ -16,7 +16,7 @@ module Transformation
   # @param zaxis [::Geom::Vector3d]
   #
   # @example
-  #   # Skew selected group/component
+  #   # Skew Selected Group/Component
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
   #   e.transformation = SUCommunityLib::Geom::Transformation.create_from_axes(
@@ -44,6 +44,48 @@ module Transformation
       zaxis.x,  zaxis.y,  zaxis.z,  0,
       origin.x, origin.y, origin.z, 1
     ])
+  end
+
+  # Calculate extrinsic, chained XYZ rotation angles for transformation.
+  #
+  # Scaling, shearing and translation are all ignored.
+  #
+  # Note that rotations are not communicative, meaning the order they are
+  # applied in matters.
+  #
+  # @param transformation [::Geom::Transformation]
+  #
+  # @example
+  #   # Compose and Decompose Angle Based Transformation
+  #   x_angle = -14.degrees
+  #   y_angle = 7.degrees
+  #   z_angle = 45.degrees
+  #   transformation = Geom::Transformation.rotation(ORIGIN, Z_AXIS, z_angle) *
+  #     Geom::Transformation.rotation(ORIGIN, Y_AXIS, y_angle) *
+  #     Geom::Transformation.rotation(ORIGIN, X_AXIS, x_angle)
+  #   angles = SUCommunityLib::Geom::Transformation.euler_angles(transformation)
+  #   angles.map(&:radians)
+  #
+  #   # Determine Angles of Selected Group/Component
+  #   # Select a group or component and run:
+  #   e = Sketchup.active_model.selection.first
+  #   SUCommunityLib::Geom::Transformation.euler_angles(e.transformation).map(&:radians)
+  #
+  # @return [Array(Float, Float, Float)] X rotation, Y rotation and Z Rotation
+  #   in radians.
+  def self.euler_angles(transformation)
+    a = SUCommunityLib::Geom::Transformation.reset_scale(
+      SUCommunityLib::Geom::Transformation.reset_skew(transformation, false)
+    ).to_a
+
+    x = Math.atan2(a[6], a[10])
+    c2 = Math.sqrt(a[0]**2 + a[1]**2)
+    y = Math.atan2(-a[2], c2)
+    s = Math.sin(x)
+    c1 = Math.cos(x)
+    z = Math.atan2(s * a[8] - c1 * a[4], c1 * a[5] - s * a[9])
+
+    [x, y, z]
   end
 
   # Calculate determinant of 3X3 matrix.
@@ -138,6 +180,39 @@ module Transformation
       new_yaxis,
       new_zaxis
     )
+  end
+
+  # Get X rotation in radians.
+  #
+  # See euler_angles for details on order of rotations.
+  #
+  # @param transformation [::Geom::Transformation]
+  #
+  # @return [Float]
+  def self.rotx(transformation)
+    euler_angles(transformation)[0]
+  end
+
+  # Get Y rotation in radians.
+  #
+  # See euler_angles for details on order of rotations.
+  #
+  # @param transformation [::Geom::Transformation]
+  #
+  # @return [Float]
+  def self.roty(transformation)
+    euler_angles(transformation)[1]
+  end
+
+  # Get Z rotation in radians.
+  #
+  # See euler_angles for details on order of rotations.
+  #
+  # @param transformation [::Geom::Transformation]
+  #
+  # @return [Float]
+  def self.rotz(transformation)
+    euler_angles(transformation)[2]
   end
 
   # Check whether two transformations are the same using SketchUp's internal
