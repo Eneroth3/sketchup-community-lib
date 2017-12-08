@@ -3,7 +3,7 @@ module LGeom
 
 # Namespace for methods related to planes.
 #
-# A plane can either be defined as an Array of a point and vector or as an
+# A plane can either be expressed as an Array of a point and vector or as an
 # Array of 4 Floats defining the coefficients of the plane equation.
 module LPlane
 
@@ -19,7 +19,7 @@ module LPlane
     Geom::Vector3d.new(a, b, c).normalize
   end
 
-  # Check whether two planes are plane parallel.
+  # Test if two planes are plane parallel.
   #
   # @param plane_a [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   # @param plane_b [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
@@ -42,7 +42,7 @@ module LPlane
     ORIGIN.offset(v, -d)
   end
 
-  # Check whether two planes are the same.
+  # Test if two planes are the same.
   #
   # @param plane_a [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   # @param plane_b [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]

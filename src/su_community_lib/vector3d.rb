@@ -22,16 +22,18 @@ module LVector3d
     (vector * arbitrary_non_parallel_vector(vector)).normalize
   end
 
-  # Transform vector as a normal, i.e. transform the plane the vector is
-  # perpendicular to and return the new normal of that plane. For non-uniform
-  # Transformations this result typically differs from directly transforming
-  # the vector.
+  # Return new vector transformed as a normal.
+  #
+  # Transforming a normal vector as a ordinary vector can give it a faulty
+  # direction if the transformation is non-uniformly scaled or sheared. This
+  # method assures the vector stays perpendicular to its perpendicular plane
+  # when a transformation is applied.
   #
   # @param normal [Geom::Vector3d]
   # @param transformation [Geom::Transformation]
   #
   # @example
-  #   # transform_as_normal vs native #transform
+  #   # transform_as_normal VS native #transform
   #   skewed_tr = SUCommunityLib::LGeom::LTransformation.create_from_axes(
   #     ORIGIN,
   #     Geom::Vector3d.new(1, 0.3, 0),

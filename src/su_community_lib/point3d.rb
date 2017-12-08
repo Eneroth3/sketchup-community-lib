@@ -4,7 +4,7 @@ module LGeom
 # Namespace for methods related to SketchUp's native Geom::Point3d class.
 module LPoint3d
 
-  # Check whether point lies between two other points.
+  # Test if point lies between two other points.
   #
   # @param point [Geom::Point3d]
   # @param boundary_a [Geom::Point3d]
@@ -25,7 +25,7 @@ module LPoint3d
     !vector_a.samedirection?(vector_b)
   end
 
-  # Check whether point is in front of or behind a plane.
+  # Test if point is in front of or behind a plane.
   #
   # @param point [Geom::Point3d]
   # @param plane [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]

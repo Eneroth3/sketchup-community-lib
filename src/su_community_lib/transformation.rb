@@ -95,7 +95,7 @@ module LTransformation
     xaxis(transformation) % (yaxis(transformation) * zaxis(transformation))
   end
 
-  # Check whether transformation is flipped (mirrored).
+  # Test if transformation is flipped (mirrored).
   #
   # @param transformation [Geom::Transformation]
   #
@@ -104,7 +104,9 @@ module LTransformation
     determinant(transformation) < 0
   end
 
-  # Check whether a transformation is the identity transformation.
+  # Test if a transformation is the identity transformation.
+  #
+  # Before SketchUp 2018 the native +Transformation#identity?+ method was broken.
   #
   # @param transformation [Geom::Transformation]
   #
@@ -113,7 +115,7 @@ module LTransformation
     same?(transformation, IDENTITY)
   end
 
-  # Create non-scaling transformation based on a transformation.
+  # Return new transformation with scaling removed.
   #
   # @param transformation [Geom::Transformation]
   #
@@ -138,7 +140,7 @@ module LTransformation
     )
   end
 
-  # Create a orthogonal transformation based on a transformation.
+  # Return new transformation with skewing removed (made orthogonal).
   #
   # @param transformation [Geom::Transformation]
   # @param preserve_determinant_value [Boolean]
@@ -213,7 +215,7 @@ module LTransformation
     euler_angles(transformation)[2]
   end
 
-  # Check whether two transformations are the same using SketchUp's internal
+  # Test if two transformations are the same using SketchUp's internal
   # precision for Point3d and Vector3d comparison.
   #
   # @param transformation_a [Geom::Transformation]
@@ -232,6 +234,12 @@ module LTransformation
   # @param transformation [Geom::Transformation]
   # @param plane [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   #
+  # @example
+  #   tr = Geom::Transformation.scaling(ORIGIN, 2, 1, 1)
+  #   plane = [ORIGIN, Z_AXIS]
+  #   SUCommunityLib::LGeom::LTransformation.scale_factor_in_plane(tr, plane)
+  #
+  #
   # @return [Float]
   def self.scale_factor_in_plane(transformation, plane)
     normal = LPlane.normal(plane)
@@ -244,7 +252,7 @@ module LTransformation
     (tangent * bi_tangent).length.to_f
   end
 
-  # Check whether transformation is skewed (not orthogonal).
+  # Test if transformation is skewed (not orthogonal).
   #
   # @param transformation [Geom::Transformation]
   #
@@ -253,9 +261,11 @@ module LTransformation
     !xaxis(transformation).parallel?(yaxis(transformation) * zaxis(transformation))
   end
 
-  # Get the X axis vector of a transformation. Unlike native
-  # Transformation#xaxis this method returns a vector which length resembles
-  # scaling instead of a unit vector.
+  # Get the X axis vector of a transformation.
+  #
+  #
+  # Unlike native +Transformation#xaxis+ the length of this axis isn't normalized
+  # but resamples the scaling along the axis.
   #
   # @param transformation [Geom::Transformation]
   #
@@ -264,7 +274,7 @@ module LTransformation
     Geom::Vector3d.new(transformation.to_a.values_at(0..2))
   end
 
-  # Get X scale factor for transformation.
+  # Get X scale factor fora  transformation.
   #
   # @param transformation [Geom::Transformation]
   #
@@ -278,9 +288,11 @@ module LTransformation
     xaxis(transformation).length * transformation.to_a[15]
   end
 
-  # Get the Y axis vector of a transformation. Unlike native
-  # Transformation#yaxis this method returns a vector which length resembles
-  # scaling instead of a unit vector.
+  # Get the Y axis vector of a transformation.
+  #
+  #
+  # Unlike native +Transformation#yaxis+ the length of this axis isn't normalized
+  # but resamples the scaling along the axis.
   #
   # @param transformation [Geom::Transformation]
   #
@@ -289,7 +301,7 @@ module LTransformation
     Geom::Vector3d.new(transformation.to_a.values_at(4..6))
   end
 
-  # Get Y scale factor for transformation.
+  # Get Y scale factor fora  transformation.
   #
   # @param transformation [Geom::Transformation]
   #
@@ -303,10 +315,10 @@ module LTransformation
     yaxis(transformation).length * transformation.to_a[15]
   end
 
-  # Get the Z axis vector of a transformation. Unlike native
-  # Transformation#zaxis this method returns a vector which length resembles
-  # scaling instead of a unit vector.
+  # Get the Z axis vector of a transformation.
   #
+  # Unlike native +Transformation#zaxis+ the length of this axis isn't normalized
+  # but resamples the scaling along the axis.
   # @param transformation [Geom::Transformation]
   #
   # @return [Geom::Vector3d]
@@ -314,7 +326,7 @@ module LTransformation
     Geom::Vector3d.new(transformation.to_a.values_at(8..10))
   end
 
-  # Get Z scale factor for transformation.
+  # Get Z scale factor for a transformation.
   #
   # @param transformation [Geom::Transformation]
   #

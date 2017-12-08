@@ -3,7 +3,7 @@ module SUCommunityLib
 # Namespace for methods related to SketchUp's native UI module.
 module LUI
 
-  # Open directory and select file if defined.
+  # Open directory and, if file is specified, select it.
   #
   # Commonly referred to in UIs as "Open File Location",
   # "Reveal in Finder/Explorer", "Show Containing Folder" and "Show in Folder".
