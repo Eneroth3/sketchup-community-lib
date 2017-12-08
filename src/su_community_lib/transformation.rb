@@ -124,12 +124,12 @@ module LTransformation
   #   # Note that native Reset Scale also resets skew, not just scale.
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_scale(
-  #     SUCommunityLib::LGeom::LTransformation.reset_skew(e.transformation, false)
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_scaling(
+  #     SUCommunityLib::LGeom::LTransformation.reset_shearing(e.transformation, false)
   #   )
   #
   # @return [Geom::Transformation]
-  def self.reset_scale(transformation)
+  def self.reset_scaling(transformation)
     x_axis = xaxis(transformation).normalize
     x_axis.reverse! if flipped?(transformation)
     create_from_axes(
@@ -140,7 +140,9 @@ module LTransformation
     )
   end
 
-  # Return new transformation with skewing removed (made orthogonal).
+  # Return new transformation with shearing removed (made orthogonal).
+  #
+  # Note that the SketchUp UI refers to shearing as skewing.
   #
   # @param transformation [Geom::Transformation]
   # @param preserve_determinant_value [Boolean]
@@ -153,15 +155,15 @@ module LTransformation
   #   # Mimic Context Menu > Reset Skew
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_skew(e.transformation, false)
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_shearing(e.transformation, false)
   #
   #   # Reset Skewing While Retaining Volume
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_skew(e.transformation, true)
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_shearing(e.transformation, true)
   #
   # @return [Geom::Transformation]
-  def self.reset_skew(transformation, preserve_determinant_value = false)
+  def self.reset_shearing(transformation, preserve_determinant_value = false)
     xaxis = xaxis(transformation)
     yaxis = yaxis(transformation)
     zaxis = zaxis(transformation)
