@@ -235,7 +235,7 @@ module LTransformation
   # @return [Float]
   def self.scale_factor_in_plane(transformation, plane)
     normal = LPlane.normal(plane)
-    tangent = LVector.arbitrary_perpendicular_vector(normal)
+    tangent = LVector3d.arbitrary_perpendicular_vector(normal)
     bi_tangent = tangent * normal
 
     tangent.transform!(transformation)
