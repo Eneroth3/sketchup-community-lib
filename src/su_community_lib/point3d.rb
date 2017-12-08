@@ -1,18 +1,18 @@
 module SUCommunityLib
-module Geom
+module LGeom
 
 # Namespace for methods related to SketchUp's native Geom::Point3d class.
-module Point3d
+module LPoint3d
 
   # Check whether point lies between two other points.
   #
-  # @param point [::Geom::Point3d]
-  # @param boundary_a [::Geom::Point3d]
-  # @param boundary_b [::Geom::Point3d]
+  # @param point [Geom::Point3d]
+  # @param boundary_a [Geom::Point3d]
+  # @param boundary_b [Geom::Point3d]
   # @param include_boundaries [Boolean]
   #
   # @example
-  #   SUCommunityLib::Geom::Point3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
+  #   SUCommunityLib::LGeom::LPoint3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
   #   # => true
   #
   # @return [Boolean]
@@ -27,13 +27,13 @@ module Point3d
 
   # Check whether point is in front of or behind a plane.
   #
-  # @param point [::Geom::Point3d]
-  # @param plane [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param point [Geom::Point3d]
+  # @param plane [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   #
   # @return [Boolean]
   #   +true+ when in front, +false+ when behind or on plane.
   def self.front_of_plane?(point, plane)
-    (point - point.project_to_plane(plane)) % Plane.normal(plane) > 0
+    (point - point.project_to_plane(plane)) % LPlane.normal(plane) > 0
   end
 
 end

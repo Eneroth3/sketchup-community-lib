@@ -31,7 +31,7 @@ module SUCommunityLib
     # Use zero timer hack to save calling command to console stack even though
     # it clears the console. Otherwise the user wont be able to use Up Arrow
     # to call the same command again.
-    ::UI.start_timer(0) { SKETCHUP_CONSOLE.clear } if clear_console
+    UI.start_timer(0) { SKETCHUP_CONSOLE.clear } if clear_console
 
     Sketchup.undo if undo
 

@@ -1,7 +1,7 @@
 module SUCommunityLib
 
 # Namespace for methods related to SketchUp's native Entity classes.
-module Entity
+module LEntity
 
   # List all InstancePaths pointing towards this Entity throughout the model.
   #

@@ -1,8 +1,8 @@
 module SUCommunityLib
-module Geom
+module LGeom
 
 # Namespace for methods related to SketchUp's native Geom::Transformation class.
-module Transformation
+module LTransformation
 
   # Create transformation from origin point and axes vectors.
   #
@@ -10,16 +10,16 @@ module Transformation
   # orthogonal or normalize them but uses them as they are, allowing for scaled
   # and skewed transformations.
   #
-  # @param origin [::Geom::Point3d]
-  # @param xaxis [::Geom::Vector3d]
-  # @param yaxis [::Geom::Vector3d]
-  # @param zaxis [::Geom::Vector3d]
+  # @param origin [Geom::Point3d]
+  # @param xaxis [Geom::Vector3d]
+  # @param yaxis [Geom::Vector3d]
+  # @param zaxis [Geom::Vector3d]
   #
   # @example
   #   # Skew Selected Group/Component
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::Geom::Transformation.create_from_axes(
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.create_from_axes(
   #     ORIGIN,
   #     Geom::Vector3d.new(2, 0.3, 0.3),
   #     Geom::Vector3d.new(0.3, 2, 0.3),
@@ -29,7 +29,7 @@ module Transformation
   # @raise [ArgumentError] if any of the provided axes are parallel.
   # @raise [ArgumentError] if any of the vectors are zero length.
   #
-  # @return [::Geom::Transformation]
+  # @return [Geom::Transformation]
   def self.create_from_axes(origin, xaxis, yaxis, zaxis)
     unless [xaxis, yaxis, zaxis].all?(&:valid?)
       raise ArgumentError, "Axes must not be zero length."
@@ -38,7 +38,7 @@ module Transformation
       raise ArgumentError, "Axes must not be parallel."
     end
 
-    ::Geom::Transformation.new([
+    Geom::Transformation.new([
       xaxis.x,  xaxis.y,  xaxis.z,  0,
       yaxis.x,  yaxis.y,  yaxis.z,  0,
       zaxis.x,  zaxis.y,  zaxis.z,  0,
@@ -53,7 +53,7 @@ module Transformation
   # Note that rotations are not communicative, meaning the order they are
   # applied in matters.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @example
   #   # Compose and Decompose Angle Based Transformation
@@ -63,20 +63,18 @@ module Transformation
   #   transformation = Geom::Transformation.rotation(ORIGIN, Z_AXIS, z_angle) *
   #     Geom::Transformation.rotation(ORIGIN, Y_AXIS, y_angle) *
   #     Geom::Transformation.rotation(ORIGIN, X_AXIS, x_angle)
-  #   angles = SUCommunityLib::Geom::Transformation.euler_angles(transformation)
+  #   angles = SUCommunityLib::LGeom::LTransformation.euler_angles(transformation)
   #   angles.map(&:radians)
   #
   #   # Determine Angles of Selected Group/Component
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   SUCommunityLib::Geom::Transformation.euler_angles(e.transformation).map(&:radians)
+  #   SUCommunityLib::LGeom::LTransformation.euler_angles(e.transformation).map(&:radians)
   #
   # @return [Array(Float, Float, Float)] X rotation, Y rotation and Z Rotation
   #   in radians.
   def self.euler_angles(transformation)
-    a = SUCommunityLib::Geom::Transformation.reset_scale(
-      SUCommunityLib::Geom::Transformation.reset_skew(transformation, false)
-    ).to_a
+    a = reset_scale(reset_skew(transformation, false)).to_a
 
     x = Math.atan2(a[6], a[10])
     c2 = Math.sqrt(a[0]**2 + a[1]**2)
@@ -90,7 +88,7 @@ module Transformation
 
   # Calculate determinant of 3X3 matrix.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @return [Float]
   def self.determinant(transformation)
@@ -99,7 +97,7 @@ module Transformation
 
   # Check whether transformation is flipped (mirrored).
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @return [Boolean]
   def self.flipped?(transformation)
@@ -108,7 +106,7 @@ module Transformation
 
   # Check whether a transformation is the identity transformation.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @return [Boolean]
   def self.identity?(transformation)
@@ -117,18 +115,18 @@ module Transformation
 
   # Create non-scaling transformation based on a transformation.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @example
   #   # Mimic Context Menu > Reset Scale
+  #   # Note that native Reset Scale also resets skew, not just scale.
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::Geom::Transformation.reset_scale(
-  #     SUCommunityLib::Geom::Transformation.reset_skew(e.transformation, false)
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_scale(
+  #     SUCommunityLib::LGeom::LTransformation.reset_skew(e.transformation, false)
   #   )
-  #   # Note that native Reset Scale also resets skew, not just scale.
   #
-  # @return [::Geom::Transformation]
+  # @return [Geom::Transformation]
   def self.reset_scale(transformation)
     x_axis = xaxis(transformation).normalize
     x_axis.reverse! if flipped?(transformation)
@@ -142,7 +140,7 @@ module Transformation
 
   # Create a orthogonal transformation based on a transformation.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   # @param preserve_determinant_value [Boolean]
   #   If +true+ the determinant value of the transformation, and thus the volume
   #   of an object transformed with it, is preserved. If +false+ lengths along
@@ -153,14 +151,14 @@ module Transformation
   #   # Mimic Context Menu > Reset Skew
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::Geom::Transformation.reset_skew(e.transformation, false)
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_skew(e.transformation, false)
   #
   #   # Reset Skewing While Retaining Volume
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::Geom::Transformation.reset_skew(e.transformation, true)
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_skew(e.transformation, true)
   #
-  # @return [::Geom::Transformation]
+  # @return [Geom::Transformation]
   def self.reset_skew(transformation, preserve_determinant_value = false)
     xaxis = xaxis(transformation)
     yaxis = yaxis(transformation)
@@ -186,7 +184,7 @@ module Transformation
   #
   # See euler_angles for details on order of rotations.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @return [Float]
   def self.rotx(transformation)
@@ -197,7 +195,7 @@ module Transformation
   #
   # See euler_angles for details on order of rotations.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @return [Float]
   def self.roty(transformation)
@@ -208,7 +206,7 @@ module Transformation
   #
   # See euler_angles for details on order of rotations.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @return [Float]
   def self.rotz(transformation)
@@ -218,8 +216,8 @@ module Transformation
   # Check whether two transformations are the same using SketchUp's internal
   # precision for Point3d and Vector3d comparison.
   #
-  # @param transformation_a [::Geom::Transformation]
-  # @param transformation_b [::Geom::Transformation]
+  # @param transformation_a [Geom::Transformation]
+  # @param transformation_b [Geom::Transformation]
   #
   # @return [Boolean]
   def self.same?(transformation_a, transformation_b)
@@ -231,13 +229,13 @@ module Transformation
 
   # Compute the area scale factor of transformation at specific plane.
   #
-  # @param transformation [::Geom::Transformation]
-  # @param plane [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param transformation [Geom::Transformation]
+  # @param plane [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   #
   # @return [Float]
   def self.scale_factor_in_plane(transformation, plane)
-    normal = Plane.normal(plane)
-    tangent = Vector.arbitrary_perpendicular_vector(normal)
+    normal = LPlane.normal(plane)
+    tangent = LVector.arbitrary_perpendicular_vector(normal)
     bi_tangent = tangent * normal
 
     tangent.transform!(transformation)
@@ -248,7 +246,7 @@ module Transformation
 
   # Check whether transformation is skewed (not orthogonal).
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @return [Boolean]
   def self.skewed?(transformation)
@@ -259,21 +257,21 @@ module Transformation
   # Transformation#xaxis this method returns a vector which length resembles
   # scaling instead of a unit vector.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
-  # @return [::Geom::Vector3d]
+  # @return [Geom::Vector3d]
   def self.xaxis(transformation)
-    ::Geom::Vector3d.new(transformation.to_a.values_at(0..2))
+    Geom::Vector3d.new(transformation.to_a.values_at(0..2))
   end
 
   # Get X scale factor for transformation.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @example
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   SUCommunityLib::Geom::Transformation.xscale(e.transformation)
+  #   SUCommunityLib::LGeom::LTransformation.xscale(e.transformation)
   #
   # @return [Float]
   def self.xscale(transformation)
@@ -284,21 +282,21 @@ module Transformation
   # Transformation#yaxis this method returns a vector which length resembles
   # scaling instead of a unit vector.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
-  # @return [::Geom::Vector3d]
+  # @return [Geom::Vector3d]
   def self.yaxis(transformation)
-    ::Geom::Vector3d.new(transformation.to_a.values_at(4..6))
+    Geom::Vector3d.new(transformation.to_a.values_at(4..6))
   end
 
   # Get Y scale factor for transformation.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @example
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   SUCommunityLib::Geom::Transformation.yscale(e.transformation)
+  #   SUCommunityLib::LGeom::LTransformation.yscale(e.transformation)
   #
   # @return [Float]
   def self.yscale(transformation)
@@ -309,21 +307,21 @@ module Transformation
   # Transformation#zaxis this method returns a vector which length resembles
   # scaling instead of a unit vector.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
-  # @return [::Geom::Vector3d]
+  # @return [Geom::Vector3d]
   def self.zaxis(transformation)
-    ::Geom::Vector3d.new(transformation.to_a.values_at(8..10))
+    Geom::Vector3d.new(transformation.to_a.values_at(8..10))
   end
 
   # Get Z scale factor for transformation.
   #
-  # @param transformation [::Geom::Transformation]
+  # @param transformation [Geom::Transformation]
   #
   # @example
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   SUCommunityLib::Geom::Transformation.zscale(e.transformation)
+  #   SUCommunityLib::LGeom::LTransformation.zscale(e.transformation)
   #
   # @return [Float]
   def self.zscale(transformation)
