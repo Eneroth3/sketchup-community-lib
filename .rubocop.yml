@@ -22,22 +22,24 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 20
 
+# Modules can be however long that is needed to fit all methods related to the
+# corresponding API Class/Method.
+Metrics/ModuleLength:
+  Enabled: false
+
 Layout/IndentArray:
   EnforcedStyle: consistent
 
-# The modules containing methods should have wrapping empty lines to increase
-# readability. The first method has the same relation to the module as all
-# following methods and should therefore have the same outer wrapping empty
-# lines.
+# Use wrapping empty lines in modules containing methods (the first and last
+# method should have the same spacing to the module as there are between
+# methods).
 #
-# However the modules that only wrap one single module should not have empty
-# wrapping lines. Writing  "module ParentModule::ChildModule" wouldn't work
-# as methods in one module needs to be able to access the other modules and
-# their methods.
+# Don't however use wrapping empty lines for a module that merely wraps another
+# module.
 Layout/EmptyLinesAroundModuleBody:
   Enabled: false
 
-# A module that merely wraps another module doesn't have to be indented.
+# A module that merely wraps another module shouldn't be indented.
 Layout/IndentationWidth:
   IgnoredPatterns:
     - '^\s*module'
@@ -69,6 +71,7 @@ SketchupSuggestions:
 # FileStructure checks don't apply as this isn't an Extension but a library.
 SketchupRequirements/FileStructure:
   Enabled: false
+
 # Not an Extension.
 SketchupRequirements/SketchupExtension:
   Enabled: false

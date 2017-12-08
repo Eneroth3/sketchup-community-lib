@@ -1,11 +1,15 @@
 module SUCommunityLib
 
 # Namespace for methods related to SketchUp's native Entity classes.
-module Entity
+module LEntity
 
   # List all InstancePaths pointing towards this Entity throughout the model.
   #
   # @param entity [Sketchup::Drawingelement]
+  #
+  # @example
+  #   # Select an Entity:
+  #   SUCommunityLib::LEntity.all_instance_paths(Sketchup.active_model.selection.first)
   #
   # @return [Array<Array>, Array<Sketchup::InstancePath>]
   #   In SketchUp 2017+ InstancePath objects are returned. In earlier versions

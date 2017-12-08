@@ -1,28 +1,28 @@
 module SUCommunityLib
-module Geom
+module LGeom
 
 # Namespace for methods related to planes.
 #
-# A plane can either be defined as an Array of a point and vector or as an
+# A plane can either be expressed as an Array of a point and vector or as an
 # Array of 4 Floats defining the coefficients of the plane equation.
-module Plane
+module LPlane
 
   # Determine the unit normal vector for a plane.
   #
-  # @param plane [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   #
-  # @return [::Geom::Vector3d]
+  # @return [Geom::Vector3d]
   def self.normal(plane)
     return plane[1].normalize if plane.size == 2
     a, b, c = plane
 
-    ::Geom::Vector3d.new(a, b, c).normalize
+    Geom::Vector3d.new(a, b, c).normalize
   end
 
-  # Check whether two planes are plane parallel.
+  # Test if two planes are plane parallel.
   #
-  # @param plane_a [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @param plane_b [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane_a [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane_b [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   #
   # @return [Boolean]
   def self.parallel?(plane_a, plane_b)
@@ -31,21 +31,21 @@ module Plane
 
   # Find arbitrary point on plane.
   #
-  # @param plane [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   #
-  # @return [::Geom::Point3d]
+  # @return [Geom::Point3d]
   def self.point(plane)
     return plane[0].normalize if plane.size == 2
     a, b, c, d = plane
-    v = ::Geom::Vector3d.new(a, b, c)
+    v = Geom::Vector3d.new(a, b, c)
 
     ORIGIN.offset(v, -d)
   end
 
-  # Check whether two planes are the same.
+  # Test if two planes are the same.
   #
-  # @param plane_a [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @param plane_b [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane_a [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param plane_b [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   #
   # @return [Boolean]
   def self.same?(plane_a, plane_b)
@@ -56,14 +56,14 @@ module Plane
 
   # Transform plane.
   #
-  # @param plane [Array(::Geom::Point3d, ::Geom::Vector3d), Array(Float, Float, Float, Float)]
-  # @param transformation [::Geom::Transformation]
+  # @param plane [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param transformation [Geom::Transformation]
   #
   # @return [Array(Geom::Point3d, Geom::Vector3d)]
   def self.transform_plane(plane, transformation)
     [
       point(plane).transform(transformation),
-      Vector3d.transform_as_normal(normal(plane), transformation)
+      LVector3d.transform_as_normal(normal(plane), transformation)
     ]
   end
 

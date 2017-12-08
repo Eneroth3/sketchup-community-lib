@@ -1,11 +1,11 @@
 module SUCommunityLib
 
 # Namespace for methods related to SketchUp's native Geom module.
-module Geom
+module LGeom
 
   # Compute area of an array of points representing a polygon.
   #
-  # @param points [Array<::Geom::Point3d>]
+  # @param points [Array<Geom::Point3d>]
   #
   # @return [Float]
   def self.polygon_area(points)
@@ -28,7 +28,7 @@ module Geom
 
   # Find normal vector from an array of points representing a polygon.
   #
-  # @param points [Array<::Geom::Point3d>]
+  # @param points [Array<Geom::Point3d>]
   #
   # @example
   #   # Find Normal of a Face
@@ -37,9 +37,9 @@ module Geom
   #   points = face.vertices.map(&:position)
   #   normal = SUCommunityLib::Geom.polygon_normal(points)
   #
-  # @return [::Geom::Vector3d]
+  # @return [Geom::Vector3d]
   def self.polygon_normal(points)
-    normal = ::Geom::Vector3d.new
+    normal = Geom::Vector3d.new
     points.each_with_index do |pt0, i|
       pt1 = points[i + 1] || points.first
       normal.x += (pt0.y - pt1.y) * (pt0.z + pt1.z)

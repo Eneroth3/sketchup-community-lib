@@ -1,7 +1,7 @@
 module SUCommunityLib
 
 # Namespace for methods related to SketchUp's native ComponentDefinition class.
-module ComponentDefinition
+module LComponentDefinition
 
   # Get definition used by given instance.
   # For Versions before SU 2015 there was no Group#definition method.
@@ -20,7 +20,7 @@ module ComponentDefinition
   # Define new axes placement for component.
   #
   # @param definition [Sketchup::ComponentDefiniton]
-  # @param new_axes [::Geom::Transformation]
+  # @param new_axes [Geom::Transformation]
   #   A Transformation object defining the new axes placement relative to old
   #   axes.
   # @param adjust_instances [Boolean]
