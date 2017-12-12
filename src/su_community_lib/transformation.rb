@@ -30,7 +30,7 @@ module LTransformation
   # @raise [ArgumentError] if any of the vectors are zero length.
   #
   # @return [Geom::Transformation]
-  def self.create_from_axes(origin, xaxis, yaxis, zaxis)
+  def self.create_from_axes(origin = ORIGIN, xaxis = ZAXIS, yaxis = YAXIS, zaxis = XAXIS)
     unless [xaxis, yaxis, zaxis].all?(&:valid?)
       raise ArgumentError, "Axes must not be zero length."
     end
@@ -46,6 +46,33 @@ module LTransformation
     ])
   end
 
+  # Create transformation from origin point and three angles.
+  #
+  # See +euler_angles+ for details on order of rotations.
+  #
+  # @param origin [Geom::Point3d]
+  # @param x_angle [Float] Rotation in radians
+  # @param y_angle [Float] Rotation in radians
+  # @param z_angle [Float] Rotation in radians
+  #
+  # @example
+  #   # Compose and Decompose Euler Angle Based Transformation
+  #   tr = SUCommunityLib::LGeom::LTransformation.create_from_euler_angles(
+  #     ORIGIN,
+  #     45.degrees,
+  #     45.degrees,
+  #     45.degrees
+  #   )
+  #   SUCommunityLib::LGeom::LTransformation.euler_angles(tr).map(&:radians)
+  #
+  # @return [Geom::Transformation]
+  def self.create_from_euler_angles(origin = ORIGIN, x_angle = 0, y_angle = 0, z_angle = 0)
+    Geom::Transformation.new(origin) *
+      Geom::Transformation.rotation(ORIGIN, Z_AXIS, z_angle) *
+      Geom::Transformation.rotation(ORIGIN, Y_AXIS, y_angle) *
+      Geom::Transformation.rotation(ORIGIN, X_AXIS, x_angle)
+  end
+
   # Calculate extrinsic, chained XYZ rotation angles for transformation.
   #
   # Scaling, shearing and translation are all ignored.
@@ -56,7 +83,7 @@ module LTransformation
   # @param transformation [Geom::Transformation]
   #
   # @example
-  #   # Compose and Decompose Angle Based Transformation
+  #   # Compose and Decompose Euler Angle Based Transformation
   #   x_angle = -14.degrees
   #   y_angle = 7.degrees
   #   z_angle = 45.degrees
@@ -84,6 +111,31 @@ module LTransformation
     z = Math.atan2(s * a[8] - c1 * a[4], c1 * a[5] - s * a[9])
 
     [x, y, z]
+  end
+
+  # Extract a transformation only resembling the shearing of another
+  # transformation.
+  #
+  # The X axis is never considered to be sheared but represents rotation, and
+  # will therefore always be an X unit vector in the new transformation.
+  #
+  # @param transformation [Geom::Transformation]
+  #
+  # @example
+  #   # Determine how much transformation would displace a point along the X
+  #   # axis relative its signed Y coordinate.
+  #   sheared_tr = SUCommunityLib::LGeom::LTransformation.create_from_axes(
+  #     ORIGIN,
+  #     X_AXIS,
+  #     Geom::Vector3d.new(0.3, 1, 0),
+  #     Z_AXIS
+  #   )
+  #   shear_tr = SUCommunityLib::LGeom::LTransformation.extract_shearing(sheared_tr)
+  #   SUCommunityLib::LGeom::LTransformation.yaxis(shear_tr).x
+  #
+  # @return [Geom::Transformation]
+  def self.extract_shearing(transformation)
+    reset_shearing(transformation, true).inverse * transformation
   end
 
   # Calculate determinant of 3X3 matrix.
@@ -142,6 +194,11 @@ module LTransformation
 
   # Return new transformation with shearing removed (made orthogonal).
   #
+  # The X axis is considered to represent rotation and will remain the same as
+  # in the original transformation. The Y axis of the new transformation will
+  # however be made perpendicular to the X axis, and the Z axis will be made
+  # perpendicular to both the other axes.
+  #
   # Note that the SketchUp UI refers to shearing as skewing.
   #
   # @param transformation [Geom::Transformation]
@@ -186,7 +243,7 @@ module LTransformation
 
   # Get X rotation in radians.
   #
-  # See euler_angles for details on order of rotations.
+  # See +euler_angles+ for details on order of rotations.
   #
   # @param transformation [Geom::Transformation]
   #
@@ -197,7 +254,7 @@ module LTransformation
 
   # Get Y rotation in radians.
   #
-  # See euler_angles for details on order of rotations.
+  # See +euler_angles+ for details on order of rotations.
   #
   # @param transformation [Geom::Transformation]
   #
@@ -208,7 +265,7 @@ module LTransformation
 
   # Get Z rotation in radians.
   #
-  # See euler_angles for details on order of rotations.
+  # See +euler_angles+ for details on order of rotations.
   #
   # @param transformation [Geom::Transformation]
   #
