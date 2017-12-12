@@ -2,6 +2,10 @@
 #
 # For simplicity's sake the library doesn't refine the API's existing modules
 # and classes but defines its own corresponding modules.
+#
+# The library consist of modules that mostly maps to corresponding
+# modules/classes in the Ruby API. To avoid confusion which module is which
+# the modules in this library are prefixed with L (for library).
 module SUCommunityLib
 
   # Ensure character encoding is correct for users with non-English names.

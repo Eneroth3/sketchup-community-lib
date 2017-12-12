@@ -5,6 +5,11 @@ module LGeom
 #
 # A plane can either be expressed as an Array of a point and vector or as an
 # Array of 4 Floats defining the coefficients of the plane equation.
+# SketchUp' API methods accepts both types.
+#
+# This module is however designed so you don't have to think about this.
+# Instead of e.g. having methods to convert between the two formats all methods
+# accept them directly.
 module LPlane
 
   # Determine the unit normal vector for a plane.
