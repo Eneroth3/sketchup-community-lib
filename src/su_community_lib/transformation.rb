@@ -73,6 +73,15 @@ module LTransformation
       Geom::Transformation.rotation(ORIGIN, X_AXIS, x_angle)
   end
 
+  # Calculate determinant of 3X3 matrix.
+  #
+  # @param transformation [Geom::Transformation]
+  #
+  # @return [Float]
+  def self.determinant(transformation)
+    xaxis(transformation) % (yaxis(transformation) * zaxis(transformation))
+  end
+
   # Calculate extrinsic, chained XYZ rotation angles for transformation.
   #
   # Scaling, shearing and translation are all ignored.
@@ -136,15 +145,6 @@ module LTransformation
   # @return [Geom::Transformation]
   def self.extract_shearing(transformation)
     reset_shearing(transformation, true).inverse * transformation
-  end
-
-  # Calculate determinant of 3X3 matrix.
-  #
-  # @param transformation [Geom::Transformation]
-  #
-  # @return [Float]
-  def self.determinant(transformation)
-    xaxis(transformation) % (yaxis(transformation) * zaxis(transformation))
   end
 
   # Test if transformation is flipped (mirrored).
