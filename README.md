@@ -48,7 +48,7 @@ Example of loading script inside an extension's own directory:
 
 1. Read and understand Intent/Scope.
 2. Read and below guidelines.
-3. Fork, create a new branch, do your thing, and make a pull request.
+3. [Fork, create a new branch](https://gist.github.com/Chaser324/ce0505fbed06b947d962), do your thing, and make a pull request.
 4. ????
 5. Profit!
 
