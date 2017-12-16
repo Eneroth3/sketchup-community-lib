@@ -110,7 +110,7 @@ module LTransformation
   # @return [Array(Float, Float, Float)] X rotation, Y rotation and Z Rotation
   #   in radians.
   def self.euler_angles(transformation)
-    a = reset_scale(reset_skew(transformation, false)).to_a
+    a = reset_scaling(reset_shearing(transformation, false)).to_a
 
     x = Math.atan2(a[6], a[10])
     c2 = Math.sqrt(a[0]**2 + a[1]**2)
