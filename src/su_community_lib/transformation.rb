@@ -8,7 +8,7 @@ module LTransformation
   #
   # Unlike native +Geom::Transformation.axes+ this method does not make the axes
   # orthogonal or normalize them but uses them as they are, allowing for scaled
-  # and skewed transformations.
+  # and sheared transformations.
   #
   # @param origin [Geom::Point3d]
   # @param xaxis [Geom::Vector3d]
@@ -169,6 +169,13 @@ module LTransformation
 
   # Return new transformation with scaling removed.
   #
+  # All axes of the new transformation have the length 1, meaning that if the
+  # transformation was sheared it will still scale volumes, areas and length not
+  # parallel to coordinate axes.
+  #
+  # If transformation is flipped, the X axis is reversed. Otherwise axes keeps
+  # their direction.
+  #
   # @param transformation [Geom::Transformation]
   #
   # @example
@@ -311,12 +318,14 @@ module LTransformation
     (tangent * bi_tangent).length.to_f
   end
 
-  # Test if transformation is skewed (not orthogonal).
+  # Test if transformation is sheared (not orthogonal).
+  #
+  # Note that the SketchUp UI refers to shearing as skewing.
   #
   # @param transformation [Geom::Transformation]
   #
   # @return [Boolean]
-  def self.skewed?(transformation)
+  def self.sheared?(transformation)
     !xaxis(transformation).parallel?(yaxis(transformation) * zaxis(transformation))
   end
 
