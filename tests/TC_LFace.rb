@@ -27,7 +27,7 @@ class TC_LFace < TestUp::TestCase
   def test_wrapping_face
     # TODO: Test less trivial cases where the edges of inner face binds other
     # faces as well.
-    outer_face = @inner_face
+    outer_face = SUCommunityLib::LFace.wrapping_face(@inner_face)
     assert(outer_face == @outer_face, "Wrong face returned.")
   end
 
