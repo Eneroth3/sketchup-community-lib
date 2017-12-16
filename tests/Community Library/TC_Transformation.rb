@@ -26,6 +26,22 @@ class TC_Transformation < TestUp::TestCase
 
   #-----------------------------------------------------------------------------
 
+  def test_create_from_axes
+    origin_in = Geom::Point3d.new(34, 23.23, 23)
+    x_axis_in = Geom::Vector3d.new(234.45, 34.456, -43.456)
+    y_axis_in = Geom::Vector3d.new(567.3, -45, -456.546)
+    z_axis_in = Geom::Vector3d.new(234.4, 345, -435)
+    tr = LTransformation.create_from_axes(origin_in, x_axis_in, y_axis_in, z_axis_in)
+    x_axis_out = Geom::Vector3d.new(tr.to_a.values_at(0..2))
+    y_axis_out = Geom::Vector3d.new(tr.to_a.values_at(4..6))
+    z_axis_out = Geom::Vector3d.new(tr.to_a.values_at(8..10))
+    origin_out = Geom::Point3d.new(tr.to_a.values_at(12..14))
+    assert_equal(origin_out, origin_in)
+    assert_equal(x_axis_out, x_axis_in)
+    assert_equal(y_axis_out, y_axis_in)
+    assert_equal(z_axis_out, z_axis_in)
+  end
+
   def test_create_euler_angles
     x_in = -14.degrees
     y_in = 7.degrees
