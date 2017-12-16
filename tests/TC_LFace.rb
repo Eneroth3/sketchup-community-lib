@@ -2,6 +2,8 @@ require 'testup/testcase'
 
 class TC_LFace < TestUp::TestCase
 
+  LFace = SUCommunityLib::LFace
+
   def setup
     @container = Sketchup.active_model.active_entities.add_group
     @outer_face = @container.entities.add_face(
@@ -27,12 +29,12 @@ class TC_LFace < TestUp::TestCase
   def test_wrapping_face
     # TODO: Test less trivial cases where the edges of inner face binds other
     # faces as well.
-    outer_face = SUCommunityLib::LFace.wrapping_face(@inner_face)
+    outer_face = LFace.wrapping_face(@inner_face)
     assert(outer_face == @outer_face, "Wrong face returned.")
   end
 
   def test_inner_loops
-    inner_loops = SUCommunityLib::LFace.inner_loops(@outer_face)
+    inner_loops = LFace.inner_loops(@outer_face)
     assert_kind_of(Array, inner_loops)
     assert_equal(1, inner_loops.size)
   end
