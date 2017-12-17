@@ -6,6 +6,8 @@ require: rubocop-sketchup
 
 AllCops:
   DisplayCopNames: true
+  Exclude:
+    - 'tests/**/*'
 
 # This cop catches methods that assigns many variables, even if the complexity
 # is low and readability is high.
