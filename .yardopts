@@ -1,0 +1,3 @@
+--title "SketchUp Community Library Documentation"
+--no-private
+src/**/*.rb
