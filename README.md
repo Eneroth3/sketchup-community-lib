@@ -20,13 +20,17 @@ This should be achieved through:
 
 This library should be easy to grasp and use for new developers, while still being useful for advanced developers.
 
-To prevent the library from being bloated with functionality, try to make your additions as generic as possible and save specific implementations for your own code base. For instance this library has a method for changing the axes of a ComponentDefinition, but if you want to center the axes at the bottom of the BoundingBox, the code for defining the new axes placement will have to be in your own extension/library.
+To prevent the library from being bloated with functionality, try to make your additions as generic as possible and save specific implementations for your own code base. For instance this library has a method for changing the axes of a ComponentDefinition, but if you want to, say, center the axes at the bottom of the BoundingBox, the code for defining the new axes placement will have to be in your own extension/library.
 
 If you have found a way to mimic SketchUp's native [face shading](https://github.com/Eneroth3/FaceShader), created [your own solid operations](https://github.com/Eneroth3/Eneroth-Solid-Tools) or creates some other rather specific functionality that is probably better suited as a separate library, but could be dependent on this one.
 
+If you however have a snippet that is too simple to be published as an individual library and almost generic enough to fit into the API itself, this is the place for it.
+
 ### Supported SU versions
 
-This is not yet decided. However ancient versions should NOT be supported at the cost of code readability. For instance the &:-idiom must be supported (SU 2014+, Ruby 2.0.0+).
+No effort should be made to make the library support versions older than SketchUp 2014 (Ruby 2.0.0). Code readability, such as using the &:-idion, matters more than supporting ancient versions. SU 2014 is also the oldest version supporting [TestUp2](https://github.com/SketchUp/testup-2).
+
+Individual methods doesn't have to support SU 2014, e.g. methods related to API features added in a later version, but their documentation must in that case state what the oldest supported version is.
 
 ## Installation
 
