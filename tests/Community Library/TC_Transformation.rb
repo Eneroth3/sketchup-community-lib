@@ -62,6 +62,10 @@ class TC_Transformation < TestUp::TestCase
     determinant = LTransformation.determinant(tr)
     msg = "Determinant should not include translation."
     assert_in_delta(1.0, determinant, DivideByZeroTol, msg)
+
+    tr = Geom::Transformation.rotation(ORIGIN, Z_AXIS, 34.degrees)
+    determinant = LTransformation.determinant(tr)
+    assert_in_delta(1.0, determinant, DivideByZeroTol, msg)
   end
 
   def test_euler_angles
@@ -157,6 +161,32 @@ class TC_Transformation < TestUp::TestCase
     assert(x_axis_out.perpendicular?(y_axis_out), "Axes should be perpendicular.")
     assert(x_axis_out.perpendicular?(z_axis_out), "Axes should be perpendicular.")
     assert(y_axis_out.perpendicular?(z_axis_out), "Axes should be perpendicular.")
+  end
+
+  def test_same_Query
+    tr_in = TrArbitrary
+    # Introduce some floating point inaccuracy that prevents the Transformation
+    # to be truly identical.
+    tr_out = (tr_in * tr_in.inverse * tr_in).inverse.inverse
+    assert(LTransformation.same?(tr_in, tr_out))
+  end
+
+  def test_rotx
+    angle_in = 56.degrees
+    tr = Geom::Transformation.rotation(ORIGIN, X_AXIS, angle_in)
+    assert_in_delta(angle_in, LTransformation.rotx(tr), DivideByZeroTol)
+  end
+
+  def test_roty
+    angle_in = 56.degrees
+    tr = Geom::Transformation.rotation(ORIGIN, Y_AXIS, angle_in)
+    assert_in_delta(angle_in, LTransformation.roty(tr), DivideByZeroTol)
+  end
+
+  def test_rotz
+    angle_in = 56.degrees
+    tr = Geom::Transformation.rotation(ORIGIN, Z_AXIS, angle_in)
+    assert_in_delta(angle_in, LTransformation.rotz(tr), DivideByZeroTol)
   end
 
 end
