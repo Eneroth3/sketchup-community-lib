@@ -59,8 +59,9 @@ class TC_Transformation < TestUp::TestCase
 
   def test_determinant
     tr = Geom::Transformation.new([434, 2343, 123])
+    determinant = LTransformation.determinant(tr)
     msg = "Determinant should not include translation."
-    assert_equal(1, LTransformation.determinant(tr), msg)
+    assert_in_delta(1.0, determinant, DivideByZeroTol, msg)
   end
 
   def test_euler_angles
@@ -82,8 +83,9 @@ class TC_Transformation < TestUp::TestCase
 
   def test_extract_shearing
     tr_out = LTransformation.extract_shearing(TrArbitrary)
+    determinant = LTransformation.determinant(tr_out)
     msg = "Determinant should be 1.0 for transformation only resembling shearing."
-    assert(1.0 == LTransformation.determinant(tr_out).to_l, msg)
+    assert_in_delta(1.0, determinant, DivideByZeroTol, msg)
   end
 
   def test_flipped_Query
