@@ -339,7 +339,10 @@ module LTransformation
   #
   # @return [Geom::Vector3d]
   def self.xaxis(transformation)
-    Geom::Vector3d.new(transformation.to_a.values_at(0..2))
+    v = Geom::Vector3d.new(transformation.to_a.values_at(0..2))
+    v.length /= transformation.to_a[15]
+
+    v
   end
 
   # Get X scale factor fora  transformation.
@@ -353,7 +356,7 @@ module LTransformation
   #
   # @return [Float]
   def self.xscale(transformation)
-    xaxis(transformation).length * transformation.to_a[15]
+    xaxis(transformation).length.to_f
   end
 
   # Get the Y axis vector of a transformation.
@@ -366,7 +369,10 @@ module LTransformation
   #
   # @return [Geom::Vector3d]
   def self.yaxis(transformation)
-    Geom::Vector3d.new(transformation.to_a.values_at(4..6))
+    v = Geom::Vector3d.new(transformation.to_a.values_at(4..6))
+    v.length /= transformation.to_a[15]
+
+    v
   end
 
   # Get Y scale factor fora  transformation.
@@ -380,7 +386,7 @@ module LTransformation
   #
   # @return [Float]
   def self.yscale(transformation)
-    yaxis(transformation).length * transformation.to_a[15]
+    yaxis(transformation).length.to_f
   end
 
   # Get the Z axis vector of a transformation.
@@ -391,7 +397,10 @@ module LTransformation
   #
   # @return [Geom::Vector3d]
   def self.zaxis(transformation)
-    Geom::Vector3d.new(transformation.to_a.values_at(8..10))
+    v = Geom::Vector3d.new(transformation.to_a.values_at(8..10))
+    v.length /= transformation.to_a[15]
+
+    v
   end
 
   # Get Z scale factor for a transformation.
@@ -405,7 +414,7 @@ module LTransformation
   #
   # @return [Float]
   def self.zscale(transformation)
-    zaxis(transformation).length * transformation.to_a[15]
+    zaxis(transformation).length.to_f
   end
 
 end

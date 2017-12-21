@@ -104,6 +104,10 @@ class TC_Transformation < TestUp::TestCase
     tr = Geom::Transformation.scaling(-1, -1, -1)
     msg = "Flipping along 3 axes makes a flipped transformation"
     assert(LTransformation.flipped?(tr), msg)
+
+    tr = Geom::Transformation.scaling(-1)
+    msg = "Uniform -1 scaling makes a flipped transformation"
+    assert(LTransformation.flipped?(tr), msg)
   end
 
   def test_identity_Query
@@ -187,6 +191,36 @@ class TC_Transformation < TestUp::TestCase
     angle_in = 56.degrees
     tr = Geom::Transformation.rotation(ORIGIN, Z_AXIS, angle_in)
     assert_in_delta(angle_in, LTransformation.rotz(tr), DivideByZeroTol)
+  end
+
+  def test_xscale
+    tr = Geom::Transformation.scaling(2, 1, 1)
+    msg = "Wrong X scale reported."
+    assert_in_delta(2.0, LTransformation.xscale(tr), DivideByZeroTol, msg)
+
+    tr = Geom::Transformation.scaling(2)
+    msg = "Wrong X scale reported for uniform scaling."
+    assert_in_delta(2.0, LTransformation.xscale(tr), DivideByZeroTol, msg)
+  end
+
+  def test_yscale
+    tr = Geom::Transformation.scaling(1, 2, 1)
+    msg = "Wrong Y scale reported."
+    assert_in_delta(2.0, LTransformation.yscale(tr), DivideByZeroTol, msg)
+
+    tr = Geom::Transformation.scaling(2)
+    msg = "Wrong Y scale reported for uniform scaling."
+    assert_in_delta(2.0, LTransformation.yscale(tr), DivideByZeroTol, msg)
+  end
+
+  def test_zscale
+    tr = Geom::Transformation.scaling(1, 1, 2)
+    msg = "Wrong Z scale reported."
+    assert_in_delta(2.0, LTransformation.zscale(tr), DivideByZeroTol, msg)
+
+    tr = Geom::Transformation.scaling(2)
+    msg = "Wrong Z scale reported for uniform scaling."
+    assert_in_delta(2.0, LTransformation.zscale(tr), DivideByZeroTol, msg)
   end
 
 end
