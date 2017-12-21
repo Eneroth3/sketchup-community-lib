@@ -110,7 +110,7 @@ module LTransformation
   # @return [Array(Float, Float, Float)] X rotation, Y rotation and Z Rotation
   #   in radians.
   def self.euler_angles(transformation)
-    a = reset_scaling(reset_shearing(transformation, false)).to_a
+    a = remove_scaling(remove_shearing(transformation, false)).to_a
 
     x = Math.atan2(a[6], a[10])
     c2 = Math.sqrt(a[0]**2 + a[1]**2)
@@ -144,7 +144,7 @@ module LTransformation
   #
   # @return [Geom::Transformation]
   def self.extract_shearing(transformation)
-    reset_shearing(transformation, true).inverse * transformation
+    remove_shearing(transformation, true).inverse * transformation
   end
 
   # Test if transformation is flipped (mirrored).
@@ -183,12 +183,12 @@ module LTransformation
   #   # Note that native Reset Scale also resets skew, not just scale.
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_scaling(
-  #     SUCommunityLib::LGeom::LTransformation.reset_shearing(e.transformation, false)
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.remove_scaling(
+  #     SUCommunityLib::LGeom::LTransformation.remove_shearing(e.transformation, false)
   #   )
   #
   # @return [Geom::Transformation]
-  def self.reset_scaling(transformation)
+  def self.remove_scaling(transformation)
     x_axis = xaxis(transformation).normalize
     x_axis.reverse! if flipped?(transformation)
     create_from_axes(
@@ -219,15 +219,15 @@ module LTransformation
   #   # Mimic Context Menu > Reset Skew
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_shearing(e.transformation, false)
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.remove_shearing(e.transformation, false)
   #
   #   # Reset Skewing While Retaining Volume
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.reset_shearing(e.transformation, true)
+  #   e.transformation = SUCommunityLib::LGeom::LTransformation.remove_shearing(e.transformation, true)
   #
   # @return [Geom::Transformation]
-  def self.reset_shearing(transformation, preserve_determinant_value = false)
+  def self.remove_shearing(transformation, preserve_determinant_value = false)
     xaxis = xaxis(transformation)
     yaxis = yaxis(transformation)
     zaxis = zaxis(transformation)

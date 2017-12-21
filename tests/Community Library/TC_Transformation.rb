@@ -112,9 +112,9 @@ class TC_Transformation < TestUp::TestCase
     assert(LTransformation.identity?(tr), msg)
   end
 
-  def test_reset_scaling
+  def test_remove_scaling
     tr_in = TrArbitrary
-    tr_out = LTransformation.reset_scaling(tr_in)
+    tr_out = LTransformation.remove_scaling(tr_in)
 
     determinant_out = LTransformation.determinant(tr_out)
     x_axis_in = Geom::Vector3d.new(tr_in.to_a.values_at(0..2))
@@ -138,14 +138,14 @@ class TC_Transformation < TestUp::TestCase
     assert(z_axis_out.samedirection?(z_axis_in), "Reseting scale should not change Z axis direction.")
 
     tr_flipped = Geom::Transformation.scaling(-1, 1, 1)
-    tr_unscaled_flipped = LTransformation.reset_scaling(tr_flipped)
+    tr_unscaled_flipped = LTransformation.remove_scaling(tr_flipped)
     msg = "Reseting scaling should un-flip transformation."
     refute(LTransformation.flipped?(tr_unscaled_flipped), msg)
   end
 
-  def test_reset_shearing
+  def test_remove_shearing
     tr_in = TrArbitrary
-    tr_out = LTransformation.reset_shearing(tr_in, true)
+    tr_out = LTransformation.remove_shearing(tr_in, true)
 
     determinant_in = LTransformation.determinant(tr_in)
     determinant_out = LTransformation.determinant(tr_out)
