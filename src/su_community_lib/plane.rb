@@ -58,15 +58,17 @@ module LPlane
   #
   # @param plane_a [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
   # @param plane_b [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param incldue_flipped [Boolean]
   #
   # @return [Boolean]
-  def self.same?(plane_a, plane_b)
+  def self.same?(plane_a, plane_b, incldue_flipped = false)
     raise ArgumentError, "Object 'plane_a' doesn't represent a plane." unless valid?(plane_a)
     raise ArgumentError, "Object 'plane_b' doesn't represent a plane." unless valid?(plane_b)
 
-    # REVIEW: Should true be returned for planes with opposite orientation?
-    point(plane_a).on_plane?(plane_b) &&
-      parallel?(plane_a, plane_b)
+    return false unless point(plane_a).on_plane?(plane_b)
+    return false unless parallel?(plane_a, plane_b)
+
+    incldue_flipped || normal(plane_a).samedirection?(normal(plane_b))
   end
 
   # Transform plane.
