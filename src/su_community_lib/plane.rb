@@ -7,7 +7,7 @@ module LGeom
 # Array of 4 Floats defining the coefficients of the plane equation.
 # SketchUp' API methods accepts both types.
 #
-# This module is however designed so you don't have to think about this.
+# This module is however designed so you don't have to think about these formats.
 # Instead of e.g. having methods to convert between the two formats all methods
 # accept them directly.
 module LPlane
@@ -18,6 +18,8 @@ module LPlane
   #
   # @return [Geom::Vector3d]
   def self.normal(plane)
+    raise ArgumentError, "Object doesn't represent a plane." unless valid?(plane)
+
     return plane[1].normalize if plane.size == 2
     a, b, c = plane
 
@@ -31,6 +33,9 @@ module LPlane
   #
   # @return [Boolean]
   def self.parallel?(plane_a, plane_b)
+    raise ArgumentError, "Object 'plane_a' doesn't represent a plane." unless valid?(plane_a)
+    raise ArgumentError, "Object 'plane_b' doesn't represent a plane." unless valid?(plane_b)
+
     normal(plane_a).parallel?(normal(plane_b))
   end
 
@@ -40,6 +45,8 @@ module LPlane
   #
   # @return [Geom::Point3d]
   def self.point(plane)
+    raise ArgumentError, "Object doesn't represent a plane." unless valid?(plane)
+
     return plane[0] if plane.size == 2
     a, b, c, d = plane
     v = Geom::Vector3d.new(a, b, c)
@@ -54,6 +61,9 @@ module LPlane
   #
   # @return [Boolean]
   def self.same?(plane_a, plane_b)
+    raise ArgumentError, "Object 'plane_a' doesn't represent a plane." unless valid?(plane_a)
+    raise ArgumentError, "Object 'plane_b' doesn't represent a plane." unless valid?(plane_b)
+
     # REVIEW: Should true be returned for planes with opposite orientation?
     point(plane_a).on_plane?(plane_b) &&
       parallel?(plane_a, plane_b)
@@ -66,10 +76,26 @@ module LPlane
   #
   # @return [Array(Geom::Point3d, Geom::Vector3d)]
   def self.transform_plane(plane, transformation)
+    raise ArgumentError, "Object doesn't represent a plane." unless valid?(plane)
+    raise ArgumentError, "Requires transformation." unless transformation.is_a?(Geom::Transformation)
+
     [
       point(plane).transform(transformation),
       LVector3d.transform_as_normal(normal(plane), transformation)
     ]
+  end
+
+  # Test if Object represents a plane.
+  #
+  # In the SketchUp Ruby API a plane can either be expressed as an Array of 4
+  # floats, or as an Array of one Point3d and one Vector3d.
+  #
+  # @return [Boolean]
+  def self.valid?(plane)
+    return false unless plane.is_a?(Array)
+
+    (plane.size == 4 && plane.all? { |e| e.is_a?(Numeric) }) ||
+      (plane.size == 2 && plane[0].is_a?(Geom::Point3d) && plane[1].is_a?(Geom::Vector3d))
   end
 
 end
