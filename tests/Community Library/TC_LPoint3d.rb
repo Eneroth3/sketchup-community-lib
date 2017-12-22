@@ -31,6 +31,7 @@ class TC_LPoint3d < TestUp::TestCase
     pt_back = Geom::Point3d.new(-1, 0, 0)
     plane_geom = [ORIGIN, X_AXIS]
     plane_ary = [1.0, -0.0, -0.0, -0.0]
+
     assert(LPoint3d.front_of_plane?(pt_front, plane_geom))
     refute(LPoint3d.front_of_plane?(pt_back, plane_geom))
     assert(LPoint3d.front_of_plane?(pt_front, plane_ary))

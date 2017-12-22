@@ -31,11 +31,14 @@ class TC_LTransformation < TestUp::TestCase
     x_axis_in = Geom::Vector3d.new(234.45, 34.456, -43.456)
     y_axis_in = Geom::Vector3d.new(567.3, -45, -456.546)
     z_axis_in = Geom::Vector3d.new(234.4, 345, -435)
+
     tr = LTransformation.create_from_axes(origin_in, x_axis_in, y_axis_in, z_axis_in)
+
     x_axis_out = Geom::Vector3d.new(tr.to_a.values_at(0..2))
     y_axis_out = Geom::Vector3d.new(tr.to_a.values_at(4..6))
     z_axis_out = Geom::Vector3d.new(tr.to_a.values_at(8..10))
     origin_out = Geom::Point3d.new(tr.to_a.values_at(12..14))
+
     assert_equal(origin_out, origin_in)
     assert_equal(x_axis_out, x_axis_in)
     assert_equal(y_axis_out, y_axis_in)
@@ -60,11 +63,14 @@ class TC_LTransformation < TestUp::TestCase
   def test_determinant
     tr = Geom::Transformation.new([434, 2343, 123])
     determinant = LTransformation.determinant(tr)
+
     msg = "Determinant should not include translation."
     assert_in_delta(1.0, determinant, DivideByZeroTol, msg)
 
     tr = Geom::Transformation.rotation(ORIGIN, Z_AXIS, 34.degrees)
     determinant = LTransformation.determinant(tr)
+
+    msg = "Determinant should be 1."
     assert_in_delta(1.0, determinant, DivideByZeroTol, msg)
   end
 
@@ -88,6 +94,7 @@ class TC_LTransformation < TestUp::TestCase
   def test_extract_shearing
     tr_out = LTransformation.extract_shearing(TrArbitrary)
     determinant = LTransformation.determinant(tr_out)
+
     msg = "Determinant should be 1.0 for transformation only resembling shearing."
     assert_in_delta(1.0, determinant, DivideByZeroTol, msg)
   end
@@ -127,6 +134,7 @@ class TC_LTransformation < TestUp::TestCase
 
   def test_identity_Query
     tr = TrArbitrary * TrArbitrary.inverse
+
     msg = "Transformation should be regarded as the identity transformation."
     assert(LTransformation.identity?(tr), msg)
   end
@@ -158,6 +166,7 @@ class TC_LTransformation < TestUp::TestCase
 
     tr_flipped = Geom::Transformation.scaling(-1, 1, 1)
     tr_unscaled_flipped = LTransformation.remove_scaling(tr_flipped)
+
     msg = "Reseting scaling should un-flip transformation."
     refute(LTransformation.flipped?(tr_unscaled_flipped), msg)
   end
@@ -168,6 +177,7 @@ class TC_LTransformation < TestUp::TestCase
 
     determinant_in = LTransformation.determinant(tr_in)
     determinant_out = LTransformation.determinant(tr_out)
+
     assert_equal(determinant_in.to_l, determinant_out.to_l)
 
     x_axis_in = Geom::Vector3d.new(tr_in.to_a.values_at(0..2))
@@ -176,6 +186,7 @@ class TC_LTransformation < TestUp::TestCase
     x_axis_out = Geom::Vector3d.new(tr_out.to_a.values_at(0..2))
     y_axis_out = Geom::Vector3d.new(tr_out.to_a.values_at(4..6))
     z_axis_out = Geom::Vector3d.new(tr_out.to_a.values_at(8..10))
+
     assert(x_axis_out.samedirection?(x_axis_in), "X axis should keep its direction.")
     assert(x_axis_out.perpendicular?(y_axis_out), "Axes should be perpendicular.")
     assert(x_axis_out.perpendicular?(z_axis_out), "Axes should be perpendicular.")
@@ -184,56 +195,67 @@ class TC_LTransformation < TestUp::TestCase
 
   def test_same_Query
     tr_in = TrArbitrary
+
     # Introduce some floating point inaccuracy that prevents the Transformation
     # to be truly identical.
     tr_out = (tr_in * tr_in.inverse * tr_in).inverse.inverse
+
     assert(LTransformation.same?(tr_in, tr_out))
   end
 
   def test_rotx
     angle_in = 56.degrees
     tr = Geom::Transformation.rotation(ORIGIN, X_AXIS, angle_in)
+
     assert_in_delta(angle_in, LTransformation.rotx(tr), DivideByZeroTol)
   end
 
   def test_roty
     angle_in = 56.degrees
     tr = Geom::Transformation.rotation(ORIGIN, Y_AXIS, angle_in)
+
     assert_in_delta(angle_in, LTransformation.roty(tr), DivideByZeroTol)
   end
 
   def test_rotz
     angle_in = 56.degrees
     tr = Geom::Transformation.rotation(ORIGIN, Z_AXIS, angle_in)
+
     assert_in_delta(angle_in, LTransformation.rotz(tr), DivideByZeroTol)
   end
 
   def test_xscale
     tr = Geom::Transformation.scaling(2, 1, 1)
+
     msg = "Wrong X scale reported."
     assert_in_delta(2.0, LTransformation.xscale(tr), DivideByZeroTol, msg)
 
     tr = Geom::Transformation.scaling(2)
+
     msg = "Wrong X scale reported for uniform scaling."
     assert_in_delta(2.0, LTransformation.xscale(tr), DivideByZeroTol, msg)
   end
 
   def test_yscale
     tr = Geom::Transformation.scaling(1, 2, 1)
+
     msg = "Wrong Y scale reported."
     assert_in_delta(2.0, LTransformation.yscale(tr), DivideByZeroTol, msg)
 
     tr = Geom::Transformation.scaling(2)
+
     msg = "Wrong Y scale reported for uniform scaling."
     assert_in_delta(2.0, LTransformation.yscale(tr), DivideByZeroTol, msg)
   end
 
   def test_zscale
     tr = Geom::Transformation.scaling(1, 1, 2)
+
     msg = "Wrong Z scale reported."
     assert_in_delta(2.0, LTransformation.zscale(tr), DivideByZeroTol, msg)
 
     tr = Geom::Transformation.scaling(2)
+
     msg = "Wrong Z scale reported for uniform scaling."
     assert_in_delta(2.0, LTransformation.zscale(tr), DivideByZeroTol, msg)
   end

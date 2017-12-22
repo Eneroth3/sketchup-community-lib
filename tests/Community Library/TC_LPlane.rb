@@ -16,7 +16,7 @@ class TC_LPlane < TestUp::TestCase
 
   def test_normal
     assert_raises(ArgumentError, "Invalid plane.") do
-      LPlane.normal(Z_AXIS, ORIGIN)
+      LPlane.normal([Z_AXIS, ORIGIN])
     end
 
     assert_raises(ArgumentError, "Invalid plane.") do
@@ -54,7 +54,7 @@ class TC_LPlane < TestUp::TestCase
 
   def test_point
     assert_raises(ArgumentError, "Invalid plane.") do
-      LPlane.point(Z_AXIS, ORIGIN)
+      LPlane.point([Z_AXIS, ORIGIN])
     end
 
     assert_raises(ArgumentError, "Invalid plane.") do
@@ -90,7 +90,7 @@ class TC_LPlane < TestUp::TestCase
 
   def test_parallel_Query
     assert_raises(ArgumentError, "Invalid plane.") do
-      LPlane.normal(Z_AXIS, ORIGIN)
+      LPlane.normal([Z_AXIS, ORIGIN])
     end
 
     assert_raises(ArgumentError, "Invalid plane.") do

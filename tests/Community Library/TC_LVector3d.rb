@@ -17,6 +17,7 @@ class TC_LVector3d < TestUp::TestCase
   def test_arbitrary_non_parallel_vector
     vector_in = Geom::Vector3d.new(1, 2, 3)
     vector_out = LVector3d.arbitrary_non_parallel_vector(vector_in)
+    
     assert(vector_out.valid?)
     refute(vector_out.parallel?(vector_in))
   end
@@ -24,6 +25,7 @@ class TC_LVector3d < TestUp::TestCase
   def test_arbitrary_perpendicular_vector
     vector_in = Geom::Vector3d.new(1, 2, 3)
     vector_out = LVector3d.arbitrary_perpendicular_vector(vector_in)
+    
     assert(vector_out.valid?)
     assert(vector_out.perpendicular?(vector_in))
   end
@@ -38,18 +40,21 @@ class TC_LVector3d < TestUp::TestCase
 
     vector_in = Y_AXIS
     vector_out = LVector3d.transform_as_normal(vector_in, tr_shear)
+    
     assert_equal(1, vector_out.length)
     assert_equal(Y_AXIS, vector_out)
 
     vector_in = X_AXIS
     vector_out = LVector3d.transform_as_normal(vector_in, tr_shear)
     vector_expected = Geom::Vector3d.new(1, -0.5, 0).normalize
+    
     assert_equal(vector_expected, vector_out)
 
     tr_flip = Geom::Transformation.scaling(-1, 1, 1)
     vector_in = X_AXIS
     vector_out = LVector3d.transform_as_normal(vector_in, tr_flip)
     vector_expected = X_AXIS.reverse
+    
     assert_equal(vector_expected, vector_out)
   end
 
