@@ -40,7 +40,7 @@ module LPlane
   #
   # @return [Geom::Point3d]
   def self.point(plane)
-    return plane[0].normalize if plane.size == 2
+    return plane[0] if plane.size == 2
     a, b, c, d = plane
     v = Geom::Vector3d.new(a, b, c)
 
