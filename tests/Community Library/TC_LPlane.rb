@@ -162,4 +162,31 @@ class TC_LPlane < TestUp::TestCase
     assert(LPlane.same?(plane1, plane2, true), "plane1 and plane2 are the same.")
   end
 
+  def test_valid_Query
+    refute(LPlane.valid?([Z_AXIS, ORIGIN]), "Invalid plane.")
+    refute(LPlane.valid?("Hej, världen!"), "Invalid plane.")
+    refute(LPlane.valid?([1]), "Invalid plane.")
+    refute(LPlane.valid?([1, 1]), "Invalid plane.")
+    refute(LPlane.valid?([1, 1, 1]), "Invalid plane.")
+    refute(LPlane.valid?([1, 1, 1, 1, 1]), "Invalid plane.")
+
+    assert(LPlane.valid?([1, 1, 1, 1]), "Valid plane.")
+    assert(LPlane.valid?([ORIGIN, X_AXIS]), "Valid plane.")
+  end
+
+  def test_transform_plane
+    tr = Geom::Transformation.new([
+      1, 3, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ])
+    plane = LPlane.transform_plane([ORIGIN, Y_AXIS], tr)
+    normal = LPlane.normal(plane)
+    expected_normal = Geom::Vector3d.new(-3, 1, 0).normalize
+
+    assert(ORIGIN.on_plane?(plane), "Plane should still pass through origin.")
+    assert(normal == expected_normal, "Faulty normal.")
+  end
+
 end

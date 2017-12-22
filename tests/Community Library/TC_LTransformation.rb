@@ -110,6 +110,21 @@ class TC_LTransformation < TestUp::TestCase
     assert(LTransformation.flipped?(tr), msg)
   end
 
+  def test_sheared_Quary
+    tr = Geom::Transformation.rotation(ORIGIN, Z_AXIS, 7.degrees)
+
+    refute(LTransformation.sheared?(tr), "Transformation should not be sheared.")
+
+    tr = Geom::Transformation.new([
+      1, 3, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ])
+
+    assert(LTransformation.sheared?(tr), "Transformation should be sheared.")
+  end
+
   def test_identity_Query
     tr = TrArbitrary * TrArbitrary.inverse
     msg = "Transformation should be regarded as the identity transformation."
@@ -221,6 +236,85 @@ class TC_LTransformation < TestUp::TestCase
     tr = Geom::Transformation.scaling(2)
     msg = "Wrong Z scale reported for uniform scaling."
     assert_in_delta(2.0, LTransformation.zscale(tr), DivideByZeroTol, msg)
+  end
+
+  def test_x_axis
+    tr = Geom::Transformation.new
+    vector1 = LTransformation.xaxis(tr)
+    vector2 = Geom::Vector3d.new(1, 0, 0)
+
+    assert(vector1 == vector2, "vector1 and vector2 are not equivalent.")
+
+    tr = Geom::Transformation.scaling(2)
+    vector1 = LTransformation.xaxis(tr)
+    vector2 = Geom::Vector3d.new(2, 0, 0)
+
+    assert(vector1 == vector2, "vector1 and vector2 are not equivalent.")
+
+    tr = Geom::Transformation.axes(ORIGIN, Z_AXIS, X_AXIS, Y_AXIS)
+    vector1 = LTransformation.xaxis(tr)
+    vector2 = Z_AXIS
+
+    assert(vector1 == vector2, "vector1 and vector2 are not equivalent.")
+  end
+
+  def test_y_axis
+    tr = Geom::Transformation.new
+    vector1 = LTransformation.yaxis(tr)
+    vector2 = Geom::Vector3d.new(0, 1, 0)
+
+    assert(vector1 == vector2, "vector1 and vector2 are not equivalent.")
+
+    tr = Geom::Transformation.scaling(2)
+    vector1 = LTransformation.yaxis(tr)
+    vector2 = Geom::Vector3d.new(0, 2, 0)
+
+    assert(vector1 == vector2, "vector1 and vector2 are not equivalent.")
+
+    tr = Geom::Transformation.axes(ORIGIN, Z_AXIS, X_AXIS, Y_AXIS)
+    vector1 = LTransformation.yaxis(tr)
+    vector2 = X_AXIS
+
+    assert(vector1 == vector2, "vector1 and vector2 are not equivalent.")
+  end
+
+  def test_z_axis
+    tr = Geom::Transformation.new
+    vector1 = LTransformation.zaxis(tr)
+    vector2 = Geom::Vector3d.new(0, 0, 1)
+
+    assert(vector1 == vector2, "vector1 and vector2 are not equivalent.")
+
+    tr = Geom::Transformation.scaling(2)
+    vector1 = LTransformation.zaxis(tr)
+    vector2 = Geom::Vector3d.new(0, 0, 2)
+
+    assert(vector1 == vector2, "vector1 and vector2 are not equivalent.")
+
+    tr = Geom::Transformation.axes(ORIGIN, Z_AXIS, X_AXIS, Y_AXIS)
+    vector1 = LTransformation.zaxis(tr)
+    vector2 = Y_AXIS
+
+    assert(vector1 == vector2, "vector1 and vector2 are not equivalent.")
+  end
+
+  def test_scale_factor_in_plane
+    plane = [ORIGIN, Z_AXIS]
+    tr = IDENTITY
+
+    assert_equal(1, LTransformation.scale_factor_in_plane(tr, plane))
+
+    tr = Geom::Transformation.scaling(2)
+
+    assert_equal(4, LTransformation.scale_factor_in_plane(tr, plane))
+
+    tr = Geom::Transformation.scaling(2, 4, 1)
+
+    assert_equal(8, LTransformation.scale_factor_in_plane(tr, plane))
+
+    tr = Geom::Transformation.scaling(2, 4, 7)
+
+    assert_equal(8, LTransformation.scale_factor_in_plane(tr, plane))
   end
 
 end
