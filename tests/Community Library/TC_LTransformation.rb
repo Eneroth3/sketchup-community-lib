@@ -1,6 +1,6 @@
 require 'testup/testcase'
 
-class TC_Transformation < TestUp::TestCase
+class TC_LTransformation < TestUp::TestCase
 
   LTransformation = SUCommunityLib::LGeom::LTransformation
 
