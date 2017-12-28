@@ -12,34 +12,34 @@ class TC_LEntity < TestUp::TestCase
   def setup
     model = Sketchup.active_model
 
-    @containes = {}
+    @containers = {}
 
-    @containes[:"1"]     = model.entities.add_group
-    @containes[:"1.1"]   = @containes[:"1"].entities.add_group
-    @containes[:"1.1.1"] = @containes[:"1.1"].entities.add_group
-    @containes[:"1.2"]   = @containes[:"1"].entities.add_group
-    @containes[:"2"]     = model.entities.add_instance(
-      group_definiton(@containes[:"1"]),
+    @containers[:"1"]     = model.entities.add_group
+    @containers[:"1.1"]   = @containers[:"1"].entities.add_group
+    @containers[:"1.1.1"] = @containers[:"1.1"].entities.add_group
+    @containers[:"1.2"]   = @containers[:"1"].entities.add_group
+    @containers[:"2"]     = model.entities.add_instance(
+      group_definiton(@containers[:"1"]),
       IDENTITY
     )
-    @containes[:"3"]     = model.entities.add_instance(
-      group_definiton(@containes[:"1.1.1"]),
+    @containers[:"3"]     = model.entities.add_instance(
+      group_definiton(@containers[:"1.1.1"]),
       IDENTITY
     )
 
     # Prevent garbage collection.
     # Note that using Group#entities directly causes the group to be made unique.
     # A reference to the group's definition's entities must be used!
-    @containes.each_value { |c| group_definiton(c).entities.add_cpoint(ORIGIN) }
+    @containers.each_value { |c| group_definiton(c).entities.add_cpoint(ORIGIN) }
 
-    @entity = group_definiton(@containes[:"1.1.1"]).entities.add_cpoint(ORIGIN)
+    @entity = group_definiton(@containers[:"1.1.1"]).entities.add_cpoint(ORIGIN)
 
     @component_not_in_model = model.definitions.add("My Component Definition")
     @entity_not_in_model = @component_not_in_model.entities.add_cpoint(ORIGIN)
   end
 
   def teardown
-    @containes.each_value { |c| c.erase! if c.valid? }
+    @containers.each_value { |c| c.erase! if c.valid? }
   end
 
   #-----------------------------------------------------------------------------
@@ -54,13 +54,13 @@ class TC_LEntity < TestUp::TestCase
     assert_equal(
       paths,
       [
-        [@containes[:"1"], @containes[:"1.1"], @containes[:"1.1.1"], @entity],
-        [@containes[:"2"], @containes[:"1.1"], @containes[:"1.1.1"], @entity],
-        [@containes[:"3"], @entity]
+        [@containers[:"1"], @containers[:"1.1"], @containers[:"1.1.1"], @entity],
+        [@containers[:"2"], @containers[:"1.1"], @containers[:"1.1.1"], @entity],
+        [@containers[:"3"], @entity]
       ]
     )
 
-    paths = LEntity.all_instance_paths(group_definiton(@containes[:"1.1.1"]))
+    paths = LEntity.all_instance_paths(group_definiton(@containers[:"1.1.1"]))
 
     assert_kind_of(Array, paths)
     klass = Sketchup.version.to_i >= 17 ? Sketchup::InstancePath : Array
@@ -69,9 +69,9 @@ class TC_LEntity < TestUp::TestCase
     assert_equal(
       paths,
       [
-        [@containes[:"1"], @containes[:"1.1"], @containes[:"1.1.1"]],
-        [@containes[:"2"], @containes[:"1.1"], @containes[:"1.1.1"]],
-        [@containes[:"3"]]
+        [@containers[:"1"], @containers[:"1.1"], @containers[:"1.1.1"]],
+        [@containers[:"2"], @containers[:"1.1"], @containers[:"1.1.1"]],
+        [@containers[:"3"]]
       ]
     )
 
