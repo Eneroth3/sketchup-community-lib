@@ -50,15 +50,28 @@ class TC_LEntity < TestUp::TestCase
     assert_kind_of(Array, paths)
     klass = Sketchup.version.to_i >= 17 ? Sketchup::InstancePath : Array
     assert_kind_of(klass, paths.first)
-
     paths = paths.map(&:to_a)
-
     assert_equal(
       paths,
       [
         [@containes[:"1"], @containes[:"1.1"], @containes[:"1.1.1"], @entity],
         [@containes[:"2"], @containes[:"1.1"], @containes[:"1.1.1"], @entity],
         [@containes[:"3"], @entity]
+      ]
+    )
+
+    paths = LEntity.all_instance_paths(group_definiton(@containes[:"1.1.1"]))
+
+    assert_kind_of(Array, paths)
+    klass = Sketchup.version.to_i >= 17 ? Sketchup::InstancePath : Array
+    assert_kind_of(klass, paths.first)
+    paths = paths.map(&:to_a)
+    assert_equal(
+      paths,
+      [
+        [@containes[:"1"], @containes[:"1.1"], @containes[:"1.1.1"]],
+        [@containes[:"2"], @containes[:"1.1"], @containes[:"1.1.1"]],
+        [@containes[:"3"]]
       ]
     )
 

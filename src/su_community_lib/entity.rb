@@ -5,6 +5,9 @@ module LEntity
 
   # List all InstancePaths pointing towards this Entity throughout the model.
   #
+  # If the entity is a ComponentDefinition, the paths leading to its instances
+  # will be listed.
+  #
   # @param entity [Sketchup::Drawingelement]
   #
   # @example
@@ -19,7 +22,12 @@ module LEntity
       raise TypeError, "wrong argument type. Expected Sketchup::Drawingelement. #{entity.class} was supplied."
     end
 
-    paths = recursive_instance_path_listing(entity)
+    paths =
+      if entity.is_a?(Sketchup::ComponentDefinition)
+        entity.instances.flat_map { |i| recursive_instance_path_listing(i) }
+      else
+        recursive_instance_path_listing(entity)
+      end
 
     return paths if Sketchup.version.to_i < 17
 
