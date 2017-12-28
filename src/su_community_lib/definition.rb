@@ -55,5 +55,46 @@ module LComponentDefinition
     nil
   end
 
+  # Check if definition is only used within certain containers, e.g. another
+  # definition, an array of groups or an instance path.
+  #
+  # @param definition [Sketchup::ComponentDefinition]
+  # @param containers [Sketchup::ComponentDefinition,
+  #                    Sketchup::ComponentInstance,
+  #                    Sketchup::Group,
+  #                    Sketchup::InstancePath,
+  #                    Array<
+  #                      Sketchup::ComponentDefinition,
+  #                      Sketchup::ComponentInstance,
+  #                      Sketchup::Group,
+  #                      Sketchup::InstancePath
+  #                    >]
+  #
+  # @example
+  #   # Check if all instances of the first component definition in the model is
+  #   # within the selection (including within selected containers).
+  #   model = Sketchup.active_model
+  #   definition = model.definitions.first
+  #   SUCommunityLib::LComponentDefinition.unique_to?(definition, model.selection.to_a)
+  #
+  # @return [Boolean]
+  def self.unique_to?(definition, containers)
+    containers = [containers] unless containers.is_a?(Array)
+    return false if containers.empty?
+
+    LEntity.all_instance_paths(definition).all? do |path|
+      containers.any? do |container|
+        case container
+        when Sketchup::ComponentDefinition
+          path.to_a.map{ |i| LEntity.instance?(i) ? from_instance(i) : i}.include?(container)
+        when Sketchup::ComponentInstance, Sketchup::Group
+          path.to_a.include?(container)
+        when Sketchup::InstancePath
+          path.to_a[0..(container.size - 1)] == container.to_a
+        end
+      end
+    end
+  end
+
 end
 end

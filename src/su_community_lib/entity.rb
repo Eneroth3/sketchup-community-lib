@@ -5,6 +5,9 @@ module LEntity
 
   # List all InstancePaths pointing towards this Entity throughout the model.
   #
+  # If the entity is a ComponentDefinition, the paths leading to its instances
+  # will be listed.
+  #
   # @param entity [Sketchup::Drawingelement]
   #
   # @example
@@ -19,28 +22,16 @@ module LEntity
       raise TypeError, "wrong argument type. Expected Sketchup::Drawingelement. #{entity.class} was supplied."
     end
 
-    # This code throws syntax error in SU 6 on Win. That is however not a
-    # supported version.
-    recursive = lambda do |e, current_path = [], all_paths = []|
-      current_path.unshift(e)
-      if e.parent.is_a?(Sketchup::Model)
-        all_paths << current_path
+    paths =
+      if entity.is_a?(Sketchup::ComponentDefinition)
+        entity.instances.flat_map { |i| recursive_instance_path_listing(i) }
       else
-        e.parent.instances.each do |instance|
-          recursive.call(instance, current_path.dup, all_paths)
-        end
+        recursive_instance_path_listing(entity)
       end
 
-      all_paths
-    end
+    return paths if Sketchup.version.to_i < 17
 
-    ary = recursive.call(entity)
-
-    if Sketchup.version.to_i < 17
-      return ary
-    else
-      return ary.map { |a| Sketchup::InstancePath.new(a) }
-    end
+    paths.map { |a| Sketchup::InstancePath.new(a) }
   end
 
   # Test if entity is either group or component instance.
@@ -66,6 +57,20 @@ module LEntity
   def self.instance?(entity)
     entity.is_a?(Sketchup::Group) || entity.is_a?(Sketchup::ComponentInstance)
   end
+
+  def self.recursive_instance_path_listing(entity, current_path = [], all_paths = [])
+    current_path.unshift(entity)
+    if entity.parent.is_a?(Sketchup::Model)
+      all_paths << current_path
+    else
+      entity.parent.instances.each do |instance|
+        recursive_instance_path_listing(instance, current_path.dup, all_paths)
+      end
+    end
+
+    all_paths
+  end
+  private_class_method :recursive_instance_path_listing
 
 end
 end
