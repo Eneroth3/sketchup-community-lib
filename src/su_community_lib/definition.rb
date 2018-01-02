@@ -10,7 +10,8 @@ module LComponentDefinition
   #
   # @return [Sketchup::ComponentDefinition]
   def self.from_instance(instance)
-    if instance.is_a?(Sketchup::ComponentInstance)
+    if instance.is_a?(Sketchup::ComponentInstance) ||
+       (Sketchup.version.to_a >= 15 && instance.is_a?(Sketchup::Group))
       instance.definition
     else
       instance.model.definitions.find { |d| d.instances.include?(instance) }
