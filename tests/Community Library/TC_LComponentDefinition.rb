@@ -4,11 +4,6 @@ class TC_LComponentDefinition < TestUp::TestCase
 
   LComponentDefinition = SUCommunityLib::LComponentDefinition
 
-  def group_definiton(group)
-    # Group#definition only available in SU2015 and later.
-    group.model.definitions.find { |d| d.instances.include?(group) }
-  end
-
   def setup
     basename = File.basename(__FILE__, ".*")
     path = File.dirname(__FILE__)
