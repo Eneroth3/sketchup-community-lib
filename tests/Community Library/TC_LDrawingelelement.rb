@@ -1,8 +1,8 @@
 require 'testup/testcase'
 
-class TC_LEntity < TestUp::TestCase
+class TC_LDrawingelelement < TestUp::TestCase
 
-  LEntity = SUCommunityLib::LEntity
+  LDrawingelelement = SUCommunityLib::LDrawingelelement
 
   def setup
     basename = File.basename(__FILE__, ".*")
@@ -35,7 +35,7 @@ class TC_LEntity < TestUp::TestCase
 
   def test_all_instance_paths_definition
     entity = @stacy_def
-    paths = LEntity.all_instance_paths(entity)
+    paths = LDrawingelelement.all_instance_paths(entity)
     expected_paths = [
       [@stacy_def.instances.first]
     ]
@@ -46,7 +46,7 @@ class TC_LEntity < TestUp::TestCase
     assert(same_content(expected_paths, paths), msg)
 
     entity = @vase_def
-    paths = LEntity.all_instance_paths(entity)
+    paths = LDrawingelelement.all_instance_paths(entity)
     expected_paths = [
       [@table_def1.instances.first, @vase_def.instances.find { |i| i.parent == @table_def1 }],
       [@vase_def.instances.find { |i| i.parent.is_a?(Sketchup::Model) }]
@@ -58,13 +58,13 @@ class TC_LEntity < TestUp::TestCase
     assert(same_content(expected_paths, paths), msg)
 
     entity = @leg_def
-    paths = LEntity.all_instance_paths(entity)
+    paths = LDrawingelelement.all_instance_paths(entity)
     assert_kind_of(Array, paths)
     assert_kind_of(expected_path_class, paths.first)
     assert_equal(8, paths.size)
 
     entity = @foot_def
-    paths = LEntity.all_instance_paths(entity)
+    paths = LDrawingelelement.all_instance_paths(entity)
     assert_kind_of(Array, paths)
     assert_kind_of(expected_path_class, paths.first)
     assert_equal(8, paths.size)
@@ -72,7 +72,7 @@ class TC_LEntity < TestUp::TestCase
 
   def test_all_instance_paths_instance
     entity = @stacy_def.instances.first
-    paths = LEntity.all_instance_paths(entity)
+    paths = LDrawingelelement.all_instance_paths(entity)
     expected_paths = [
       [entity]
     ]
@@ -83,7 +83,7 @@ class TC_LEntity < TestUp::TestCase
     assert(same_content(expected_paths, paths), msg)
 
     entity = @vase_def.instances.find { |i| i.parent.is_a?(Sketchup::Model) }
-    paths = LEntity.all_instance_paths(entity)
+    paths = LDrawingelelement.all_instance_paths(entity)
     expected_paths = [
       [entity]
     ]
@@ -94,7 +94,7 @@ class TC_LEntity < TestUp::TestCase
     assert(same_content(expected_paths, paths), msg)
 
     entity = @vase_def.instances.find { |i| i.parent == @table_def1 }
-    paths = LEntity.all_instance_paths(entity)
+    paths = LDrawingelelement.all_instance_paths(entity)
     expected_paths = [
       [@table_def1.instances.first, entity]
     ]
@@ -105,14 +105,14 @@ class TC_LEntity < TestUp::TestCase
     assert(same_content(expected_paths, paths), msg)
 
     entity = @leg_def.instances.first
-    paths = LEntity.all_instance_paths(entity)
+    paths = LDrawingelelement.all_instance_paths(entity)
     assert_kind_of(Array, paths)
     assert_kind_of(expected_path_class, paths.first)
     # With only one instance of each table, any instance of a leg has just one path to it.
     assert_equal(1, paths.size)
 
     entity = @foot_def.instances.first
-    paths = LEntity.all_instance_paths(entity)
+    paths = LDrawingelelement.all_instance_paths(entity)
     assert_kind_of(Array, paths)
     assert_kind_of(expected_path_class, paths.first)
     # With 8 instances of the leg there are 8 paths to the one and only foot instance.

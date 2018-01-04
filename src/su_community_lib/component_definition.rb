@@ -84,7 +84,7 @@ module LComponentDefinition
     scopes = [scopes] unless scopes.is_a?(Array)
     raise ArgumentError, "Scope is empty." if scopes.empty?
 
-    LEntity.all_instance_paths(definition).all? do |path|
+    LDrawingelement.all_instance_paths(definition).all? do |path|
       scopes.any? do |scope|
         case scope
         when Sketchup::ComponentDefinition
