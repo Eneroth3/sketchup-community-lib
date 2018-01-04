@@ -3,21 +3,6 @@ module SUCommunityLib
 # Namespace for methods related to SketchUp's native ComponentDefinition class.
 module LComponentDefinition
 
-  # Get definition used by given instance.
-  # For Versions before SU 2015 there was no Group#definition method.
-  #
-  # @param instance [Sketchup::ComponentInstance, Sketchup::Group, Sketchup::Image]
-  #
-  # @return [Sketchup::ComponentDefinition]
-  def self.from_instance(instance)
-    if instance.is_a?(Sketchup::ComponentInstance) ||
-       (Sketchup.version.to_a >= 15 && instance.is_a?(Sketchup::Group))
-      instance.definition
-    else
-      instance.model.definitions.find { |d| d.instances.include?(instance) }
-    end
-  end
-
   # Define new axes placement for component.
   #
   # @param definition [Sketchup::ComponentDefiniton]
@@ -118,7 +103,7 @@ module LComponentDefinition
   #
   # @return [Array<Sketchup::Drawingelement>]
   def self.instance_path_definitions(path)
-    path.map { |i| LEntity.instance?(i) ? from_instance(i) : i }
+    path.map { |i| LEntity.instance?(i) ? LEntity.definition(i) : i }
   end
   private_class_method :instance_path_definitions
 
