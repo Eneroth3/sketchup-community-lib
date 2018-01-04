@@ -100,23 +100,25 @@ module LComponentDefinition
     end
   end
 
+  # Check if InstancePath (or Array representing InstancePath) starts with other
+  # InstancePath (or Array representing InstancePath).
+  #
   # @param path [Array, Sketchup::InstancePath]
-  # @param start [Array, Sketchup::InstancePath]
+  # @param beginning [Array, Sketchup::InstancePath]
+  #
+  # @return [Boolean]
   def self.instance_path_start_with_instance_path?(path, beginning)
-    # If start is empty array the index in the second line of code would
-    # become negative, resulting in a mismatch.
-    return true if beginning.empty?
-
-    # The == comparison does not honor the order of the elements.
-    # However SketchUp will only allow one single order in an InstancePath as
-    # anything else would require circular component nesting.
-    path.to_a[0..(beginning.size - 1)] == beginning.to_a
+    path.to_a.take(beginning.size) == beginning.to_a
   end
   private_class_method :instance_path_start_with_instance_path?
 
+  # List definitions used by InstancePath/Array as well as the leaf entity.
+  #
   # @param path [Array, Sketchup::InstancePath]
+  #
+  # @return [Array<Sketchup::Drawingelement>]
   def self.instance_path_definitions(path)
-    path.to_a[0..-2].map { |i| LEntity.instance?(i) ? from_instance(i) : i }
+    path.map { |i| LEntity.instance?(i) ? from_instance(i) : i }
   end
   private_class_method :instance_path_definitions
 
