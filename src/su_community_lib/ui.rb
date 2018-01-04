@@ -35,7 +35,7 @@ module LUI
     end
   end
 
-  # Get platform dependant icon file extension, e.g. for mouse cursor or toolbar.
+  # Get platform dependent icon file extension, e.g. for mouse cursor or toolbar.
   #
   # For SU versions below 2016 ".png" is returned. For newer versions ".svg" is
   # returned on Windows and ".pdf" on Mac.
