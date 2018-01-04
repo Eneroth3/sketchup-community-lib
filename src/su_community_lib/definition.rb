@@ -56,20 +56,20 @@ module LComponentDefinition
     nil
   end
 
-  # Check if definition is only used within certain containers, e.g. another
+  # Check if definition is solely used within certain scope, e.g. another
   # definition, an array of groups or an instance path.
   #
   # @param definition [Sketchup::ComponentDefinition]
-  # @param containers [Sketchup::ComponentDefinition,
-  #                    Sketchup::ComponentInstance,
-  #                    Sketchup::Group,
-  #                    Sketchup::InstancePath,
-  #                    Array<
-  #                      Sketchup::ComponentDefinition,
-  #                      Sketchup::ComponentInstance,
-  #                      Sketchup::Group,
-  #                      Sketchup::InstancePath
-  #                    >]
+  # @param scopes [Sketchup::ComponentDefinition,
+  #                 Sketchup::ComponentInstance,
+  #                 Sketchup::Group,
+  #                 Sketchup::InstancePath,
+  #                 Array<
+  #                   Sketchup::ComponentDefinition,
+  #                   Sketchup::ComponentInstance,
+  #                   Sketchup::Group,
+  #                   Sketchup::InstancePath
+  #                 >]
   #
   # @example
   #   # Check if all instances of the first component definition in the model is
@@ -79,23 +79,46 @@ module LComponentDefinition
   #   SUCommunityLib::LComponentDefinition.unique_to?(definition, model.selection.to_a)
   #
   # @return [Boolean]
-  def self.unique_to?(definition, containers)
-    containers = [containers] unless containers.is_a?(Array)
-    return false if containers.empty?
+  def self.unique_to?(definition, scopes)
+    raise ArgumentError, "Expected ComponentDefinition." unless definition.is_a?(Sketchup::ComponentDefinition)
+    scopes = [scopes] unless scopes.is_a?(Array)
+    raise ArgumentError, "Scope is empty." if scopes.empty?
 
     LEntity.all_instance_paths(definition).all? do |path|
-      containers.any? do |container|
-        case container
+      scopes.any? do |scope|
+        case scope
         when Sketchup::ComponentDefinition
-          path.to_a.map{ |i| LEntity.instance?(i) ? from_instance(i) : i}.include?(container)
+          instance_path_definitions(path).include?(scope)
         when Sketchup::ComponentInstance, Sketchup::Group
-          path.to_a.include?(container)
-        when Sketchup::InstancePath
-          path.to_a[0..(container.size - 1)] == container.to_a
+          path.include?(scope)
+        when defined?(Sketchup::InstancePath) && Sketchup::InstancePath
+          instance_path_start_with_instance_path?(path, scope)
+        else
+          raise ArgumentError, "Unexpected scope #{scope.class}."
         end
       end
     end
   end
+
+  # @param path [Array, Sketchup::InstancePath]
+  # @param start [Array, Sketchup::InstancePath]
+  def self.instance_path_start_with_instance_path?(path, beginning)
+    # If start is empty array the index in the second line of code would
+    # become negative, resulting in a mismatch.
+    return true if beginning.empty?
+
+    # The == comparison does not honor the order of the elements.
+    # However SketchUp will only allow one single order in an InstancePath as
+    # anything else would require circular component nesting.
+    path.to_a[0..(beginning.size - 1)] == beginning.to_a
+  end
+  private_class_method :instance_path_start_with_instance_path?
+
+  # @param path [Array, Sketchup::InstancePath]
+  def self.instance_path_definitions(path)
+    path.to_a[0..-2].map { |i| LEntity.instance?(i) ? from_instance(i) : i }
+  end
+  private_class_method :instance_path_definitions
 
 end
 end
