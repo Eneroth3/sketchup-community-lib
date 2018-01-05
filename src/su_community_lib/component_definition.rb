@@ -71,16 +71,7 @@ module LComponentDefinition
 
     LDrawingelement.all_instance_paths(definition).all? do |path|
       scopes.any? do |scope|
-        case scope
-        when Sketchup::ComponentDefinition
-          instance_path_definitions(path).include?(scope)
-        when Sketchup::ComponentInstance, Sketchup::Group
-          path.include?(scope)
-        when defined?(Sketchup::InstancePath) && Sketchup::InstancePath
-          instance_path_start_with_instance_path?(path, scope)
-        else
-          raise ArgumentError, "Unexpected scope #{scope.class}."
-        end
+        instance_path_matches_scope?(path, scope)
       end
     end
   end
@@ -106,6 +97,32 @@ module LComponentDefinition
     path.map { |i| LEntity.instance?(i) ? LEntity.definition(i) : i }
   end
   private_class_method :instance_path_definitions
+
+  # Check if InstancePath (or Array representing InstancePath) points to an
+  # entity in a certain scope, e.g. a ComponentDefinition or an InstancePath to
+  # a parent drawing context.
+  #
+  # @param path [Array, Sketchup::InstancePath]
+  # @param scope [Sketchup::ComponentDefinition,
+  #                Sketchup::ComponentInstance,
+  #                Sketchup::Group,
+  #                Sketchup::InstancePath
+  #               ]
+  #
+  # @return [Boolean]
+  def self.instance_path_matches_scope?(path, scope)
+    case scope
+    when Sketchup::ComponentDefinition
+      instance_path_definitions(path).include?(scope)
+    when Sketchup::ComponentInstance, Sketchup::Group
+      path.include?(scope)
+    when defined?(Sketchup::InstancePath) && Sketchup::InstancePath
+      instance_path_start_with_instance_path?(path, scope)
+    else
+      raise ArgumentError, "Unexpected scope #{scope.class}."
+    end
+  end
+  private_class_method :instance_path_matches_scope?
 
 end
 end

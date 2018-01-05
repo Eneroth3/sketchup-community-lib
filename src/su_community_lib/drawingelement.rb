@@ -3,7 +3,6 @@ module SUCommunityLib
 # Namespace for methods related to SketchUp's native Drawingelement class.
 module LDrawingelement
 
-
   # List all InstancePaths pointing towards this Entity throughout the model.
   #
   # If the entity is a ComponentDefinition, the paths leading to its instances

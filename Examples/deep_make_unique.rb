@@ -138,9 +138,9 @@ module DeepMakeUnique
     index
   end
 
-  @@loaded ||= false
-  unless @@loaded
-    @@loaded = true
+  @loaded ||= false
+  unless @loaded
+    @loaded = true
 
     UI.add_context_menu_handler do |menu|
       next unless menu_available?
