@@ -27,13 +27,15 @@ module AlignAxes
   def self.line_up_axes
     model = Sketchup.active_model
     instances = model.selection.select { |i| SUCommunityLib::LEntity.instance?(i) }
+    model.start_operation("Line Up Axes", true)
 
     # Different instances of the same definition needs to be made unique to have
     # their axes adjusted individually (assuming there aren't perfectly
     # overlapping instances).
-    return unless make_unique(instances)
-
-    model.start_operation("Line Up Axes", true)
+    unless make_unique(instances)
+      model.abort_operation
+      return
+    end
 
     # In theory passing the inverse of an instance's transformation to place_axes
     # should line up its axes to those of the parent drawing context.
