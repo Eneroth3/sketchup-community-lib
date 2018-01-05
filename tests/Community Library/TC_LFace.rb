@@ -5,6 +5,8 @@ class TC_LFace < TestUp::TestCase
   LFace = SUCommunityLib::LFace
 
   def setup
+    open_new_model
+
     @container = Sketchup.active_model.active_entities.add_group
     @outer_face = @container.entities.add_face(
       Geom::Point3d.new(0,   0,   0),
@@ -21,7 +23,7 @@ class TC_LFace < TestUp::TestCase
   end
 
   def teardown
-    @container.erase!
+    discard_model_changes
   end
 
   #-----------------------------------------------------------------------------

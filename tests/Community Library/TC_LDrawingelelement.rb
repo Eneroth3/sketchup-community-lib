@@ -8,7 +8,9 @@ class TC_LDrawingelelement < TestUp::TestCase
     basename = File.basename(__FILE__, ".*")
     path = File.dirname(__FILE__)
     test_model = File.join(path, basename, "Table.skp")
+    disable_read_only_flag_for_test_models
     Sketchup.open_file(test_model)
+    restore_read_only_flag_for_test_models
 
     definitions = Sketchup.active_model.definitions
     @stacy_def = definitions["Stacy"]
@@ -20,7 +22,7 @@ class TC_LDrawingelelement < TestUp::TestCase
   end
 
   def teardown
-    # ...
+    close_active_model
   end
 
   #-----------------------------------------------------------------------------

@@ -5,11 +5,11 @@ class TC_LEdge < TestUp::TestCase
   LEdge = SUCommunityLib::LEdge
 
   def setup
-    #...
+    open_new_model
   end
 
   def teardown
-    #...
+    discard_model_changes
   end
 
   #-----------------------------------------------------------------------------

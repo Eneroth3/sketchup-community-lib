@@ -5,8 +5,11 @@ class TC_Entity < TestUp::TestCase
   LEntity = SUCommunityLib::LEntity
 
   def setup
+    open_new_model
+    
     model = Sketchup.active_model
     entities = model.entities
+    
     @group = entities.add_group
     @group_definition = model.definitions.find { |d| d.instances.include?(@group) }
     @cpoint = @group.entities.add_cpoint(ORIGIN)
@@ -16,7 +19,7 @@ class TC_Entity < TestUp::TestCase
   end
 
   def teardown
-    #...
+    discard_model_changes
   end
 
   #-----------------------------------------------------------------------------
@@ -26,7 +29,7 @@ class TC_Entity < TestUp::TestCase
 
     assert_equal(@group_definition, LEntity.definition(@group))
   end
- 
+
   def test_instance_Query
     msg = "A Group is an instance"
     assert(LEntity.instance?(@group), msg)
