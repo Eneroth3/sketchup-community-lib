@@ -3,6 +3,26 @@ module SUCommunityLib
 # Namespace for methods related to SketchUp's native Entity classes.
 module LEntity
 
+  # Copy all attributes from another entity.
+  #
+  # @param entity [Sketchup::Entity]
+  # @param source [Sketchup::Entity]
+  #
+  # Returns [Nothing]
+  def self.copy_attributes(entity, source)
+    # Entity#attribute_dictionaries returns nil instead of empty Array when
+    # empty.
+    dicts = source.attribute_dictionaries || []
+
+    dicts.each do |dict|
+      dict.each_pair do |key, value|
+        entity.set_attribute(dict.name, key, value)
+      end
+    end
+
+    nil
+  end
+
   # Get definition used by instance.
   # For Versions before SU 2015 there was no Group#definition method.
   #
@@ -40,6 +60,35 @@ module LEntity
   # @return [Boolean]
   def self.instance?(entity)
     entity.is_a?(Sketchup::Group) || entity.is_a?(Sketchup::ComponentInstance)
+  end
+
+  # Swap the definition used by an instance.
+  #
+  # As SketchUp doesn't support swapping group definitions or swap between a
+  # group definition and a component definition, a new instance is
+  # created in these cases.
+  #
+  # @param instance [Sketchup::ComponentInstance, Sketchup::Group]
+  # @param definition [Skecthup::ComponentDefinition]
+  #
+  # @return [Sketchup::ComponentInstance, Sketchup::Group]
+  def self.swap_definition(instance, definition)
+    if instance.is_a?(Sketchup::Group) || definition.group?
+      old_instance = instance
+      instance = old_instance.parent.entities.add_instance(
+        definition,
+        old_instance.transformation
+      )
+      instance.material = old_instance.material
+      instance.layer = old_instance.layer
+      instance.hidden = old_instance.hidden?
+      copy_attributes(instance, old_instance)
+      old_instance.erase!
+    else
+      instance.definition = definition
+    end
+
+    instance
   end
 
 end
