@@ -26,5 +26,19 @@ class TC_Entity < TestUp::TestCase
 
     assert_equal(@group_definition, LEntity.definition(@group))
   end
+ 
+  def test_instance_Query
+    msg = "A Group is an instance"
+    assert(LEntity.instance?(@group), msg)
+
+    msg = "A ComponentInstance is an instance"
+    assert(LEntity.instance?(@component_instance), msg)
+
+    msg = "A ComponentDefinition is not an instance"
+    refute(LEntity.instance?(@component_definition), msg)
+
+    msg = "A ConstructionPoint is not an instance"
+    refute(LEntity.instance?(@cpoint), msg)
+  end
 
 end

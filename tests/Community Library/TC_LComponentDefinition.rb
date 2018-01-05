@@ -25,6 +25,49 @@ class TC_LComponentDefinition < TestUp::TestCase
 
   #-----------------------------------------------------------------------------
 
+  def group_definiton(group)
+    # Group#definition only available in SU2015 and later.
+    group.model.definitions.find { |d| d.instances.include?(group) }
+  end
+
+  def test_place_axes
+    model = Sketchup.active_model
+    arbitrary_tr = Geom::Transformation.new([
+      0.6659020798475525, 0.7563298801682948, 1.2304333867430537, 0,
+      0.5255701896498736, 1.2000850097458482, 0.5551255073894125, 0,
+      0.9055675476053245, 1.2593342527824833, 1.0736847987057314, 0,
+      0.8815187812185686, 1.1875845990707674, 0.6093097598311678, 0.5700086077795378
+    ])
+
+    group = model.entities.add_group # Created with IDENTITY transformation.
+    original_points = [
+      Geom::Point3d.new(0, 0, 0),
+      Geom::Point3d.new(1, 0, 0),
+      Geom::Point3d.new(1, 1, 0),
+      Geom::Point3d.new(0, 1, 0)
+    ]
+    face = group.entities.add_face(original_points)
+    definition = group_definiton(group)
+
+    LComponentDefinition.place_axes(definition, arbitrary_tr)
+    modified_points = face.vertices.map(&:position)
+    modified_points.each { |p| p.transform!(group.transformation)}
+    msg =
+      "Coordinates in model space within an instance should stay the same when "\
+      "changing the definition axes (and no third argument says otherwise)."
+    assert(modified_points == original_points, msg)
+
+    group = model.entities.add_group
+    group.entities.add_cpoint(ORIGIN)
+    definition = group_definiton(group)
+
+    LComponentDefinition.place_axes(definition, arbitrary_tr, false)
+    msg =
+      "Instances should keep their old transformation when third argument "\
+      "is false."
+    assert(group.transformation.to_a == IDENTITY.to_a, msg)
+  end
+
   def test_unique_to_Query_definitions
     definition = @stacy_def
     scope = @table_def
