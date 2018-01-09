@@ -1,4 +1,6 @@
-module SUCommunityLib
+Sketchup.require "modules/vector3d.rb"
+
+module SkippyLib
 module LGeom
 
 # Namespace for methods related to planes.

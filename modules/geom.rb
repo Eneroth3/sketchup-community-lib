@@ -1,4 +1,4 @@
-module SUCommunityLib
+module SkippyLib
 
 # Namespace for methods related to SketchUp's native Geom module.
 module LGeom

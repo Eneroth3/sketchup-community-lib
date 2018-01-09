@@ -1,4 +1,6 @@
-module SUCommunityLib
+Sketchup.require "modules/plane.rb"
+
+module SkippyLib
 module LGeom
 
 # Namespace for methods related to SketchUp's native Geom::Point3d class.

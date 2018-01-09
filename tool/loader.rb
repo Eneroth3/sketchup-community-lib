@@ -1,4 +1,4 @@
-module SUCommunityLib
+module SUCommunityLibLoader
 
  # Ensure character encoding is correct for users with non-English names.
   current_dir = __dir__
@@ -6,10 +6,16 @@ module SUCommunityLib
     current_dir.force_encoding("UTF-8")
   end
 
-  # Path to library's directory.
-  LIB_ROOT = File.expand_path("../modules", current_dir)
-  LOAD_PATTERN = File.join(LIB_ROOT, "**/*.rb")
-  Dir.glob(LOAD_PATTERN).each { |p| require p }
+  LIB_ROOT = File.expand_path("../", current_dir)
+  $LOAD_PATH << LIB_ROOT
+  LOAD_PATTERN = File.join(LIB_ROOT, "modules", "**/*.rb")
+
+  # Load all .rb files in library.
+  #
+  # @return [Void]
+  def require_all
+    Dir.glob(LOAD_PATTERN).each { |p| require p }
+  end
 
   # Reload library.
   #

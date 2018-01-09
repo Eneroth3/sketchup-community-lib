@@ -1,4 +1,6 @@
-module SUCommunityLib
+Sketchup.require "modules/transformation.rb"
+
+module SkippyLib
 module LGeom
 
 # Namespace for methods related to SketchUp's native Geom::Vector3d class.

@@ -1,4 +1,7 @@
-module SUCommunityLib
+Sketchup.require "modules/entity.rb"
+Sketchup.require "modules/drawingelement.rb"
+
+module SkippyLib
 
 # Namespace for methods related to SketchUp's native ComponentDefinition class.
 module LComponentDefinition
