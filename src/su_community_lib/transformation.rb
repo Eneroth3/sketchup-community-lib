@@ -309,13 +309,16 @@ module LTransformation
   # @return [Float]
   def self.scale_factor_in_plane(transformation, plane)
     normal = LPlane.normal(plane)
-    tangent = LVector3d.arbitrary_perpendicular_vector(normal)
-    bi_tangent = tangent * normal
 
-    tangent.transform!(transformation)
-    bi_tangent.transform!(transformation)
+    # REVIEW: If this operation has a name, extract it to its own method.
+    tr = create_from_axes(
+      ORIGIN,
+      yaxis(transformation) * zaxis(transformation),
+      zaxis(transformation) * xaxis(transformation),
+      xaxis(transformation) * yaxis(transformation)
+    )
 
-    (tangent * bi_tangent).length.to_f
+    normal.transform(tr).length.to_f
   end
 
   # Test if transformation is sheared (not orthogonal).
