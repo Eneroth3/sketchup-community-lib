@@ -1,8 +1,13 @@
-module SUCommunityLib
-module Example
+module SUCommunityLibExamples
 
 # Make selected instances' axes match those of the active drawing context.
 # Useful to get texture positioning to match between drawing contexts.
+#
+# This example shows how `LComponentDefinition.place_axes` can be used.
+#
+# For this example SUCommunityLib is assumed to already be loaded in the top
+# level namsepsace. For a real extension the library should be copied into the
+# extension's own folder, wrapped under its namespace and loaded from there.
 module AlignAxes
 
   def self.make_unique(instances)
@@ -62,6 +67,5 @@ module AlignAxes
     UI.menu("Plugins").add_item("Line Up Axes") { line_up_axes }
   end
 
-end
 end
 end

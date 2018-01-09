@@ -25,7 +25,7 @@ Metrics/MethodLength:
   Max: 20
 
 # Modules can be however long that is needed to fit all methods related to the
-# corresponding API Class/Method.
+# corresponding API Class/Module.
 Metrics/ModuleLength:
   Enabled: false
 
@@ -41,7 +41,8 @@ Layout/IndentArray:
 Layout/EmptyLinesAroundModuleBody:
   Enabled: false
 
-# A module that merely wraps another module shouldn't be indented.
+# A module that merely wraps one single direct child module should not be
+# indented. Every other code block must be indented.
 Layout/IndentationWidth:
   IgnoredPatterns:
     - '^\s*module'
@@ -74,6 +75,6 @@ SketchupSuggestions:
 SketchupRequirements/FileStructure:
   Enabled: false
 
-# Not an Extension.
+# SketchupExtension checks don't apply as this isn't an Extension but a library.
 SketchupRequirements/SketchupExtension:
   Enabled: false

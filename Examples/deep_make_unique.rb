@@ -1,12 +1,15 @@
-module SUCommunityLib
-module Example
+module SUCommunityLibExamples
 
-# Make selected instances unique, similarly to the native feature, but include
-# child instances.
+# Make selected instances unique, similarly to the native feature, but affects
+# child instances too.
 #
 # This example shows a number of SUCommunityLib features, including custom
-# menu item position (next to native make Unique), swapping group definitions
+# menu item position (next to native Make Unique), swapping group definitions
 # and testing if a definition is unique to a certain scope.
+#
+# For this example SUCommunityLib is assumed to already be loaded in the top
+# level namsepsace. For a real extension the library should be copied into the
+# extension's own folder, wrapped under its namespace and loaded from there.
 module DeepMakeUnique
 
   ACTION_NAME = "Deep Make Unique".freeze
@@ -17,7 +20,7 @@ module DeepMakeUnique
   #
   # @param definition [Sketchup::ComponentDefiniton]
   #
-  # @return [Nothing]
+  # @return [Void]
   def self.mark_definition(definition)
     definition.entities.add_line(ORIGIN, [0, 0, 100])
   end
@@ -29,7 +32,7 @@ module DeepMakeUnique
   # @param scope [Array<Sketchup::Group, Sketchup::ComponentInstance>]
   # @replacement_table [Hash]
   #
-  # @return [Nothing]
+  # @return [Void]
   def self.recursive_make_unique(instance, scope, replacement_table)
     definition = SUCommunityLib::LEntity.definition(instance)
 
@@ -150,6 +153,5 @@ module DeepMakeUnique
     end
   end
 
-end
 end
 end

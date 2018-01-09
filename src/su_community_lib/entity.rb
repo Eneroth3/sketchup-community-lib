@@ -69,7 +69,7 @@ module LEntity
   # created in these cases.
   #
   # @param instance [Sketchup::ComponentInstance, Sketchup::Group]
-  # @param definition [Skecthup::ComponentDefinition]
+  # @param definition [Sketchup::ComponentDefinition]
   #
   # @return [Sketchup::ComponentInstance, Sketchup::Group]
   def self.swap_definition(instance, definition)
