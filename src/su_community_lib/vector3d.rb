@@ -46,17 +46,9 @@ module LVector3d
   #
   # @return [Geom::Vector3d]
   def self.transform_as_normal(normal, transformation)
-    tangent = arbitrary_perpendicular_vector(normal)
-    bi_tangent = normal * tangent
+    tr = LTransformation.transpose(transformation).inverse
 
-    tangent.transform!(transformation)
-    bi_tangent.transform!(transformation)
-    normal = (tangent * bi_tangent).normalize
-
-    # Mathematically, mirroring an object should flip its faces inside out
-    # (winding order of vertices, cross product of tangents and cotangents).
-    # However SketchUp compensates for this. So does this library.
-    LTransformation.flipped?(transformation) ? normal.reverse : normal
+    normal.transform(tr).normalize
   end
 
 end

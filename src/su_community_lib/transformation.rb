@@ -73,7 +73,7 @@ module LTransformation
       Geom::Transformation.rotation(ORIGIN, X_AXIS, x_angle)
   end
 
-  # Calculate determinant of 3X3 matrix.
+  # Calculate determinant of 3X3 matrix (ignore translation).
   #
   # @param transformation [Geom::Transformation]
   #
@@ -327,6 +327,22 @@ module LTransformation
   # @return [Boolean]
   def self.sheared?(transformation)
     !xaxis(transformation).parallel?(yaxis(transformation) * zaxis(transformation))
+  end
+
+  # Transpose of 3X3 matrix (drop translation).
+  #
+  # @param transformation [Geom::Transformation]
+  #
+  # @return [Geom::Transformation]
+  def self.transpose(transformation)
+    a = transformation.to_a
+
+    Geom::Transformation.new([
+      a[0], a[4], a[8],  0,
+      a[1], a[5], a[9],  0,
+      a[2], a[6], a[10], 0,
+      0,    0,    0,     a[15]
+    ])
   end
 
   # Get the X axis vector of a transformation.
