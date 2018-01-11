@@ -1,5 +1,3 @@
-Sketchup.require "modules/vector3d.rb"
-
 module SkippyLib
 module LGeom
 
