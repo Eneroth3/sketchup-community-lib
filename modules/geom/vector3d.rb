@@ -1,5 +1,3 @@
-Sketchup.require "modules/transformation.rb"
-
 module SkippyLib
 module LGeom
 

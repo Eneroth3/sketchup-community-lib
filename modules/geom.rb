@@ -1,3 +1,8 @@
+Sketchup.require "modules/geom/plane.rb"
+Sketchup.require "modules/geom/point3d.rb"
+Sketchup.require "modules/geom/transformation.rb"
+Sketchup.require "modules/geom/vector3d.rb"
+
 module SkippyLib
 
 # Namespace for methods related to SketchUp's native Geom module.
