@@ -321,33 +321,33 @@ class TC_LTransformation < TestUp::TestCase
   end
 
   def test_scale_factor_in_plane
-    plane = [ORIGIN, Z_AXIS]
+    normal = Z_AXIS
 
     tr = IDENTITY
-    assert_equal(1, LTransformation.scale_factor_in_plane(tr, plane))
+    assert_equal(1, LTransformation.scale_factor_in_plane(tr, normal))
 
     tr = Geom::Transformation.scaling(2)
-    assert_equal(4, LTransformation.scale_factor_in_plane(tr, plane))
+    assert_equal(4, LTransformation.scale_factor_in_plane(tr, normal))
 
     tr = Geom::Transformation.scaling(2, 4, 1)
-    assert_equal(8, LTransformation.scale_factor_in_plane(tr, plane))
+    assert_equal(8, LTransformation.scale_factor_in_plane(tr, normal))
 
     tr = Geom::Transformation.scaling(2, 4, 7)
-    assert_equal(8, LTransformation.scale_factor_in_plane(tr, plane))
+    assert_equal(8, LTransformation.scale_factor_in_plane(tr, normal))
 
     # Mirrored.
     tr = Geom::Transformation.scaling(2, -4, 7)
-    assert_equal(8, LTransformation.scale_factor_in_plane(tr, plane))
+    assert_equal(8, LTransformation.scale_factor_in_plane(tr, normal))
 
     # Other magnitude of normal.
-    plane = [ORIGIN, Geom::Vector3d.new(0, 0, 10)]
+    normal = Geom::Vector3d.new(0, 0, 10)
     tr = Geom::Transformation.scaling(2)
-    assert_equal(4, LTransformation.scale_factor_in_plane(tr, plane))
+    assert_equal(4, LTransformation.scale_factor_in_plane(tr, normal))
 
     # Skewed plane.
-    plane = [ORIGIN, Geom::Vector3d.new(1, 0, 1)]
+    normal = Geom::Vector3d.new(1, 0, 1)
     tr = Geom::Transformation.scaling(2, 1, 1)
-    actual = LTransformation.scale_factor_in_plane(tr, plane)
+    actual = LTransformation.scale_factor_in_plane(tr, normal)
     assert_in_delta(1.5811388300841873, actual, SKETCHUP_FLOAT_TOLERANCE)
 
     # Skewed transformation.
@@ -357,18 +357,18 @@ class TC_LTransformation < TestUp::TestCase
       0,   0,   1,  0,
       0,   0,   0,  1
     ])
-    plane = [ORIGIN, Z_AXIS]
-    assert_equal(1, LTransformation.scale_factor_in_plane(tr, plane))
+    normal = Z_AXIS
+    assert_equal(1, LTransformation.scale_factor_in_plane(tr, normal))
 
     # Skewed, scaled, rotated and translated transformation.
-    plane = [ORIGIN, Z_AXIS]
+    normal = Z_AXIS
     tr = Geom::Transformation.new([
       0.7431103159841183, 0.17161397638840747, -1.4538852158104993, 0.0,
       -1.2500000000000004, 0.8660254037844387, 0.0, 0.0,
       -2.8740361035487787, -0.6637302072178367, -3.3832469630857473, 0.0,
       43.503319882909025, -38.94829332461316, 29.612099664272684, 1.0
     ])
-    actual = LTransformation.scale_factor_in_plane(tr, plane)
+    actual = LTransformation.scale_factor_in_plane(tr, normal)
     assert_in_delta(2.371582869685522, actual, SKETCHUP_FLOAT_TOLERANCE)
 
   end
