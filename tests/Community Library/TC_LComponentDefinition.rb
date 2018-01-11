@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_LComponentDefinition < TestUp::TestCase
 
-  LComponentDefinition = SUCommunityLib::LComponentDefinition
+  LComponentDefinition = SkippyLib::LComponentDefinition
 
   def setup
     basename = File.basename(__FILE__, ".*")

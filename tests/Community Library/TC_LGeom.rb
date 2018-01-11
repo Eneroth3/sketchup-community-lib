@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_LGeom < TestUp::TestCase
 
-  LGeom = SUCommunityLib::LGeom
+  LGeom = SkippyLib::LGeom
 
   def setup
     #...

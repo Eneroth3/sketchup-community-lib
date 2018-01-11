@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_LVector3d < TestUp::TestCase
 
-  LVector3d = SUCommunityLib::LGeom::LVector3d
+  LVector3d = SkippyLib::LGeom::LVector3d
 
   def setup
     # ...

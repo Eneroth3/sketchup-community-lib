@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_LDrawingelelement < TestUp::TestCase
 
-  LDrawingelement = SUCommunityLib::LDrawingelement
+  LDrawingelement = SkippyLib::LDrawingelement
 
   def setup
     basename = File.basename(__FILE__, ".*")

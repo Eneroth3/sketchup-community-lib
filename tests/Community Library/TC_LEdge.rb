@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_LEdge < TestUp::TestCase
 
-  LEdge = SUCommunityLib::LEdge
+  LEdge = SkippyLib::LEdge
 
   def setup
     open_new_model

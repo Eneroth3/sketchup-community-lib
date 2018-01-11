@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_LFace < TestUp::TestCase
 
-  LFace = SUCommunityLib::LFace
+  LFace = SkippyLib::LFace
 
   def setup
     open_new_model
