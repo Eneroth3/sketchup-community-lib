@@ -299,18 +299,26 @@ module LTransformation
 
   # Compute the area scale factor of transformation at specific plane.
   #
+  # Since all parallel planes have the same scale factor when applying a
+  # transformation, only the normal needs to be passed as an argument. To find
+  # the normal of a plane, please see `LPlane.normal`.
+  #
   # @param transformation [Geom::Transformation]
-  # @param plane [Array(Geom::Point3d, Geom::Vector3d), Array(Float, Float, Float, Float)]
+  # @param normal [Geom::Vector3d]
   #
   # @example
+  #   # When the normal is explicitly specific:
   #   tr = Geom::Transformation.scaling(ORIGIN, 2, 1, 1)
-  #   plane = [ORIGIN, Z_AXIS]
-  #   SUCommunityLib::LGeom::LTransformation.scale_factor_in_plane(tr, plane)
+  #   normal = Z_AXIS
+  #   SUCommunityLib::LGeom::LTransformation.scale_factor_in_plane(tr, normal)
   #
+  #   # For a plane in any of SketchUp's 2 supported formats:
+  #   plane = [0, 0, 0, 1]
+  #   normal = SUCommunityLib::LGeom::LPlane.normal(plane) # This example requires the LPlane module.
+  #   SUCommunityLib::LGeom::LTransformation.scale_factor_in_plane(tr, normal)
   #
   # @return [Float]
-  def self.scale_factor_in_plane(transformation, plane)
-    normal = LPlane.normal(plane)
+  def self.scale_factor_in_plane(transformation, normal)
 
     # REVIEW: If this operation has a name, extract it to its own method.
     tr = create_from_axes(
@@ -320,7 +328,7 @@ module LTransformation
       xaxis(transformation) * yaxis(transformation)
     )
 
-    normal.transform(tr).length.to_f
+    normal.normalize.transform(tr).length.to_f
   end
 
   # Test if transformation is sheared (not orthogonal).
