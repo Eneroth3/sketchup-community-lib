@@ -1,3 +1,4 @@
+# Load this file to load _all_ the Community Library modules, e.g. for testing.
 module SUCommunityLibLoader
 
  # Ensure character encoding is correct for users with non-English names.
@@ -13,9 +14,13 @@ module SUCommunityLibLoader
   # Load all .rb files in library.
   #
   # @return [Void]
-  def require_all
+  def self.require_all
     Dir.glob(LOAD_PATTERN).each { |p| require p }
+
+    nil
   end
+
+  require_all
 
   # Reload library.
   #
