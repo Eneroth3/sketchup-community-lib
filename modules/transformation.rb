@@ -1,5 +1,3 @@
-Sketchup.require "modules/plane.rb"
-
 module SkippyLib
 module LGeom
 
