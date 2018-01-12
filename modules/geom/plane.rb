@@ -1,4 +1,4 @@
-module SUCommunityLib
+module SkippyLib
 module LGeom
 
 # Namespace for methods related to planes.

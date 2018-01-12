@@ -1,4 +1,4 @@
-module SUCommunityLib
+module SkippyLib
 
 # Namespace for methods related to SketchUp's native Entity classes.
 module LEntity
@@ -48,7 +48,7 @@ module LEntity
   #   entity = Sketchup.active_model.selection.first
   #   if !entity
   #     puts "Selection is empty."
-  #   elsif SUCommunityLib::LEntity.instance?(entity)
+  #   elsif SkippyLib::LEntity.instance?(entity)
   #     puts "Instance's transformation is: #{entity.transformation}."
   #     puts "Instance's definition is: #{entity.definition}."
   #   else

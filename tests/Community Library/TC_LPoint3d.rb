@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_LPoint3d < TestUp::TestCase
 
-  LPoint3d = SUCommunityLib::LGeom::LPoint3d
+  LPoint3d = SkippyLib::LGeom::LPoint3d
 
   def setup
     # ...

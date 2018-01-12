@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_LPlane < TestUp::TestCase
 
-  LPlane = SUCommunityLib::LGeom::LPlane
+  LPlane = SkippyLib::LGeom::LPlane
 
   def setup
     # ...

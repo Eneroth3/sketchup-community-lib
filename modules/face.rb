@@ -1,4 +1,4 @@
-module SUCommunityLib
+module SkippyLib
 
 # Namespace for methods related to SketchUp's native Face class.
 module LFace
@@ -23,7 +23,7 @@ module LFace
   #     Geom::Point3d.new(0.75.m, 0.75.m, 0),
   #     Geom::Point3d.new(0.75.m, 0.25.m, 0)
   #   )
-  #   SUCommunityLib::LFace.inner_loops(outer_face)
+  #   SkippyLib::LFace.inner_loops(outer_face)
   #
   # @return [Array<Sketchup::Loop>]
   def self.inner_loops(face)
@@ -49,7 +49,7 @@ module LFace
   #     Geom::Point3d.new(0.75.m, 0.75.m, 0),
   #     Geom::Point3d.new(0.75.m, 0.25.m, 0)
   #   )
-  #   outer_face = SUCommunityLib::LFace.wrapping_face(inner_face)
+  #   outer_face = SkippyLib::LFace.wrapping_face(inner_face)
   #
   # @return [Sketchup::Face, nil]
   def self.wrapping_face(face)

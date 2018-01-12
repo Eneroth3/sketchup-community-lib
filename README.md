@@ -2,7 +2,7 @@
 
 ## WIP
 
-This project is at a very early stage and these project outlines should be seen as a draft.
+This project is at an early stage and these project outlines should be seen as a draft.
 
 ## Intent/Scope
 
@@ -32,35 +32,50 @@ No effort should be made to make the library support versions older than SketchU
 
 Individual methods doesn't have to support SU 2014, e.g. methods related to API features added in a later version, but their documentation must in that case state what the oldest supported version is.
 
-## Installation
+## Usage
 
 The library is designed to be placed in the directory of each extension using it. For simplicity's and usability's sake it is not intended to be a standalone extension or in other ways be shared between extensions.
 
-For now installation is manual (but could be scripted).
+There are three ways to use this library for your own extensions.
 
-1. Copy the content of the source directory (src/) into your extension's directory (e.g. to "my_extension/vendor/).
-2. Wrap the content of each file with the namespace of your extension.
-3. Load the library's loader file from your plugin.
+### Copy and paste code
 
-Example of loading script inside an extension's own directory:
+Ugly but straight forward. When just one method or two are needed this may be the most efficient approach
 
-    dir_path = __dir__
-    dir_path.force_encoding("UTF-8") if dir_path.respond_to?(:force_encoding)
-    require(File.join(dir_path, "vendor", "su_community_lib.rb"))
+### Manual install
+
+Simple but tedious in the long run.
+
+1. Copy the modules you need from `modules/` into your own extension's directory, e.g. `my_extension/vendor/c-lib/`. Make sure all required dependencies are copied.
+2. Edit the copied files to wrap their content in your extension's namespace.
+3. Edit the require calls (if any) to point to your own extension, e.g. by prepending `my_extension/vendor/c-lib/` to them.
+4. Require the files you need from your own code.
+
+### Automatic Install with Skippy
+
+Automation, yay!
+
+1. Install [Skippy](https://github.com/thomthom/skippy).
+2. Follow Skippy's instructions to set up a new project, install this library and use the module you need.
+3. Require the files you need from your own code.
 
 ## Contribute
 
 1. Read and understand Intent/Scope.
-2. Read and below guidelines.
-3. [Fork, create a new branch](https://gist.github.com/Chaser324/ce0505fbed06b947d962), do your thing, and make a pull request.
-4. ????
-5. Profit!
+2. Read and understand below guidelines.
+3. Create your own fork of this project.
+4. Create a new branch for your addition.
+5. Do the thing!
+6. If the master branch has been updated since you forked, merge master into your development branch. This simplifies testing and merging for the maintainer of this project.
+7. Make a pull request.
+
+To load all modules, e.g. for testing, load `tools/loader.rb`.
 
 ### Guidelines
 
 * Follow the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide), with the modifications defined by .rubocop.yml.
     * Use [Rubocop-SketchUp](https://github.com/SketchUp/rubocop-sketchup) and make sure your code passes with no offenses.
-* If a method could have been an instance method its first argument must be the object that would have been self. For instance `LPoint.between?(point, boundary_a, boundary_b)` should have the point being checked first, not between the other arguments. Code consistency is more important than non-generalizable reasoning.
+* If a method could have been an instance method its first argument must be the object that would have been self. For instance `LPoint.between?(point, boundary_a, boundary_b)` should have the point being checked first, not between the other arguments. Code consistency is more important than non-generalizable logic.
 * Code comments should tell why the code does what it does, never what it does. That should be obvious from the code itself.
 * Document with YARD.
 * KISS (keep it simple, stupid).

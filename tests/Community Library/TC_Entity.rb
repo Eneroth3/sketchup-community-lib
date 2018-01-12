@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_Entity < TestUp::TestCase
 
-  LEntity = SUCommunityLib::LEntity
+  LEntity = SkippyLib::LEntity
 
   def setup
     open_new_model

@@ -2,7 +2,7 @@ require 'testup/testcase'
 
 class TC_LTransformation < TestUp::TestCase
 
-  LTransformation = SUCommunityLib::LGeom::LTransformation
+  LTransformation = SkippyLib::LGeom::LTransformation
 
   # Copied from TestUp2 tests for SketchUp Ruby API.
   DivideByZeroTol = 1.0e-10

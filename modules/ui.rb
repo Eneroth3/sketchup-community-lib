@@ -1,4 +1,4 @@
-module SUCommunityLib
+module SkippyLib
 
 # Namespace for methods related to SketchUp's native UI module.
 module LUI
@@ -17,7 +17,7 @@ module LUI
   # @example
   #   # Add Menu Item Right Below Entity Info
   #   UI.add_context_menu_handler do |menu|
-  #     SUCommunityLib::LUI.add_menu_item(menu, "Entity Color Info", 1) do
+  #     SkippyLib::LUI.add_menu_item(menu, "Entity Color Info", 1) do
   #       model = Sketchup.active_model
   #       entity = model.selection.first
   #       return unless entity
@@ -44,7 +44,7 @@ module LUI
   #   # Create Toolbar with Crips Vector Icon If Supported
   #   # Assume the files my_icon.png, my_icon.svg and my_icon.pdf all exists.
   #   basename = "my_icon"
-  #   filename = basename + SUCommunityLib::LUI.icon_file_extension
+  #   filename = basename + SkippyLib::LUI.icon_file_extension
   #   tb = UI::Toolbar.new("My Toolbar")
   #   cmd = UI::Command.new("Do Stuff") { UI.messagebox("Stuff is done.") }
   #   cmd.large_icon = cmd.small_icon = filename
@@ -73,14 +73,14 @@ module LUI
   #
   # @example
   #   # Reveal file containing source code for this method.
-  #   path = SUCommunityLib::LUI.method(:reveal_path).source_location.first
-  #   SUCommunityLib::LUI.reveal_path(path)
+  #   path = SkippyLib::LUI.method(:reveal_path).source_location.first
+  #   SkippyLib::LUI.reveal_path(path)
   #
   #   # Open directory containing source code for this method (without selecting
   #   # the file).
-  #   path = SUCommunityLib::LUI.method(:reveal_path).source_location.first
+  #   path = SkippyLib::LUI.method(:reveal_path).source_location.first
   #   dir_path = File.dirname(path)
-  #   SUCommunityLib::LUI.reveal_path(dir_path)
+  #   SkippyLib::LUI.reveal_path(dir_path)
   #
   #
   # @return [Void]
