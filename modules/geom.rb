@@ -1,7 +1,7 @@
-Sketchup.require "modules/geom/plane.rb"
-Sketchup.require "modules/geom/point3d.rb"
-Sketchup.require "modules/geom/transformation.rb"
-Sketchup.require "modules/geom/vector3d.rb"
+Sketchup.require "modules/geom/plane"
+Sketchup.require "modules/geom/point3d"
+Sketchup.require "modules/geom/transformation"
+Sketchup.require "modules/geom/vector3d"
 
 module SkippyLib
 
@@ -40,7 +40,7 @@ module LGeom
   #   # Select a face and run:
   #   face = Sketchup.active_model.selection.first
   #   points = face.vertices.map(&:position)
-  #   normal = SUCommunityLib::Geom.polygon_normal(points)
+  #   normal = SkippyLib::Geom.polygon_normal(points)
   #
   # @return [Geom::Vector3d]
   def self.polygon_normal(points)

@@ -19,7 +19,7 @@ module LTransformation
   #   # Skew Selected Group/Component
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.create_from_axes(
+  #   e.transformation = SkippyLib::LGeom::LTransformation.create_from_axes(
   #     ORIGIN,
   #     Geom::Vector3d.new(2, 0.3, 0.3),
   #     Geom::Vector3d.new(0.3, 2, 0.3),
@@ -57,13 +57,13 @@ module LTransformation
   #
   # @example
   #   # Compose and Decompose Euler Angle Based Transformation
-  #   tr = SUCommunityLib::LGeom::LTransformation.create_from_euler_angles(
+  #   tr = SkippyLib::LGeom::LTransformation.create_from_euler_angles(
   #     ORIGIN,
   #     45.degrees,
   #     45.degrees,
   #     45.degrees
   #   )
-  #   SUCommunityLib::LGeom::LTransformation.euler_angles(tr).map(&:radians)
+  #   SkippyLib::LGeom::LTransformation.euler_angles(tr).map(&:radians)
   #
   # @return [Geom::Transformation]
   def self.create_from_euler_angles(origin = ORIGIN, x_angle = 0, y_angle = 0, z_angle = 0)
@@ -99,13 +99,13 @@ module LTransformation
   #   transformation = Geom::Transformation.rotation(ORIGIN, Z_AXIS, z_angle) *
   #     Geom::Transformation.rotation(ORIGIN, Y_AXIS, y_angle) *
   #     Geom::Transformation.rotation(ORIGIN, X_AXIS, x_angle)
-  #   angles = SUCommunityLib::LGeom::LTransformation.euler_angles(transformation)
+  #   angles = SkippyLib::LGeom::LTransformation.euler_angles(transformation)
   #   angles.map(&:radians)
   #
   #   # Determine Angles of Selected Group/Component
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   SUCommunityLib::LGeom::LTransformation.euler_angles(e.transformation).map(&:radians)
+  #   SkippyLib::LGeom::LTransformation.euler_angles(e.transformation).map(&:radians)
   #
   # @return [Array(Float, Float, Float)] X rotation, Y rotation and Z Rotation
   #   in radians.
@@ -133,14 +133,14 @@ module LTransformation
   # @example
   #   # Determine how much transformation would displace a point along the X
   #   # axis relative its signed Y coordinate.
-  #   sheared_tr = SUCommunityLib::LGeom::LTransformation.create_from_axes(
+  #   sheared_tr = SkippyLib::LGeom::LTransformation.create_from_axes(
   #     ORIGIN,
   #     X_AXIS,
   #     Geom::Vector3d.new(0.3, 1, 0),
   #     Z_AXIS
   #   )
-  #   shear_tr = SUCommunityLib::LGeom::LTransformation.extract_shearing(sheared_tr)
-  #   SUCommunityLib::LGeom::LTransformation.yaxis(shear_tr).x
+  #   shear_tr = SkippyLib::LGeom::LTransformation.extract_shearing(sheared_tr)
+  #   SkippyLib::LGeom::LTransformation.yaxis(shear_tr).x
   #
   # @return [Geom::Transformation]
   def self.extract_shearing(transformation)
@@ -183,8 +183,8 @@ module LTransformation
   #   # Note that native Reset Scale also resets skew, not just scale.
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.remove_scaling(
-  #     SUCommunityLib::LGeom::LTransformation.remove_shearing(e.transformation, false)
+  #   e.transformation = SkippyLib::LGeom::LTransformation.remove_scaling(
+  #     SkippyLib::LGeom::LTransformation.remove_shearing(e.transformation, false)
   #   )
   #
   # @return [Geom::Transformation]
@@ -219,12 +219,12 @@ module LTransformation
   #   # Mimic Context Menu > Reset Skew
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.remove_shearing(e.transformation, false)
+  #   e.transformation = SkippyLib::LGeom::LTransformation.remove_shearing(e.transformation, false)
   #
   #   # Reset Skewing While Retaining Volume
   #   # Select a skewed group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   e.transformation = SUCommunityLib::LGeom::LTransformation.remove_shearing(e.transformation, true)
+  #   e.transformation = SkippyLib::LGeom::LTransformation.remove_shearing(e.transformation, true)
   #
   # @return [Geom::Transformation]
   def self.remove_shearing(transformation, preserve_determinant_value = false)
@@ -303,7 +303,7 @@ module LTransformation
   # @example
   #   tr = Geom::Transformation.scaling(ORIGIN, 2, 1, 1)
   #   plane = [ORIGIN, Z_AXIS]
-  #   SUCommunityLib::LGeom::LTransformation.scale_factor_in_plane(tr, plane)
+  #   SkippyLib::LGeom::LTransformation.scale_factor_in_plane(tr, plane)
   #
   #
   # @return [Float]
@@ -371,7 +371,7 @@ module LTransformation
   # @example
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   SUCommunityLib::LGeom::LTransformation.xscale(e.transformation)
+  #   SkippyLib::LGeom::LTransformation.xscale(e.transformation)
   #
   # @return [Float]
   def self.xscale(transformation)
@@ -401,7 +401,7 @@ module LTransformation
   # @example
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   SUCommunityLib::LGeom::LTransformation.yscale(e.transformation)
+  #   SkippyLib::LGeom::LTransformation.yscale(e.transformation)
   #
   # @return [Float]
   def self.yscale(transformation)
@@ -429,7 +429,7 @@ module LTransformation
   # @example
   #   # Select a group or component and run:
   #   e = Sketchup.active_model.selection.first
-  #   SUCommunityLib::LGeom::LTransformation.zscale(e.transformation)
+  #   SkippyLib::LGeom::LTransformation.zscale(e.transformation)
   #
   # @return [Float]
   def self.zscale(transformation)

@@ -12,7 +12,7 @@ module LPoint3d
   # @param include_boundaries [Boolean]
   #
   # @example
-  #   SUCommunityLib::LGeom::LPoint3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
+  #   SkippyLib::LGeom::LPoint3d.between?(ORIGIN, Geom::Point3d.new(0, -1, -1), Geom::Point3d.new(0, 1, 1))
   #   # => true
   #
   # @return [Boolean]

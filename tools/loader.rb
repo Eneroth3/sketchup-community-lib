@@ -1,7 +1,9 @@
-# Load this file to load _all_ the Community Library modules, e.g. for testing.
-module SUCommunityLibLoader
+module SkippyLib
 
- # Ensure character encoding is correct for users with non-English names.
+# Load all modules, e.g. for testing.
+module Loader
+
+  # Ensure character encoding is correct for directories with non-English names.
   current_dir = __dir__
   if current_dir.respond_to?(:force_encoding)
     current_dir.force_encoding("UTF-8")
@@ -46,3 +48,5 @@ module SUCommunityLibLoader
   end
 
 end
+end
+

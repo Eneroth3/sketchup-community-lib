@@ -1,5 +1,5 @@
-Sketchup.require "modules/entity.rb"
-Sketchup.require "modules/drawingelement.rb"
+Sketchup.require "modules/entity"
+Sketchup.require "modules/drawingelement"
 
 module SkippyLib
 
@@ -26,7 +26,7 @@ module LComponentDefinition
   #   bottom_back_right = definition.bounds.corner(3)
   #   bottom_center = Geom.linear_combination(0.5, bottom_front_left, 0.5, bottom_back_right)
   #   new_axes = Geom::Transformation.new(bottom_center)
-  #   SUCommunityLib::ComponentDefinition.place_axes(definition, new_axes)
+  #   SkippyLib::LComponentDefinition.place_axes(definition, new_axes)
   #
   # @return [Void]
   def self.place_axes(definition, new_axes, adjust_instances = true)
@@ -64,7 +64,7 @@ module LComponentDefinition
   #   # within the selection (including within selected containers).
   #   model = Sketchup.active_model
   #   definition = model.definitions.first
-  #   SUCommunityLib::LComponentDefinition.unique_to?(definition, model.selection.to_a)
+  #   SkippyLib::LComponentDefinition.unique_to?(definition, model.selection.to_a)
   #
   # @return [Boolean]
   def self.unique_to?(definition, scopes)

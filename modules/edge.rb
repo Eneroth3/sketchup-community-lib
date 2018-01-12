@@ -11,7 +11,7 @@ module LEdge
   #   entities = Sketchup.active_model.active_entities
   #   edges = entities.add_edges(ORIGIN, Geom::Point3d.new(1.m, 0, 0))
   #   edge = edges.first
-  #   SUCommunityLib::LEdge.midpoint(edge)
+  #   SkippyLib::LEdge.midpoint(edge)
   #
   # @return [Geom::Point3d]
   def self.midpoint(edge)

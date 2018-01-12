@@ -1,11 +1,12 @@
-module SUCommunityLibExamples
+module SkippyLib
+module Examples
 
 # Make selected instances' axes match those of the active drawing context.
 # Useful to get texture positioning to match between drawing contexts.
 #
 # This example shows how `LComponentDefinition.place_axes` can be used.
 #
-# For this example SUCommunityLib is assumed to already be loaded in the top
+# For this example SkippyLib is assumed to already be loaded in the top
 # level namsepsace. For a real extension the library should be copied into the
 # extension's own folder, wrapped under its namespace and loaded from there.
 module AlignAxes
@@ -20,7 +21,7 @@ module AlignAxes
       "There are multiple instances of the same component in the "\
       "selection. To line up the axes of all of them they must be made unique.\n\n"\
       "Do you want to continue?"
-    definitions = instances.map { |i| SUCommunityLib::LEntity.definition(i) }.uniq
+    definitions = instances.map { |i| SkippyLib::LEntity.definition(i) }.uniq
     unless instances.size == definitions.size || UI.messagebox(msg, MB_YESNO) == IDYES
       return false
     end
@@ -31,7 +32,7 @@ module AlignAxes
 
   def self.line_up_axes
     model = Sketchup.active_model
-    instances = model.selection.select { |i| SUCommunityLib::LEntity.instance?(i) }
+    instances = model.selection.select { |i| SkippyLib::LEntity.instance?(i) }
     model.start_operation("Line Up Axes", true)
 
     # Different instances of the same definition needs to be made unique to have
@@ -52,8 +53,8 @@ module AlignAxes
     #
     # It is assumed all the selected instances are in the active drawing context.
     instances.each do |instance|
-      SUCommunityLib::LComponentDefinition.place_axes(
-        SUCommunityLib::LEntity.definition(instance),
+      SkippyLib::LComponentDefinition.place_axes(
+        SkippyLib::LEntity.definition(instance),
         instance.transformation.inverse * model.edit_transform
       )
     end
@@ -67,5 +68,6 @@ module AlignAxes
     UI.menu("Plugins").add_item("Line Up Axes") { line_up_axes }
   end
 
+end
 end
 end

@@ -12,7 +12,7 @@ module LDrawingelement
   #
   # @example
   #   # Select an Entity:
-  #   SUCommunityLib::LDrawingelement.all_instance_paths(Sketchup.active_model.selection.first)
+  #   SkippyLib::LDrawingelement.all_instance_paths(Sketchup.active_model.selection.first)
   #
   # @return [Array<Array>, Array<Sketchup::InstancePath>]
   #   In SketchUp 2017+ InstancePath objects are returned. In earlier versions

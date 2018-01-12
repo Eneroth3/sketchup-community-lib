@@ -1,13 +1,14 @@
-module SUCommunityLibExamples
+module SkippyLib
+module Examples
 
 # Make selected instances unique, similarly to the native feature, but affects
 # child instances too.
 #
-# This example shows a number of SUCommunityLib features, including custom
+# This example shows a number of SkippyLib features, including custom
 # menu item position (next to native Make Unique), swapping group definitions
 # and testing if a definition is unique to a certain scope.
 #
-# For this example SUCommunityLib is assumed to already be loaded in the top
+# For this example SkippyLib is assumed to already be loaded in the top
 # level namsepsace. For a real extension the library should be copied into the
 # extension's own folder, wrapped under its namespace and loaded from there.
 module DeepMakeUnique
@@ -34,25 +35,25 @@ module DeepMakeUnique
   #
   # @return [Void]
   def self.recursive_make_unique(instance, scope, replacement_table)
-    definition = SUCommunityLib::LEntity.definition(instance)
+    definition = SkippyLib::LEntity.definition(instance)
 
     if replacement_table[definition]
-      SUCommunityLib::LEntity.swap_definition(instance, replacement_table[definition])
+      SkippyLib::LEntity.swap_definition(instance, replacement_table[definition])
       return
     end
 
     # A new unique definition is only created if the definition has instances
     # outside of the scope. If the definition is already unique to the scope
     # this instance doesn't need to be made unique.
-    unless SUCommunityLib::LComponentDefinition.unique_to?(definition, scope)
+    unless SkippyLib::LComponentDefinition.unique_to?(definition, scope)
       instance.make_unique
       old_definition = definition
-      definition = SUCommunityLib::LEntity.definition(instance)
+      definition = SkippyLib::LEntity.definition(instance)
       replacement_table[old_definition] = definition
     end
 
     definition.entities.each do |i|
-      next unless SUCommunityLib::LEntity.instance?(i)
+      next unless SkippyLib::LEntity.instance?(i)
       recursive_make_unique(i, scope, replacement_table)
     end
 
@@ -84,7 +85,7 @@ module DeepMakeUnique
   def self.perform_deep_make_unique_operation
     model = Sketchup.active_model
 
-    scope = model.selection.select { |i| SUCommunityLib::LEntity.instance?(i) }
+    scope = model.selection.select { |i| SkippyLib::LEntity.instance?(i) }
     return if scope.empty?
 
     old_definition_count = model.definitions.size
@@ -102,7 +103,7 @@ module DeepMakeUnique
   def self.menu_available?
     selection = Sketchup.active_model.selection
 
-    selection.any? { |i| SUCommunityLib::LEntity.instance?(i) }
+    selection.any? { |i| SkippyLib::LEntity.instance?(i) }
   end
 
   def self.menu_index
@@ -147,11 +148,12 @@ module DeepMakeUnique
 
     UI.add_context_menu_handler do |menu|
       next unless menu_available?
-      SUCommunityLib::LUI.add_menu_item(menu, ACTION_NAME, menu_index) do
+      SkippyLib::LUI.add_menu_item(menu, ACTION_NAME, menu_index) do
         perform_deep_make_unique_operation
       end
     end
   end
 
+end
 end
 end

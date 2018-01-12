@@ -34,7 +34,7 @@ module LVector3d
   #
   # @example
   #   # transform_as_normal VS native #transform
-  #   skewed_tr = SUCommunityLib::LGeom::LTransformation.create_from_axes(
+  #   skewed_tr = SkippyLib::LGeom::LTransformation.create_from_axes(
   #     ORIGIN,
   #     Geom::Vector3d.new(1, 0.3, 0),
   #     Geom::Vector3d.new(0, 1, 0),
@@ -42,7 +42,7 @@ module LVector3d
   #   )
   #   normal = Y_AXIS
   #   puts "Transformed as vector: #{normal.transform(skewed_tr)}"
-  #   puts "Transformed as normal: #{SUCommunityLib::LGeom::LVector3d.transform_as_normal(normal, skewed_tr)}"
+  #   puts "Transformed as normal: #{SkippyLib::LGeom::LVector3d.transform_as_normal(normal, skewed_tr)}"
   #
   # @return [Geom::Vector3d]
   def self.transform_as_normal(normal, transformation)
