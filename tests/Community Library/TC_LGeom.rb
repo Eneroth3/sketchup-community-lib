@@ -1,4 +1,5 @@
 require 'testup/testcase'
+require_relative '../../tools/loader'
 
 class TC_LGeom < TestUp::TestCase
 

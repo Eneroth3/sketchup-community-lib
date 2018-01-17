@@ -1,4 +1,5 @@
 require 'testup/testcase'
+require_relative '../../tools/loader'
 
 class TC_LPoint3d < TestUp::TestCase
 
