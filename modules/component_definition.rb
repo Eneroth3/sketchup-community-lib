@@ -6,6 +6,40 @@ module SkippyLib
 # Namespace for methods related to SketchUp's native ComponentDefinition class.
 module LComponentDefinition
 
+  # Erase definition from model.
+  #
+  # @param definition [ComponentDefinition]
+  #
+  # @example
+  #   # Erase the first component in model (usually the scale figure).
+  #   model = Sketchup.active_model
+  #   definition = model.definitions.first
+  #
+  #   model.start_operation("Erase Definition", true)
+  #   SkippyLib::LComponentDefinition.erase(definition)
+  #   model.commit_operation
+  #
+  # @note This method must run inside of an operator (Model#start_operation).
+  #   Otherwise the component will not be erased, and SketchUp may even crash.
+  #
+  # @return [Void]
+  def self.erase(definition)
+    if Sketchup.version.to_i >= 18
+      definition.model.definitions.remove(definition)
+    else
+      definition.instances(&:erase!)
+
+      # HACK: Erasing all entities inside of ComponentDefinition purges it from
+      # model. However this action must be performed within an operation,
+      # otherwise the component will not be deleted until the user select it in
+      # the component browser and tries to place it. Very old SU versions may
+      # even crash.
+      definition.entities.clear!
+    end
+
+    nil
+  end
+
   # Define new axes placement for component.
   #
   # @param definition [Sketchup::ComponentDefiniton]

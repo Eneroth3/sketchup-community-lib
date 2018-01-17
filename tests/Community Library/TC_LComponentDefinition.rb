@@ -68,7 +68,7 @@ class TC_LComponentDefinition < TestUp::TestCase
       "Instances should keep their old transformation when third argument "\
       "is false."
     assert(group.transformation.to_a == IDENTITY.to_a, msg)
-    
+
     close_active_model
   end
 
@@ -205,6 +205,23 @@ class TC_LComponentDefinition < TestUp::TestCase
     ]
     msg = "Vase is unique to Table and Vase instance in the model root."
     refute(LComponentDefinition.unique_to?(definition, scope), msg)
+  end
+
+  def test_erase
+    model = Sketchup.active_model
+    definition = model.definitions.add("My Definition")
+    definition.entities.add_cpoint(ORIGIN)
+    model.entities.add_instance(definition, IDENTITY)
+    old_count = model.definitions.size
+
+    # Tested method must run inside an operator to work.
+    model.start_operation("Erase Definition", true)
+    LComponentDefinition.erase(definition)
+    model.commit_operation
+
+    count = model.definitions.size
+    expected_count = old_count - 1
+    assert_equal(expected_count, count)
   end
 
 end
