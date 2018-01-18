@@ -64,6 +64,33 @@ module LUI
     end
   end
 
+  # Show information page for a specific extension in Extension Warehouse.
+  #
+  # This method should work in SU 2013 and newer. Please note it is based on a
+  # terribly ugly hack. Use at your own risk.
+  #
+  # @param identifier [String] The extension identifier part of the URL to its
+  #   information page. For the URL
+  #   "http://extensions.sketchup.com/en/content/eneroth-align-face"
+  #   "eneroth-align-face" should be passed as argument.
+  #
+  # @example
+  #   SkippyLib::LUI.open_ew("eneroth-align-face")
+  #
+  # @return [Void]
+  def self.open_ew(identifier)
+    # HACK: Use the skp:launchEW@ feature of the WebDialog class to launch EW.
+    html = <<-HTML
+      Click <a href="skp:launchEW@#{identifier}">here</a> if Extension Warehouse does not open.
+      <script type="text/javascript">document.getElementsByTagName('a')[0].click();</script>
+    HTML
+    dlg = UI::WebDialog.new("Show Extension", true, nil, 0, 0, 100_000, 0, true)
+    dlg.set_html(html)
+    dlg.show
+
+    nil
+  end
+
   # Open directory and, if file is specified, select it.
   #
   # Commonly referred to in UIs as "Open File Location",
