@@ -38,11 +38,11 @@ The library is designed to be placed in the directory of each extension using it
 
 There are three ways to use this library for your own extensions.
 
-### Copy and paste code
+### Copy and Paste Code
 
-Ugly but straight forward. When just one method or two are needed this may be the most efficient approach
+Ugly but straight forward. When just one method or two are needed this may be the most efficient approach.
 
-### Manual install
+### Manual Installation
 
 Simple but tedious in the long run.
 
@@ -51,7 +51,7 @@ Simple but tedious in the long run.
 3. Edit the require calls (if any) to point to your own extension, e.g. by prepending `my_extension/vendor/c-lib/` to them.
 4. Require the files you need from your own code.
 
-### Automatic Install with Skippy
+### Automatic Installation with Skippy
 
 Automation, yay!
 
