@@ -40,7 +40,7 @@ There are three ways to use this library for your own extensions.
 
 ### Copy and Paste Code
 
-Ugly but straight forward. When just one method or two are needed this may be the most efficient approach.
+Ugly but straightforward. When just one method or two are needed this is the simplest approach.
 
 ### Manual Installation
 
