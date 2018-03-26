@@ -19,24 +19,22 @@ module LComponentDefinition
   #   SkippyLib::LComponentDefinition.erase(definition)
   #   model.commit_operation
   #
-  # @note In SketchUp versions prior to 2018 this method must run inside of an
-  #   operator (Model#start_operation). Otherwise the component will not be
-  #   erased, and SketchUp may even crash.
+  # @note This method must run inside of an operator (Model#start_operation).
+  #   Otherwise the component will not be erased, and SketchUp may even crash.
   #
   # @return [Void]
   def self.erase(definition)
-    if Sketchup.version.to_i >= 18
-      definition.model.definitions.remove(definition)
-    else
-      definition.instances(&:erase!)
+    definition.instances(&:erase!)
 
-      # HACK: Erasing all entities inside of ComponentDefinition purges it from
-      # model. However this action must be performed within an operation,
-      # otherwise the component will not be deleted until the user select it in
-      # the component browser and tries to place it. Very old SU versions may
-      # even crash.
-      definition.entities.clear!
-    end
+    # HACK: Erasing all entities inside of ComponentDefinition purges it from
+    # model. However this action must be performed within an operation,
+    # otherwise the component will not be deleted until the user select it in
+    # the component browser and tries to place it. Very old SU versions may
+    # even crash.
+    definition.entities.clear!
+
+    # Not using SU2018's DefinitionList.remove due to
+    # https://github.com/Eneroth3/sketchup-community-lib/issues/3.
 
     nil
   end
