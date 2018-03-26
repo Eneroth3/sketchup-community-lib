@@ -51,13 +51,15 @@ Simple but tedious in the long run.
 3. Edit the require calls (if any) to point to your own extension, e.g. by prepending `my_extension/vendor/c-lib/` to them.
 4. Require the files you need from your own code.
 
-### Automatic Installation with Skippy
+### ~~Automatic Installation with Skippy~~
 
-Automation, yay!
+~~Automation, yay!~~
 
-1. Install [Skippy](https://github.com/thomthom/skippy).
+~~1. Install [Skippy](https://github.com/thomthom/skippy).
 2. Follow Skippy's instructions to set up a new project, install this library and use the module you need.
-3. Require the files you need from your own code.
+3. Require the files you need from your own code.~~
+
+_As of 2018-03-26 in a pre-release state and not recommended._
 
 ## Contribute
 
