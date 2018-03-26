@@ -19,7 +19,7 @@ module LComponentDefinition
   #   SkippyLib::LComponentDefinition.erase(definition)
   #   model.commit_operation
   #
-  # @note In SketchUp versions prior to 2018 his method must run inside of an
+  # @note In SketchUp versions prior to 2018 this method must run inside of an
   #   operator (Model#start_operation). Otherwise the component will not be
   #   erased, and SketchUp may even crash.
   #
