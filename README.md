@@ -47,8 +47,8 @@ Ugly but straightforward. When just one method or two are needed this is the sim
 Simple but tedious in the long run.
 
 1. Copy the modules you need from `modules/` into your own extension's directory, e.g. `my_extension/vendor/c-lib/`. Make sure all required dependencies are copied.
-2. Edit the copied files to wrap their content in your extension's namespace.
-3. Edit the require calls (if any) to point to your own extension, e.g. by prepending `my_extension/vendor/c-lib/` to them.
+2. Replace wrapping module `SkippyLib` with that of your own extension, e.g. `MyName::MyExtension`.
+3. Replace `modules/` in require calls (if any) to point to your own extension's copy of the files, e.g. `my_extension/vendor/c-lib/`.
 4. Require the files you need from your own code.
 
 ### ~~Automatic Installation with Skippy~~
