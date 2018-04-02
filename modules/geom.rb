@@ -55,5 +55,18 @@ module LGeom
     normal.normalize
   end
 
+  # Remove duplicated points or vectors from array, using SketchUp's internal
+  # precision.
+  #
+  # Ruby's own `Array#uniq` don't remove duplicated points as they are regarded
+  # separate objects, based on #eql? and #hash.
+  #
+  # @param points [Array]
+  #
+  # @return [Array]
+  def self.remove_duplicates(array)
+    array.reduce([]) { |a, c1| a.any? { |c2| c2 == c1 } ? a : a << c1 }
+  end
+
 end
 end

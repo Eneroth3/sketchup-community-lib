@@ -3,6 +3,47 @@ module SkippyLib
 # Namespace for methods related to SketchUp's native Face class.
 module LFace
 
+  # Find an arbitrary point within face.
+  #
+  # @param face [Sketchup::Face]
+  #
+  # @return [Geom::Point3d, nil] nil is returned for zero area faces.
+  def self.arbitrary_interior_point(face)
+    return if face.area.zero?
+
+    # In rare situations PolygonMesh.polygon_points return points on a line,
+    # which would lead to a point on the face boundary being returned rather
+    # than one within face.
+    index = 1
+    points = nil
+    loop do
+      points = face.mesh.polygon_points_at(index)
+      index += 1
+      break unless points[0].on_line?(points[1], points[2])
+    end
+
+    Geom.linear_combination(
+      0.5,
+      Geom.linear_combination(0.5, points[0], 0.5, points[1]),
+      0.5,
+      points[2]
+    )
+  end
+
+  # Test if point is within a face.
+  #
+  # @param point [Geom::Point3d]
+  # @param face [Sketchup::Face]
+  # @param include_boundary [Boolean]
+  #
+  # @return [Boolean]
+  def self.includes_point?(face, point, include_boundary = true)
+    pc = face.classify_point(point)
+    return include_boundary if [Sketchup::Face::PointOnEdge, Sketchup::Face::PointOnVertex].include?(pc)
+
+    pc == Sketchup::Face::PointInside
+  end
+
   # Get an array of all the interior loops of a face.
   #
   # If the face has no interior loops (holes in it) the array will be empty.

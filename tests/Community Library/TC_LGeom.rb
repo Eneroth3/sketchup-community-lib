@@ -54,4 +54,36 @@ class TC_LGeom < TestUp::TestCase
     assert_equal(expected_normal, normal)
   end
 
+  def test_remove_duplicates
+    output = LGeom.remove_duplicates([
+      Geom::Point3d.new(1, 2, 3),
+      Geom::Point3d.new(1, 2, 3),
+      Geom::Point3d.new(4, 3, 1),
+      Geom::Point3d.new(1, 2, 3),
+      Geom::Point3d.new(5, 5, 5),
+      Geom::Point3d.new(4, 3, 1)
+    ])
+    expected = LGeom.remove_duplicates([
+      Geom::Point3d.new(1, 2, 3),
+      Geom::Point3d.new(4, 3, 1),
+      Geom::Point3d.new(5, 5, 5)
+    ])
+    assert_equal(output, expected)
+
+    output = LGeom.remove_duplicates([
+      Geom::Vector3d.new(1, 2, 3),
+      Geom::Vector3d.new(1, 2, 3),
+      Geom::Vector3d.new(4, 3, 1),
+      Geom::Vector3d.new(1, 2, 3),
+      Geom::Vector3d.new(5, 5, 5),
+      Geom::Vector3d.new(4, 3, 1)
+    ])
+    expected = LGeom.remove_duplicates([
+      Geom::Vector3d.new(1, 2, 3),
+      Geom::Vector3d.new(4, 3, 1),
+      Geom::Vector3d.new(5, 5, 5)
+    ])
+    assert_equal(output, expected)
+  end
+
 end
