@@ -112,6 +112,8 @@ module LComponentDefinition
     end
   end
 
+  #-----------------------------------------------------------------------------
+
   # Check if InstancePath (or Array representing InstancePath) starts with other
   # InstancePath (or Array representing InstancePath).
   #

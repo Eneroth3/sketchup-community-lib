@@ -34,6 +34,8 @@ module LDrawingelement
     paths.map { |a| Sketchup::InstancePath.new(a) }
   end
 
+  #-----------------------------------------------------------------------------
+
   def self.recursive_instance_path_listing(entity, current_path = [], all_paths = [])
     current_path.unshift(entity)
     if entity.parent.is_a?(Sketchup::Model)
