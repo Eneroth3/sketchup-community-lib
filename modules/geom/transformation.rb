@@ -173,10 +173,11 @@ module LTransformation
   # transformation was sheared it will still scale volumes, areas and length not
   # parallel to coordinate axes.
   #
-  # If transformation is flipped, the X axis is reversed. Otherwise axes keeps
-  # their direction.
+  # If transformation is flipped and allow_flip false, the X axis is reversed.
+  # Otherwise axes keeps their direction.
   #
   # @param transformation [Geom::Transformation]
+  # @param allow_flip [Boolean]
   #
   # @example
   #   # Mimic Context Menu > Reset Scale
@@ -188,9 +189,9 @@ module LTransformation
   #   )
   #
   # @return [Geom::Transformation]
-  def self.remove_scaling(transformation)
+  def self.remove_scaling(transformation, allow_flip = false)
     x_axis = xaxis(transformation).normalize
-    x_axis.reverse! if flipped?(transformation)
+    x_axis.reverse! if flipped?(transformation) && !allow_flip
     create_from_axes(
       transformation.origin,
       x_axis,

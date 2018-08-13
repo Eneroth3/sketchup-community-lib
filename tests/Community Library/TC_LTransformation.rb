@@ -170,6 +170,12 @@ class TC_LTransformation < TestUp::TestCase
 
     msg = "Reseting scaling should un-flip transformation."
     refute(LTransformation.flipped?(tr_unscaled_flipped), msg)
+
+    tr_flipped = Geom::Transformation.scaling(-1, 1, 1)
+    tr_unscaled_flipped = LTransformation.remove_scaling(tr_flipped, true)
+
+    msg = "Reseting scaling should not un-flip transformation if param says not to."
+    assert(LTransformation.flipped?(tr_unscaled_flipped), msg)
   end
 
   def test_remove_shearing
