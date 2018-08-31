@@ -12,7 +12,7 @@ module LUI
   #
   # @param menu [UI::Menu]
   # @param name [String]
-  # @param position [Fixnum, nil]
+  # @param position [Integer, nil]
   #
   # @example
   #   # Add Menu Item Right Below Entity Info
@@ -26,7 +26,7 @@ module LUI
   #     end
   #   end
   #
-  # @return [Fixnum] identifier of menu item.
+  # @return [Integer] identifier of menu item.
   def self.add_menu_item(menu, name, position = nil, &block)
     if position && Sketchup.platform == :platform_win && Sketchup.version.to_i >= 16
       menu.add_item(name, position, &block)
