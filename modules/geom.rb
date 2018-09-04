@@ -8,6 +8,26 @@ module SkippyLib
 # Namespace for methods related to SketchUp's native Geom module.
 module LGeom
 
+  # Calculate angle from subtrahend to minuend vector, projected to given plane.
+  # Returns angle in radians from 0.0 up to 2 pi. Angle is measured ccw as seen
+  # from the direction normal points towards.
+  #
+  # @param minuend [Geom::Vector3d]
+  # @param subtrahend [Geom::Vector3d]
+  # @param normal [Geom::Vector3d]
+  #
+  # @return [Float]
+  def self.angle_in_plane(minuend, subtrahend, normal = Z_AXIS)
+    minuend = normal * minuend * normal
+    subtrahend = normal * subtrahend * normal
+
+    if (minuend * subtrahend) % normal > 0
+      Math::PI * 2 - minuend.angle_between(subtrahend)
+    else
+      minuend.angle_between(subtrahend)
+    end
+  end
+
   # Compute area of an array of points representing a polygon.
   #
   # @param points [Array<Geom::Point3d>]

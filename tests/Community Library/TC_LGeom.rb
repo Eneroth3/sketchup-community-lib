@@ -5,6 +5,11 @@ class TC_LGeom < TestUp::TestCase
 
   LGeom = SkippyLib::LGeom
 
+  # From testup-2/tests/SketchUp Ruby API/TC_Geom_Vector3d.rb
+  def assert_equal_tol(expected, actual, tol = 1.0e-10)
+    assert_in_delta(expected, actual, tol)
+  end
+
   def setup
     #...
   end
@@ -84,6 +89,14 @@ class TC_LGeom < TestUp::TestCase
       Geom::Vector3d.new(5, 5, 5)
     ])
     assert_equal(output, expected)
+  end
+
+  def test_angle_in_plane
+    assert_equal_tol(LGeom.angle_in_plane(Y_AXIS, X_AXIS), Math::PI / 2)
+    assert_equal_tol(LGeom.angle_in_plane(X_AXIS, Y_AXIS), Math::PI * 3 / 2)
+    assert_equal_tol(LGeom.angle_in_plane(Y_AXIS, X_AXIS, Z_AXIS), Math::PI / 2)
+    assert_equal_tol(LGeom.angle_in_plane(Y_AXIS, X_AXIS, Z_AXIS.reverse), Math::PI * 3 / 2)
+    assert_equal_tol(LGeom.angle_in_plane(Y_AXIS, Geom::Vector3d.new(1,1,1)), 45.degrees)
   end
 
 end
