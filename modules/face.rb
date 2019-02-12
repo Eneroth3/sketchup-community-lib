@@ -71,6 +71,22 @@ module LFace
     face.loops - [face.outer_loop]
   end
 
+  # Get the triangles making up a face.
+  #
+  # @param face [Sketchup::Face]
+  # @param transformation [Geom::Transformation]
+  #   Transformation of the face.
+  #
+  # @return [Array<Array<(Geom::Point3d, Geom::Point3d, Geom::Point3d)>>]
+  def self.triangulate(face, transformation = IDENTITY)
+    mesh = face.mesh
+    incides = mesh.polygons.flatten.map(&:abs)
+    points = incides.map { |i| mesh.point_at(i) }
+    points.each { |pt| pt.transform!(transformation) }
+
+    points.each_slice(3).to_a
+  end
+
   # Find the exterior face that a face forms a hole within, or nil if face isn't
   # inside another face.
   #
