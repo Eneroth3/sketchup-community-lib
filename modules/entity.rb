@@ -15,6 +15,9 @@ module LEntity
     dicts = source.attribute_dictionaries || []
 
     dicts.each do |dict|
+      # Can't edit SketchUp's component credits.
+      next if dict.name == "GSU_ContributorsInfo"
+
       dict.each_pair do |key, value|
         entity.set_attribute(dict.name, key, value)
       end
