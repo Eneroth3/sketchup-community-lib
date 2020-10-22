@@ -13,6 +13,8 @@ module SKP
   #
   # @return [String]
   def self.guid(path)
+    return Sketchup::Skp.read_guid(path) if Sketchup.version.to_i >= 21
+    
     # HACK: This is not official API. However it's not very likely to change
     # either, given how it's placed in the file header, and supposed to be
     # read by Sketchup without parsing the full file.
