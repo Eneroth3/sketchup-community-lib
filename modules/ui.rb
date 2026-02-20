@@ -73,7 +73,7 @@ module LUI
   #   SkippyLib::LUI.open_ew("6eb2922c-a13b-4cc6-b527-d4fa5cc5317b")
   #
   # @return [Void]
-  def open_ew(identifier)
+  def self.open_ew(identifier)
     if UI.respond_to?(:show_extension_warehouse)
       # Added in 2026.1
       return UI.show_extension_warehouse(identifier)
